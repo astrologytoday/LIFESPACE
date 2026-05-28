@@ -88,6 +88,10 @@ struct MealPlannerView: View {
                         .font(.system(size: 34, weight: .heavy, design: .rounded))
                         .tracking(3)
                         .foregroundColor(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.65)
+                        .allowsTightening(true)
+                        .padding(.horizontal, 20)
                         .shadow(radius: 8)
 
                     Rectangle()
@@ -95,7 +99,7 @@ struct MealPlannerView: View {
                         .frame(width: 270, height: 2)
                         .cornerRadius(1)
                 }
-                .frame(maxWidth: .infinity) // ensure centered
+                .frame(maxWidth: .infinity)
                 .padding(.top, 28)
                 .padding(.bottom, 16)
 
@@ -107,6 +111,8 @@ struct MealPlannerView: View {
                                 Text(day)
                                     .font(.custom("Avenir-Heavy", size: 18))
                                     .foregroundColor(.white)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.75)
 
                                 mealRow(day: day, meal: "Breakfast", mealType: .breakfast)
                                 mealRow(day: day, meal: "Lunch", mealType: .lunch)
@@ -119,20 +125,19 @@ struct MealPlannerView: View {
                             Text("CLEAR ALL")
                                 .font(.custom("Avenir-Heavy", size: 16))
                                 .foregroundColor(.white)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
                                 .padding(.vertical, 12)
                                 .frame(maxWidth: .infinity)
                                 .background(Color.red.opacity(0.65))
                                 .cornerRadius(14)
                         }
                         .padding(.top, 12)
-                        .padding(.bottom, 12)
+                        .padding(.bottom, 120)
                     }
                     .padding(.horizontal)
                     .padding(.bottom, 10)
                 }
-
-                // FOOTER
-                footerBar
             }
             .onAppear { loadMeals() }
             .onChange(of: focusedField) { newValue in
@@ -189,6 +194,8 @@ struct MealPlannerView: View {
                             Text("Copy")
                                 .font(.caption.bold())
                                 .foregroundColor(.black)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
                         }
                         .padding(14)
                         .background(Color.white)
@@ -214,6 +221,8 @@ struct MealPlannerView: View {
                             Text("Paste")
                                 .font(.caption.bold())
                                 .foregroundColor(.green)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
                         }
                         .padding(14)
                         .background(Color.white)
@@ -239,6 +248,8 @@ struct MealPlannerView: View {
                             Text("Delete")
                                 .font(.caption.bold())
                                 .foregroundColor(.red)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
                         }
                         .padding(14)
                         .background(Color.white)
@@ -269,6 +280,8 @@ struct MealPlannerView: View {
                         .font(.system(size: 15))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .padding(20)
                         .background(
                             ZStack {
@@ -313,6 +326,9 @@ struct MealPlannerView: View {
                 .zIndex(5000)
             }
         }
+        .safeAreaInset(edge: .bottom) {
+            footerBar
+        }
         .coordinateSpace(name: "MealPlannerSpace")
         .onPreferenceChange(MealFieldFramePreferenceKey.self) { values in
             guard let focused = focusedField else {
@@ -333,34 +349,25 @@ struct MealPlannerView: View {
     // MARK: - FOOTER
 
     private var footerBar: some View {
-        ZStack {
-            Rectangle()
-                .fill(Color.clear)
-                .frame(height: 120)
-                .frame(maxWidth: .infinity)
-                .contentShape(Rectangle())
+        HStack(spacing: 34) {
+            floatingButton(systemName: "chevron.left") {
+                navModel.pop()
+            }
 
-            HStack(spacing: 42) {
-                floatingButton(systemName: "chevron.left") {
-                    navModel.pop()
-                }
-
-                floatingButton(systemName: "star.fill") {
-                    withAnimation(.easeInOut(duration: 0.25)) {
-                        showAutoPopulateBubble.toggle()
-                    }
-                }
-
-                floatingButton(systemName: "list.bullet") {
-                    navModel.push("GroceryListView")
+            floatingButton(systemName: "star.fill") {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    showAutoPopulateBubble.toggle()
                 }
             }
-            .padding(.bottom, -8) // adjust this if you want them a bit higher/lower
+
+            floatingButton(systemName: "list.bullet") {
+                navModel.push("GroceryListView")
+            }
         }
-        .frame(height: 120)
+        .padding(.top, 10)
+        .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
-        .background(Color.clear)
-        .ignoresSafeArea(edges: .bottom)
+        .background(.ultraThinMaterial.opacity(0.16))
     }
 
     private func floatingButton(systemName: String, action: @escaping () -> Void) -> some View {
@@ -376,10 +383,10 @@ struct MealPlannerView: View {
                         endPoint: .bottomTrailing
                     )
                 )
-                .frame(width: 70, height: 70)
+                .frame(width: 64, height: 64)
                 .overlay(
                     Image(systemName: systemName)
-                        .font(.system(size: 26, weight: .bold))
+                        .font(.system(size: 24, weight: .bold))
                         .foregroundColor(.black)
                 )
         }
@@ -438,6 +445,8 @@ struct MealPlannerView: View {
                                         Text(title)
                                             .font(.custom("Avenir", size: 14))
                                             .foregroundColor(.black)
+                                            .lineLimit(2)
+                                            .minimumScaleFactor(0.75)
                                         Spacer()
                                     }
                                     .padding(.vertical, 10)
@@ -494,6 +503,9 @@ struct MealPlannerView: View {
                 Text("GENERATE MEAL PLAN")
                     .font(.custom("Avenir-Heavy", size: 16))
                     .foregroundColor(.black)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.75)
+                    .multilineTextAlignment(.center)
 
                 ScrollView {
                     VStack(spacing: 10) {
@@ -506,6 +518,9 @@ struct MealPlannerView: View {
                                 Text(option.title)
                                     .font(.custom("Avenir-Heavy", size: 14))
                                     .foregroundColor(.black)
+                                    .lineLimit(2)
+                                    .minimumScaleFactor(0.75)
+                                    .multilineTextAlignment(.center)
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 10)
                                     .background(Color.white.opacity(0.9))
@@ -521,6 +536,8 @@ struct MealPlannerView: View {
                             Text("FAVORITES")
                                 .font(.custom("Avenir-Heavy", size: 14))
                                 .foregroundColor(.black)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 10)
                                 .background(Color.white.opacity(0.9))
@@ -552,10 +569,12 @@ struct MealPlannerView: View {
 
         return GeometryReader { geo in
             VStack(alignment: .leading, spacing: 6) {
-                HStack {
+                HStack(spacing: 8) {
                     Text("\(meal):")
                         .font(.custom("Avenir", size: 16))
                         .foregroundColor(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
                         .frame(width: 85, alignment: .leading)
 
                     ZStack {
@@ -583,6 +602,8 @@ struct MealPlannerView: View {
                                     .weight((matchedRecipe != nil || matchedModelRecipe != nil || matchedUserRecipe != nil) ? .bold : .regular)
                             )
                             .foregroundColor(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 10)
                             .opacity(fadeMeals[day]?[meal] ?? 1.0)
@@ -597,6 +618,7 @@ struct MealPlannerView: View {
                                         Text(recipe.title)
                                             .font(.custom("Avenir", size: 15).weight(.bold))
                                             .foregroundColor(.clear)
+                                            .lineLimit(1)
                                     }
                                     .buttonStyle(.plain)
                                     Spacer()
@@ -611,6 +633,7 @@ struct MealPlannerView: View {
                                         Text(modelRecipe.title)
                                             .font(.custom("Avenir", size: 15).weight(.bold))
                                             .foregroundColor(.clear)
+                                            .lineLimit(1)
                                     }
                                     .buttonStyle(.plain)
                                     Spacer()
@@ -625,6 +648,7 @@ struct MealPlannerView: View {
                                         Text(userRecipe.title)
                                             .font(.custom("Avenir", size: 15).weight(.bold))
                                             .foregroundColor(.clear)
+                                            .lineLimit(1)
                                     }
                                     .buttonStyle(.plain)
                                     Spacer()
