@@ -33,7 +33,11 @@ struct SagittariusView: View {
                     Text("November 22 – December 21")
                         .font(.system(size: 20))
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.horizontal)
 
                     HStack(alignment: .top, spacing: 16) {
                         VStack(alignment: .leading, spacing: 14) {
@@ -45,13 +49,14 @@ struct SagittariusView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 20)
+                        .layoutPriority(1)
 
                         Image("sagittarius-symbol")
                             .resizable()
                             .renderingMode(.template)
                             .foregroundColor(.white)
                             .scaledToFit()
-                            .frame(width: 150, height: 150)
+                            .frame(maxWidth: 150, maxHeight: 150)
                             .padding(.trailing, 20)
                             .shadow(radius: 10)
                     }
@@ -66,6 +71,8 @@ struct SagittariusView: View {
                     They speak directly and sometimes bluntly, driven by a need to express what they believe is right. Though this can ruffle feathers, their intentions are rarely harsh. At their best, Sagittarians are joyful, adventurous, and guided by a strong moral compass that helps them see life as a journey of growth.
                     """)
                     .foregroundColor(.white)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal)
 
                     HStack {
@@ -84,7 +91,7 @@ struct SagittariusView: View {
                         Spacer()
                     }
                     .padding(.top, 10)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 44)
                 }
                 .opacity(contentOpacity)
                 .onAppear {
@@ -98,19 +105,20 @@ struct SagittariusView: View {
 
     // MARK: - Info Row Builder
     func infoRow(label: String, value: String) -> some View {
-        HStack(spacing: 6) {
+        HStack(alignment: .top, spacing: 6) {
             Text("• \(label)")
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(value)
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
-                .fixedSize()
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
-            Spacer()
+            Spacer(minLength: 0)
         }
-        .fixedSize(horizontal: true, vertical: false)
     }
 }
-
