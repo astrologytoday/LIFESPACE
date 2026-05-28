@@ -11,7 +11,6 @@ struct SensoryCheckView: View {
 
     var body: some View {
         ZStack {
-            // Teal background
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 0.35, green: 0.80, blue: 0.75),
@@ -24,18 +23,18 @@ struct SensoryCheckView: View {
             .ignoresSafeArea()
 
             GeometryReader { geo in
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 40) {
-                        Spacer(minLength: 0)
-
+                ScrollView(showsIndicators: true) {
+                    VStack(spacing: 30) {
                         Text("SENSORY")
-                            .font(.largeTitle)
-                            .bold()
+                            .font(.system(size: 36, weight: .bold))
                             .foregroundColor(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
                             .opacity(showTitle ? 1 : 0)
                             .animation(.easeIn(duration: 1), value: showTitle)
+                            .padding(.top, 48)
 
-                        VStack(spacing: 30) {
+                        VStack(spacing: 28) {
                             QuestionToggle(
                                 question: "Have you showered today?",
                                 selection: $showered
@@ -46,12 +45,11 @@ struct SensoryCheckView: View {
                                 selection: $houseClean
                             )
                         }
-
-                        Spacer(minLength: 0)
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 44)
                     }
-                    .padding()
+                    .padding(.vertical, 18)
                     .frame(maxWidth: .infinity)
-                    // ✅ keeps it centered on normal devices, but scrolls on small devices
                     .frame(minHeight: geo.size.height)
                 }
             }
