@@ -21,12 +21,12 @@ struct AnxietyBuildingBlocksMatrixView: View {
 
     var body: some View {
 
-        // Compute cell sizes similar to Depression version
-        let containerW   = min(UIScreen.main.bounds.width, 900) - 24   // ~leading+trailing padding
-        let totalHSpace  = hSpacing * 3                                // 4 columns = 3 gaps
-        let cellW        = max(88, (containerW - totalHSpace) / 4.0)
-        let cellH        = max(52, cellW * 0.52)
-        let gridHeight   = cellH * 3 + vSpacing * 2                    // 3 rows = 2 vertical gaps
+        // Compute cell sizes without forcing the grid wider than smaller iPhones
+        let containerW = max(0, min(UIScreen.main.bounds.width, 900) - 24)
+        let totalHSpace = hSpacing * 3
+        let cellW = max(64, (containerW - totalHSpace) / 4.0)
+        let cellH = max(52, cellW * 0.52)
+        let gridHeight = cellH * 3 + vSpacing * 2
 
         return ZStack {
 
@@ -98,6 +98,7 @@ struct AnxietyBuildingBlocksMatrixView: View {
                 .transition(.opacity.combined(with: .scale))
             }
         }
+        .frame(maxWidth: .infinity)
         .frame(height: gridHeight)
         .padding(.vertical, 2)
     }
