@@ -10,7 +10,6 @@ struct FitnessCheckView: View {
 
     var body: some View {
         ZStack {
-            // Teal gradient background
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 0.35, green: 0.80, blue: 0.75),
@@ -23,16 +22,16 @@ struct FitnessCheckView: View {
             .ignoresSafeArea()
 
             GeometryReader { geo in
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 40) {
-                        Spacer(minLength: 0)
-
+                ScrollView(showsIndicators: true) {
+                    VStack(spacing: 28) {
                         Text("FITNESS")
-                            .font(.largeTitle)
-                            .bold()
+                            .font(.system(size: 36, weight: .bold))
                             .foregroundColor(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
                             .opacity(showTitle ? 1 : 0)
                             .animation(.easeIn(duration: 1), value: showTitle)
+                            .padding(.top, 48)
 
                         Text("How long have you worked out today?")
                             .foregroundColor(.white)
@@ -40,20 +39,17 @@ struct FitnessCheckView: View {
                             .multilineTextAlignment(.center)
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 24)
 
-                        VStack(spacing: 20) {
+                        VStack(spacing: 18) {
                             fitnessOption("30+ minutes", tag: "long")
                             fitnessOption("5–10 minutes", tag: "short")
                             fitnessOption("Not at all", tag: "none")
                         }
-
-                        Spacer(minLength: 0)
+                        .padding(.bottom, 44)
                     }
-                    .padding()
+                    .padding(.vertical, 18)
                     .frame(maxWidth: .infinity)
-                    // ✅ Keeps layout vertically centered on normal devices,
-                    // but still allows scrolling on smaller screens.
                     .frame(minHeight: geo.size.height)
                 }
             }
@@ -65,7 +61,6 @@ struct FitnessCheckView: View {
         }
     }
 
-    // MARK: - Fitness Option Builder
     private func fitnessOption(_ label: String, tag: String) -> some View {
         Button(action: {
             guard selected == nil else { return }
@@ -98,12 +93,12 @@ struct FitnessCheckView: View {
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .minimumScaleFactor(0.85)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(
-                    selected == tag ? Color.white.opacity(0.3) : Color.white.opacity(0.15)
-                )
+                .minimumScaleFactor(0.8)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, minHeight: 50)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 12)
+                .background(selected == tag ? Color.white.opacity(0.3) : Color.white.opacity(0.15))
                 .cornerRadius(14)
                 .overlay(
                     RoundedRectangle(cornerRadius: 14)
