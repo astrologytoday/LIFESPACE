@@ -6,7 +6,6 @@ struct AriesView: View {
 
     var body: some View {
         ZStack {
-            // Background Gradient
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 0.45, green: 0.10, blue: 0.20),
@@ -21,7 +20,6 @@ struct AriesView: View {
                 VStack(spacing: 20) {
                     Spacer(minLength: 20)
 
-                    // Zodiac Circle Image as Title
                     Image("aries-chart")
                         .resizable()
                         .renderingMode(.template)
@@ -34,9 +32,12 @@ struct AriesView: View {
                     Text("March 21 – April 19")
                         .font(.system(size: 20))
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.horizontal)
 
-                    // Info Section + Aries Symbol
                     HStack(alignment: .top, spacing: 16) {
                         VStack(alignment: .leading, spacing: 14) {
                             infoRow(label: "Symbol:", value: "Ram")
@@ -47,14 +48,14 @@ struct AriesView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 20)
+                        .layoutPriority(1)
 
-                        // Aries Ram Symbol (Large)
                         Image("aries-symbol")
                             .resizable()
                             .renderingMode(.template)
                             .foregroundColor(.white)
                             .scaledToFit()
-                            .frame(width: 150, height: 150)
+                            .frame(maxWidth: 150, maxHeight: 150)
                             .padding(.trailing, 20)
                             .shadow(radius: 10)
                     }
@@ -63,7 +64,6 @@ struct AriesView: View {
                         .background(.white)
                         .padding(.horizontal)
 
-                    // Description
                     Text("""
                     Aries are bold, direct, and full of life force. Ruled by Mars, they carry the energy of a new beginning; like a spark that ignites a fire. These individuals are natural pioneers, often diving headfirst into action before others have even decided what to do.
 
@@ -72,9 +72,10 @@ struct AriesView: View {
                     The First House governs identity, and Aries thrives when exploring who they are through independence, action, and self-expression.
                     """)
                     .foregroundColor(.white)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal)
 
-                    // Back Button
                     HStack {
                         Spacer()
                         Button(action: {
@@ -91,7 +92,7 @@ struct AriesView: View {
                         Spacer()
                     }
                     .padding(.top, 10)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 44)
                 }
                 .opacity(contentOpacity)
                 .onAppear {
@@ -103,21 +104,21 @@ struct AriesView: View {
         }
     }
 
-    // MARK: - Info Row Builder
     func infoRow(label: String, value: String) -> some View {
-        HStack(spacing: 6) {
+        HStack(alignment: .top, spacing: 6) {
             Text("• \(label)")
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(value)
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
-                .fixedSize() // ← prevents line wrapping
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
-            Spacer()
+            Spacer(minLength: 0)
         }
-        .fixedSize(horizontal: true, vertical: false) // ← forces entire row to stay on one line
     }
 }
-
