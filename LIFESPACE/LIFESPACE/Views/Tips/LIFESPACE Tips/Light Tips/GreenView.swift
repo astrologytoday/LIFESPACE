@@ -30,10 +30,14 @@ struct GreenView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                         
                         Text("GREEN")
                             .font(.system(size: 40, weight: .heavy))
                             .foregroundColor(darkGreen)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                             .scaleEffect(isPulsing ? 1.08 : 1.0)
                             .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: isPulsing)
                             .onAppear {
@@ -90,6 +94,7 @@ struct GreenView: View {
                     }
                     .foregroundColor(.white)
                     .font(.body)
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                     
                     // MARK: - Where to Use Green
@@ -103,6 +108,8 @@ struct GreenView: View {
                     Text("Because of its strong ties to nature, the color green is best used in rooms that have vegetation or that aim to facilitate the circadian rhythm, such as bedrooms or bathrooms.")
                         .foregroundColor(.white)
                         .font(.body)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                     
                     VStack(alignment: .leading, spacing: 10) {
                         bulletView(Text("Bedrooms"))
@@ -122,6 +129,8 @@ struct GreenView: View {
                         Text("← Back to Light Tips")
                             .foregroundColor(.white)
                             .font(.body)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.white.opacity(0.15))
@@ -130,6 +139,7 @@ struct GreenView: View {
                     .padding(.bottom, 60)
                 }
                 .padding(.horizontal, 24)
+                .padding(.bottom, 24)
             }
         }
     }
@@ -143,6 +153,8 @@ struct GreenView: View {
         )
         .font(.title3)
         .fontWeight(.semibold)
+        .lineLimit(nil)
+        .fixedSize(horizontal: false, vertical: true)
     }
     
     // MARK: - Bullet View
@@ -153,6 +165,7 @@ struct GreenView: View {
                 .padding(.top, 2)
             text
                 .foregroundColor(.white)
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -166,6 +179,8 @@ struct GreenView: View {
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity)
             
             // Underline
@@ -185,6 +200,8 @@ struct GreenView: View {
             .font(.system(size: 17, weight: .regular))
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity)
             .padding(.top, 2)
         }
