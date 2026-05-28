@@ -11,7 +11,6 @@ struct PurposeCheckView: View {
 
     var body: some View {
         ZStack {
-            // Teal background
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 0.35, green: 0.80, blue: 0.75),
@@ -24,50 +23,42 @@ struct PurposeCheckView: View {
             .ignoresSafeArea()
 
             GeometryReader { geo in
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 40) {
-                        Spacer(minLength: 0)
-
+                ScrollView(showsIndicators: true) {
+                    VStack(spacing: 32) {
                         Text(purposeTitle())
-                            .font(.largeTitle)
-                            .bold()
+                            .font(.system(size: 34, weight: .bold))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 24)
                             .opacity(showTitle ? 1 : 0)
                             .animation(.easeIn(duration: 1), value: showTitle)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.75)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.62)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 52)
 
                         Text("Have you been working towards your life's purpose today?")
                             .font(.headline)
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 24)
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
 
-                        HStack(spacing: 30) {
-                            AnswerButton(
-                                label: "Yes",
-                                isSelected: selection == true
-                            ) {
+                        HStack(spacing: 18) {
+                            AnswerButton(label: "Yes", isSelected: selection == true) {
                                 selectAndContinue(result: true)
                             }
 
-                            AnswerButton(
-                                label: "No",
-                                isSelected: selection == false
-                            ) {
+                            AnswerButton(label: "No", isSelected: selection == false) {
                                 selectAndContinue(result: false)
                             }
                         }
-
-                        Spacer(minLength: 0)
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 44)
                     }
-                    .padding()
+                    .padding(.vertical, 18)
                     .frame(maxWidth: .infinity)
-                    // ✅ keeps your layout centered on normal phones, but scrolls on smaller ones
                     .frame(minHeight: geo.size.height)
                 }
             }
