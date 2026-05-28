@@ -31,6 +31,8 @@ struct CommunityTipsView: View {
                         .font(.system(size: 40, weight: .bold))
                         .foregroundColor(.white)
                         .shadow(radius: 5)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .opacity(appeared ? 1 : 0)
                         .animation(.easeInOut(duration: 1.0), value: appeared)
 
@@ -39,6 +41,7 @@ struct CommunityTipsView: View {
                         .font(.title3)
                         .italic()
                         .foregroundColor(Color.white.opacity(0.95))
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .opacity(appeared ? 1 : 0)
                         .animation(.easeInOut(duration: 1.0).delay(0.05), value: appeared)
@@ -64,11 +67,15 @@ struct CommunityTipsView: View {
                         Text("Community matters!")
                             .font(.custom("Avenir", size: 22))
                             .foregroundColor(.white)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding(.top, 10)
                         
                         Text("It supports nervous system regulation, lowers stress and anxiety, and reinforces a sense of identity and self-worth.")
                             .font(.custom("Avenir", size: 18))
                             .foregroundColor(.white)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding(.top, 10)
                         
                         Spacer()
@@ -89,6 +96,7 @@ struct CommunityTipsView: View {
 
                 // ✅ Keeps title sitting comfortably under back arrow
                 .padding(.top, 56)
+                .padding(.bottom, 80)
             }
 
             // 🔙 Back button
@@ -134,15 +142,20 @@ struct CommunityTipsView: View {
             Button(action: {
                 withAnimation { isExpanded.wrappedValue.toggle() }
             }) {
-                HStack(spacing: 8) {
+                HStack(alignment: .top, spacing: 8) {
                     Image(systemName: isExpanded.wrappedValue ? "chevron.down.circle.fill" : "chevron.right.circle.fill")
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundColor(.white)
+                        .padding(.top, 4)
 
                     Text(title)
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -155,6 +168,8 @@ struct CommunityTipsView: View {
                             .font(.custom("Avenir", size: 18))
                             .foregroundColor(.white.opacity(0.9))
                             .multilineTextAlignment(.leading)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
@@ -170,15 +185,20 @@ struct CommunityTipsView: View {
             Button(action: {
                 withAnimation { isExpanded.wrappedValue.toggle() }
             }) {
-                HStack(spacing: 8) {
+                HStack(alignment: .top, spacing: 8) {
                     Image(systemName: isExpanded.wrappedValue ? "chevron.down.circle.fill" : "chevron.right.circle.fill")
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundColor(.white)
+                        .padding(.top, 4)
 
                     Text(title)
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -192,6 +212,9 @@ struct CommunityTipsView: View {
                             Text(tip.0).bold().font(.custom("Avenir", size: 18)).foregroundColor(.white) +
                             Text(" - \(tip.1)").font(.custom("Avenir", size: 18)).foregroundColor(.white.opacity(0.9))
                         )
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
