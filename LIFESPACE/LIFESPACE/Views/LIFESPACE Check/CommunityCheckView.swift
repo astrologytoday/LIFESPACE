@@ -16,7 +16,6 @@ struct CommunityCheckView: View {
 
     var body: some View {
         ZStack {
-            // Teal gradient background
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 0.35, green: 0.80, blue: 0.75),
@@ -29,104 +28,69 @@ struct CommunityCheckView: View {
             .ignoresSafeArea()
 
             GeometryReader { geo in
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 40) {
-                        Spacer(minLength: 0)
-
+                ScrollView(showsIndicators: true) {
+                    VStack(spacing: 32) {
                         Text("COMMUNITY")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
+                            .font(.system(size: 36, weight: .bold))
                             .foregroundColor(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                            .padding(.horizontal, 24)
                             .opacity(showTitle ? 1 : 0)
                             .animation(.easeIn(duration: 1), value: showTitle)
+                            .padding(.top, 48)
 
                         VStack(spacing: 30) {
-                            // Q1
                             VStack(spacing: 16) {
                                 Text("Have you engaged with your community in the last 7 days?")
-                                    .font(.title2)
-                                    .fontWeight(.bold)
+                                    .font(.system(size: 22, weight: .bold))
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
-                                    .padding(.horizontal)
+                                    .padding(.horizontal, 24)
                                     .lineLimit(nil)
                                     .fixedSize(horizontal: false, vertical: true)
 
-                                HStack(spacing: 30) {
-                                    Button(action: {
+                                HStack(spacing: 18) {
+                                    boolButton(title: "Yes", selected: communityEngaged == true) {
                                         communityEngaged = true
                                         checkAutoAdvance()
-                                    }) {
-                                        Text("Yes")
-                                            .padding(.horizontal, 20)
-                                            .padding(.vertical, 10)
-                                            .background(communityEngaged == true ? Color.white : Color.white.opacity(0.3))
-                                            .foregroundColor(.black)
-                                            .cornerRadius(10)
                                     }
-                                    .buttonStyle(.plain)
 
-                                    Button(action: {
+                                    boolButton(title: "No", selected: communityEngaged == false) {
                                         communityEngaged = false
                                         checkAutoAdvance()
-                                    }) {
-                                        Text("No")
-                                            .padding(.horizontal, 20)
-                                            .padding(.vertical, 10)
-                                            .background(communityEngaged == false ? Color.white : Color.white.opacity(0.3))
-                                            .foregroundColor(.black)
-                                            .cornerRadius(10)
                                     }
-                                    .buttonStyle(.plain)
                                 }
+                                .padding(.horizontal, 24)
                             }
 
-                            // Q2
                             VStack(spacing: 16) {
                                 Text("How are your relationships?")
-                                    .font(.title2)
-                                    .fontWeight(.bold)
+                                    .font(.system(size: 22, weight: .bold))
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
-                                    .padding(.horizontal)
+                                    .padding(.horizontal, 24)
                                     .lineLimit(nil)
                                     .fixedSize(horizontal: false, vertical: true)
 
-                                HStack(spacing: 30) {
-                                    Button(action: {
+                                VStack(spacing: 14) {
+                                    relationshipButton(title: "Mostly Positive", selected: relationshipQuality == .positive) {
                                         relationshipQuality = .positive
                                         checkAutoAdvance()
-                                    }) {
-                                        Text("Mostly Positive")
-                                            .padding(.horizontal, 20)
-                                            .padding(.vertical, 10)
-                                            .background(relationshipQuality == .positive ? Color.white : Color.white.opacity(0.3))
-                                            .foregroundColor(.black)
-                                            .cornerRadius(10)
                                     }
-                                    .buttonStyle(.plain)
 
-                                    Button(action: {
+                                    relationshipButton(title: "Mostly Negative", selected: relationshipQuality == .negative) {
                                         relationshipQuality = .negative
                                         checkAutoAdvance()
-                                    }) {
-                                        Text("Mostly Negative")
-                                            .padding(.horizontal, 20)
-                                            .padding(.vertical, 10)
-                                            .background(relationshipQuality == .negative ? Color.white : Color.white.opacity(0.3))
-                                            .foregroundColor(.black)
-                                            .cornerRadius(10)
                                     }
-                                    .buttonStyle(.plain)
                                 }
+                                .padding(.horizontal, 24)
                             }
                         }
-
-                        Spacer(minLength: 0)
+                        .padding(.bottom, 44)
                     }
-                    .padding()
+                    .padding(.vertical, 18)
                     .frame(maxWidth: .infinity)
-                    // ✅ keeps your layout centered on normal phones, but scrolls on smaller ones
                     .frame(minHeight: geo.size.height)
                 }
             }
@@ -136,6 +100,35 @@ struct CommunityCheckView: View {
                 showTitle = true
             }
         }
+    }
+
+    private func boolButton(title: String, selected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.headline)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .frame(maxWidth: .infinity, minHeight: 48)
+                .background(selected ? Color.white : Color.white.opacity(0.3))
+                .foregroundColor(.black)
+                .cornerRadius(12)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func relationshipButton(title: String, selected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.headline)
+                .lineLimit(2)
+                .minimumScaleFactor(0.75)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, minHeight: 50)
+                .background(selected ? Color.white : Color.white.opacity(0.3))
+                .foregroundColor(.black)
+                .cornerRadius(12)
+        }
+        .buttonStyle(.plain)
     }
 
     private func checkAutoAdvance() {
