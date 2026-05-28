@@ -96,7 +96,7 @@ struct ResultsView: View {
                         .padding(.bottom, 110)
                     }
                 }
-                .padding(.top, 10)
+                .padding(.top, 18)
             }
             .coordinateSpace(name: "chartSpace")
             .safeAreaInset(edge: .bottom) {
