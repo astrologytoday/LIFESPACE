@@ -42,98 +42,97 @@ struct SleepHygieneView: View {
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 14) {
+            ScrollView(showsIndicators: true) {
+                VStack(spacing: 14) {
 
-                // Top bar: Back + Info + Home
-                HStack {
-                    Button(action: { navModel.pop() }) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 18, weight: .bold))
+                    // Top bar: Back + Info + Home
+                    HStack {
+                        Button(action: { navModel.pop() }) {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.black.opacity(0.22))
+                                .clipShape(Circle())
+                        }
+
+                        Spacer()
+
+                        HStack(spacing: 10) {
+                            Button(action: { navModel.push("SleepHygieneInfoView") }) {
+                                Image(systemName: "info")
+                                    .font(.system(size: 18, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color.black.opacity(0.22))
+                                    .clipShape(Circle())
+                            }
+
+                            Button(action: { navModel.push("HomeView") }) {
+                                Image(systemName: "house.fill")
+                                    .font(.system(size: 18, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color.black.opacity(0.22))
+                                    .clipShape(Circle())
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 18)
+                    .padding(.top, 14)
+
+                    VStack(spacing: 6) {
+                        Text("Sleep Hygiene Checklist")
+                            .font(.system(size: 31, weight: .heavy))
                             .foregroundColor(.white)
-                            .padding(10)
-                            .background(Color.black.opacity(0.22))
-                            .clipShape(Circle())
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.72)
+                            .allowsTightening(true)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .shadow(radius: 4)
+                            .opacity(appeared ? 1 : 0)
+                            .offset(y: appeared ? 0 : -10)
+                            .animation(.easeInOut(duration: 0.4), value: appeared)
+
+                        Text("Tap to check off what you did tonight.")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.9))
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity, alignment: .center)
                     }
+                    .padding(.horizontal, 18)
 
-                    Spacer()
-
-                    HStack(spacing: 10) {
-                        Button(action: { navModel.push("SleepHygieneInfoView") }) {
-                            Image(systemName: "info")
-                                .font(.system(size: 18, weight: .bold))
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color.black.opacity(0.22))
-                                .clipShape(Circle())
-                        }
-
-                        Button(action: { navModel.push("HomeView") }) {
-                            Image(systemName: "house.fill")
-                                .font(.system(size: 18, weight: .bold))
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color.black.opacity(0.22))
-                                .clipShape(Circle())
+                    VStack(spacing: 10) {
+                        ForEach(items, id: \.self) { item in
+                            Button {
+                                toggle(item)
+                            } label: {
+                                ChecklistRow(
+                                    text: item,
+                                    isChecked: states[item] ?? false
+                                )
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
-                }
-                .padding(.horizontal, 18)
-                .padding(.top, 14)
-
-                // Title
-                // Title
-                VStack(spacing: 6) {
-                    Text("Sleep Hygiene Checklist")
-                        .font(.system(size: 31, weight: .heavy))
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.82)
-                        .allowsTightening(true)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .shadow(radius: 4)
-                        .opacity(appeared ? 1 : 0)
-                        .offset(y: appeared ? 0 : -10)
-                        .animation(.easeInOut(duration: 0.4), value: appeared)
-
-                    Text("Tap to check off what you did tonight.")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(.white.opacity(0.9))
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                }
-                .padding(.horizontal, 18)
-
-                VStack(spacing: 10) {
-                    ForEach(items, id: \.self) { item in
-                        Button {
-                            toggle(item)
-                        } label: {
-                            ChecklistRow(
-                                text: item,
-                                isChecked: states[item] ?? false
+                    .padding(14)
+                    .background(
+                        RoundedRectangle(cornerRadius: 22)
+                            .fill(Color.black.opacity(0.22))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 22)
+                                    .stroke(Color.white.opacity(0.18), lineWidth: 1)
                             )
-                        }
-                        .buttonStyle(.plain)
-                    }
+                    )
+                    .shadow(radius: 14)
+                    .padding(.horizontal, 18)
+                    .padding(.top, 4)
+                    .padding(.bottom, 28)
                 }
-                .padding(14)
-                .background(
-                    RoundedRectangle(cornerRadius: 22)
-                        .fill(Color.black.opacity(0.22))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 22)
-                                .stroke(Color.white.opacity(0.18), lineWidth: 1)
-                        )
-                )
-                .shadow(radius: 14)
-                .padding(.horizontal, 18)
-                .padding(.top, 4)
-
-                Spacer(minLength: 10)
             }
         }
         .onAppear {
@@ -224,7 +223,7 @@ private struct ChecklistRow: View {
     private let checkGreen = Color(red: 0.06, green: 0.30, blue: 0.26)
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(alignment: .top, spacing: 12) {
 
             ZStack {
                 RoundedRectangle(cornerRadius: 6)
@@ -241,6 +240,7 @@ private struct ChecklistRow: View {
                         .foregroundColor(checkGreen)
                 }
             }
+            .padding(.top, 1)
 
             Text(text)
                 .font(.system(size: 16, weight: .semibold))
@@ -249,8 +249,6 @@ private struct ChecklistRow: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .lineLimit(nil)
                 .frame(maxWidth: .infinity, alignment: .leading)
-
-            Spacer()
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 12)
