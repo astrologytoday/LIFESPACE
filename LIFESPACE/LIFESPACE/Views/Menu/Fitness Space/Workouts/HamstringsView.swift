@@ -7,74 +7,83 @@ struct HamstringsView: View {
     @State private var isExiting = false
 
     var body: some View {
-        ZStack {
-            // LIFESPACE Teal Gradient Background
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.35, green: 0.80, blue: 0.75),
-                    Color(red: 0.20, green: 0.65, blue: 0.60),
-                    Color(red: 0.10, green: 0.45, blue: 0.45)
-                ]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+        GeometryReader { geometry in
+            let safeBottom = geometry.safeAreaInsets.bottom
+            let bottomPadding = max(40, safeBottom + 18)
 
-            VStack(spacing: 30) {
-                Text("Choose a Workout")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.top, 60)
+            ZStack {
+                // LIFESPACE Teal Gradient Background
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color(red: 0.35, green: 0.80, blue: 0.75),
+                        Color(red: 0.20, green: 0.65, blue: 0.60),
+                        Color(red: 0.10, green: 0.45, blue: 0.45)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
 
-                VStack(spacing: 20) {
-                    workoutButton("Kettlebell Swing Squats") {
-                        fadeAndNavigate(to: "KettlebellSwingSquatView")
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 30) {
+                        Text("Choose a Workout")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 60)
+
+                        VStack(spacing: 20) {
+                            workoutButton("Kettlebell Swing Squats") {
+                                fadeAndNavigate(to: "KettlebellSwingSquatView")
+                            }
+                            workoutButton("Elevated Squats") {
+                                fadeAndNavigate(to: "ElevatedSquatsView")
+                            }
+                            workoutButton("Reverse Lunge") {
+                                fadeAndNavigate(to: "ReverseLungeView")
+                            }
+                            workoutButton("Squats") {
+                                fadeAndNavigate(to: "SquatsView")
+                            }
+                            workoutButton("Narrow Lunge + Squat") {
+                                fadeAndNavigate(to: "NarrowLungeSquatView")
+                            }
+                            workoutButton("Goblet Squats") {
+                                fadeAndNavigate(to: "GobletSquatsView")
+                            }
+                            workoutButton("Glute Bridge Chest Press") {
+                                fadeAndNavigate(to: "GluteBridgeChestPressView")
+                            }
+                            workoutButton("Lying Tuck Crunches") {
+                                fadeAndNavigate(to: "LyingTuckCrunchView")
+                            }
+                            workoutButton("Criss Cross Leg Raise") {
+                                fadeAndNavigate(to: "CrissCrossLegRaiseView")
+                            }
+                        }
+
+                        Button(action: {
+                            fadeAndNavigate(to: "FitnessSpaceView")
+                        }) {
+                            Image(systemName: "arrow.left")
+                                .resizable()
+                                .frame(width: 30, height: 20)
+                                .foregroundColor(.white)
+                                .padding()
+                        }
+                        .padding(.bottom, bottomPadding)
                     }
-                    workoutButton("Elevated Squats") {
-                        fadeAndNavigate(to: "ElevatedSquatsView")
-                    }
-                    workoutButton("Reverse Lunge") {
-                        fadeAndNavigate(to: "ReverseLungeView")
-                    }
-                    workoutButton("Squats") {
-                        fadeAndNavigate(to: "SquatsView")
-                    }
-                    workoutButton("Narrow Lunge + Squat") {
-                        fadeAndNavigate(to: "NarrowLungeSquatView")
-                    }
-                    workoutButton("Goblet Squats") {
-                        fadeAndNavigate(to: "GobletSquatsView")
-                    }
-                    workoutButton("Glute Bridge Chest Press") {
-                        fadeAndNavigate(to: "GluteBridgeChestPressView")
-                    }
-                    workoutButton("Lying Tuck Crunches") {
-                        fadeAndNavigate(to: "LyingTuckCrunchView")
-                    }
-                    workoutButton("Criss Cross Leg Raise") {
-                        fadeAndNavigate(to: "CrissCrossLegRaiseView")
-                    }
+                    .padding(.horizontal, 30)
+                    .frame(maxWidth: .infinity)
                 }
-
-                Spacer()
-
-                Button(action: {
-                    fadeAndNavigate(to: "FitnessSpaceView")
-                }) {
-                    Image(systemName: "arrow.left")
-                        .resizable()
-                        .frame(width: 30, height: 20)
-                        .foregroundColor(.white)
-                        .padding()
-                }
-                .padding(.bottom, 40)
-            }
-            .padding(.horizontal, 30)
-            .opacity(isVisible ? 1 : 0)
-            .onAppear {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    isVisible = true
+                .opacity(isVisible ? 1 : 0)
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isVisible = true
+                    }
                 }
             }
         }
@@ -86,6 +95,9 @@ struct HamstringsView: View {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(
@@ -110,8 +122,3 @@ struct HamstringsView: View {
         }
     }
 }
-
-
-
-
-
