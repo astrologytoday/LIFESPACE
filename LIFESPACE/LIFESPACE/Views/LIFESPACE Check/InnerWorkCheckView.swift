@@ -10,7 +10,6 @@ struct InnerWorkCheckView: View {
 
     var body: some View {
         ZStack {
-            // Teal gradient background
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 0.35, green: 0.80, blue: 0.75),
@@ -23,87 +22,82 @@ struct InnerWorkCheckView: View {
             .ignoresSafeArea()
 
             GeometryReader { geo in
-                // Bubble grid columns (keeps your original vibe)
-                let columns = [GridItem(.adaptive(minimum: 120), spacing: 20)]
+                let columns = [GridItem(.adaptive(minimum: 120), spacing: 16)]
 
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 30) {
-                        Spacer(minLength: 0)
-
+                ScrollView(showsIndicators: true) {
+                    VStack(spacing: 24) {
                         Text("Have you been practicing your Inner Work?")
-                            .font(.title)
-                            .fontWeight(.bold)
+                            .font(.system(size: 30, weight: .bold))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
-                            .lineLimit(nil)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.7)
                             .fixedSize(horizontal: false, vertical: true)
                             .layoutPriority(1)
-                            .padding(.horizontal, 18)
+                            .padding(.horizontal, 22)
+                            .padding(.top, 34)
 
-                        // Grid scroll area: constrained so button stays visible,
-                        // but still scrolls on smaller devices.
-                        ScrollView(showsIndicators: false) {
-                            LazyVGrid(columns: columns, spacing: 20) {
-                                ForEach(userProfile.innerWorkOptions, id: \.self) { option in
-                                    Button {
-                                        if selectedOptions.contains(option) {
-                                            selectedOptions.remove(option)
-                                        } else {
-                                            selectedOptions.insert(option)
-                                        }
-                                    } label: {
-                                        Text(option)
-                                            .font(.custom("Avenir", size: 16))
-                                            .foregroundColor(.white)
-                                            .lineLimit(1)                 // prevents ugly wrapping
-                                            .minimumScaleFactor(0.90)
-                                            .allowsTightening(true)
-                                            .multilineTextAlignment(.center)
-                                            .padding()
-                                            .frame(maxWidth: .infinity, minHeight: 44)
-                                            .background(
-                                                selectedOptions.contains(option)
-                                                ? Color.white.opacity(0.3)
-                                                : Color.white.opacity(0.15)
-                                            )
-                                            .clipShape(Capsule())
-                                            .overlay(
-                                                Capsule()
-                                                    .stroke(Color.white.opacity(0.5), lineWidth: 1)
-                                            )
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(userProfile.innerWorkOptions, id: \.self) { option in
+                                Button {
+                                    if selectedOptions.contains(option) {
+                                        selectedOptions.remove(option)
+                                    } else {
+                                        selectedOptions.insert(option)
                                     }
-                                    .buttonStyle(.plain)
+                                } label: {
+                                    Text(option)
+                                        .font(.custom("Avenir", size: 15))
+                                        .foregroundColor(.white)
+                                        .lineLimit(2)
+                                        .minimumScaleFactor(0.72)
+                                        .allowsTightening(true)
+                                        .multilineTextAlignment(.center)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .padding(.vertical, 11)
+                                        .padding(.horizontal, 10)
+                                        .frame(maxWidth: .infinity, minHeight: 48)
+                                        .background(
+                                            selectedOptions.contains(option)
+                                            ? Color.white.opacity(0.3)
+                                            : Color.white.opacity(0.15)
+                                        )
+                                        .clipShape(Capsule())
+                                        .overlay(
+                                            Capsule()
+                                                .stroke(Color.white.opacity(0.5), lineWidth: 1)
+                                        )
                                 }
+                                .buttonStyle(.plain)
                             }
-                            .padding(.horizontal, 18)
-                            .padding(.vertical, 6)
                         }
-                        .frame(maxHeight: max(220, geo.size.height * 0.42))
-
-                        Button(action: nextTapped) {
-                            Text(didLogAndAdvance ? "Next..." : "Next")
-                                .fontWeight(.bold)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.white)
-                                .foregroundColor(.black)
-                                .cornerRadius(12)
-                                .padding(.horizontal, 18)
-                                .padding(.bottom, 8)
-                        }
-                        .buttonStyle(.plain)
-                        .disabled(didLogAndAdvance)
-                        .opacity(didLogAndAdvance ? 0.6 : 1)
-
-                        Spacer(minLength: 0)
+                        .padding(.horizontal, 18)
+                        .padding(.bottom, 110)
                     }
-                    .padding(.vertical, 18)
                     .frame(maxWidth: .infinity)
-                    // ✅ This is what keeps your whole layout centered on normal devices,
-                    // but still scrollable when needed.
                     .frame(minHeight: geo.size.height)
                 }
             }
+        }
+        .safeAreaInset(edge: .bottom) {
+            Button(action: nextTapped) {
+                Text(didLogAndAdvance ? "Next..." : "Next")
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .padding()
+                    .frame(maxWidth: .infinity, minHeight: 52)
+                    .background(Color.white)
+                    .foregroundColor(.black)
+                    .cornerRadius(12)
+            }
+            .buttonStyle(.plain)
+            .disabled(didLogAndAdvance)
+            .opacity(didLogAndAdvance ? 0.6 : 1)
+            .padding(.horizontal, 18)
+            .padding(.top, 10)
+            .padding(.bottom, 8)
+            .background(.ultraThinMaterial.opacity(0.20))
         }
     }
 
