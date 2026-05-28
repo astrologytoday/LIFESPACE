@@ -12,7 +12,6 @@ struct ActivityCheckView: View {
 
     var body: some View {
         ZStack {
-            // Teal background
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 0.35, green: 0.80, blue: 0.75),
@@ -25,18 +24,17 @@ struct ActivityCheckView: View {
             .ignoresSafeArea()
 
             GeometryReader { geo in
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 40) {
-                        Spacer(minLength: 0)
-
+                ScrollView(showsIndicators: true) {
+                    VStack(spacing: 28) {
                         Text("ACTIVITY")
-                            .font(.largeTitle)
-                            .bold()
+                            .font(.system(size: 36, weight: .bold))
                             .foregroundColor(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
                             .opacity(showTitle ? 1 : 0)
                             .animation(.easeIn(duration: 1), value: showTitle)
+                            .padding(.top, 48)
 
-                        // Sleep Section
                         VStack(spacing: 15) {
                             Text("How long did you sleep last night?")
                                 .foregroundColor(.white)
@@ -44,6 +42,7 @@ struct ActivityCheckView: View {
                                 .multilineTextAlignment(.center)
                                 .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
+                                .padding(.horizontal, 24)
 
                             Text(sleepHoursLabel)
                                 .foregroundColor(.white)
@@ -51,6 +50,7 @@ struct ActivityCheckView: View {
                                 .multilineTextAlignment(.center)
                                 .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
+                                .padding(.horizontal, 24)
 
                             Slider(
                                 value: Binding(
@@ -64,17 +64,17 @@ struct ActivityCheckView: View {
                                 step: 0.5
                             )
                             .accentColor(.white)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 28)
                         }
 
-                        // Activity Section
-                        VStack(spacing: 12) {
+                        VStack(spacing: 14) {
                             Text("Have you made time for any of these recently?")
                                 .foregroundColor(.white)
                                 .font(.headline)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
+                                .padding(.horizontal, 24)
 
                             Text(activityListDisplay())
                                 .foregroundColor(.white)
@@ -82,32 +82,25 @@ struct ActivityCheckView: View {
                                 .multilineTextAlignment(.center)
                                 .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
-                                .padding(.horizontal)
+                                .padding(.horizontal, 24)
 
-                            HStack(spacing: 30) {
-                                AnswerButton(
-                                    label: "Yes",
-                                    isSelected: didActivity == true
-                                ) {
+                            HStack(spacing: 18) {
+                                AnswerButton(label: "Yes", isSelected: didActivity == true) {
                                     didActivity = true
                                     checkCompletion()
                                 }
 
-                                AnswerButton(
-                                    label: "No",
-                                    isSelected: didActivity == false
-                                ) {
+                                AnswerButton(label: "No", isSelected: didActivity == false) {
                                     didActivity = false
                                     checkCompletion()
                                 }
                             }
+                            .padding(.horizontal, 24)
                         }
-
-                        Spacer(minLength: 0)
+                        .padding(.bottom, 44)
                     }
-                    .padding()
+                    .padding(.vertical, 18)
                     .frame(maxWidth: .infinity)
-                    // ✅ keeps content centered on normal phones, but scrolls if needed on small devices
                     .frame(minHeight: geo.size.height)
                 }
             }
