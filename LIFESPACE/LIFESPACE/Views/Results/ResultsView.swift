@@ -46,13 +46,14 @@ struct ResultsView: View {
     ]
 
     let moduleLabels = Array("LIFESPACE")
-
     private let darkTeal = Color(red: 0.05, green: 0.35, blue: 0.38)
 
     var body: some View {
         GeometryReader { geometry in
             let screenWidth = geometry.size.width
             let screenHeight = geometry.size.height
+            let maxBarHeight = screenHeight * 0.30
+            let lowerMinHeight = max(360, screenHeight * 0.46)
 
             ZStack {
                 LinearGradient(
@@ -67,251 +68,33 @@ struct ResultsView: View {
                 .ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    let maxBarHeight = screenHeight * 0.30
-
-                    ZStack {
-                        if let index = selectedBarIndex {
-                            let module = modules[index]
-                            let score = lifespaceLogModel.score(for: module)
-
-                            VStack(spacing: 2) {
-                                Text(title(for: module))
-                                    .font(.caption)
-                                    .bold()
-                                    .foregroundColor(darkTeal)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.7)
-
-                                Text("\(Int(score.rounded()))%")
-                                    .font(.caption)
-                                    .bold()
-                                    .foregroundColor(darkTeal)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.7)
-                            }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(Color.white)
-                            .clipShape(Capsule())
-                            .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 2)
-                            .offset(x: bubbleXOffset(for: index, totalWidth: screenWidth))
-                        }
-                    }
-                    .frame(height: 40)
-                    .padding(.top, 10)
-
-                    ZStack(alignment: .bottomLeading) {
-                        VStack(spacing: 0) {
-                            ForEach([100, 75, 50, 25, 0], id: \.self) { tick in
-                                HStack(spacing: 4) {
-                                    Text("\(tick)")
-                                        .font(.caption2)
-                                        .foregroundColor(.white.opacity(0.9))
-                                        .frame(width: 30, alignment: .trailing)
-
-                                    Rectangle()
-                                        .fill(Color.white.opacity(tick == 0 ? 0.55 : 0.35))
-                                        .frame(height: tick == 0 ? 2 : 1)
-                                }
-                                .frame(height: maxBarHeight / 4)
-                            }
-                        }
+                    scoreBubble(screenWidth: screenWidth)
+                        .frame(height: 40)
                         .padding(.top, 10)
-                        .padding(.bottom, 18)
 
-                        VStack(spacing: 0) {
-                            let isIPad = UIDevice.current.userInterfaceIdiom == .pad
-                            let baseBarWidth = max(18, min(24, screenWidth * 0.055))
-                            let barWidth = isIPad ? baseBarWidth * 3 : baseBarWidth
-                            let circleSize = max(26, min(30, screenWidth * 0.068))
+                    chartArea(screenWidth: screenWidth, maxBarHeight: maxBarHeight)
+                        .frame(height: screenHeight * 0.34)
 
-                            HStack(alignment: .bottom, spacing: 0) {
-                                ForEach(modules.indices, id: \.self) { i in
-                                    let module = modules[i]
-                                    let height = barHeight(for: module, maxHeight: maxBarHeight)
-                                    let phase = (barAnimationPhase + i) % numPhases
-
-                                    VStack(spacing: 8) {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(
-                                                LinearGradient(
-                                                    gradient: Gradient(colors: barGradients[phase]),
-                                                    startPoint: .bottom,
-                                                    endPoint: .top
-                                                )
-                                            )
-                                            .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 4)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 8)
-                                                    .stroke(.white.opacity(0.25), lineWidth: 1)
-                                            )
-                                            .frame(width: barWidth, height: showBars ? height : 0)
-                                            .background(
-                                                GeometryReader { geo in
-                                                    Color.clear.onAppear {
-                                                        barCenters[i] = geo.frame(in: .named("chartSpace")).midX
-                                                    }
-                                                }
-                                            )
-                                            .onTapGesture {
-                                                withAnimation(.easeInOut(duration: 0.25)) {
-                                                    selectedBarIndex = selectedBarIndex == i ? nil : i
-                                                }
-                                            }
-
-                                        Circle()
-                                            .fill(Color.white.opacity(0.95))
-                                            .frame(width: circleSize, height: circleSize)
-                                            .overlay(
-                                                Text(String(moduleLabels[i]))
-                                                    .font(.caption2)
-                                                    .bold()
-                                                    .foregroundColor(darkTeal)
-                                            )
-                                            .onTapGesture {
-                                                withAnimation(.easeInOut(duration: 0.25)) {
-                                                    selectedBarIndex = selectedBarIndex == i ? nil : i
-                                                }
-                                            }
-                                    }
-
-                                    if i != modules.indices.last {
-                                        Spacer(minLength: 0)
-                                    }
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(.leading, 50)
-                            .padding(.trailing, 22)
-                            .padding(.bottom, 18)
+                    if showText {
+                        ScrollView(showsIndicators: true) {
+                            prescriptionContent(screenWidth: screenWidth)
+                                .padding(20)
+                                .frame(maxWidth: .infinity, minHeight: lowerMinHeight, alignment: .top)
+                                .background(Color.white.opacity(0.13))
+                                .cornerRadius(28)
+                                .padding(.horizontal, 16)
+                                .padding(.top, 12)
+                                .padding(.bottom, 110)
                         }
-                    }
-                    .frame(height: screenHeight * 0.34)
-
-                    Spacer(minLength: 10)
-
-                    ZStack(alignment: .bottomTrailing) {
-                        if showText {
-                            ScrollView(showsIndicators: true) {
-                                VStack(alignment: .leading, spacing: 18) {
-                                    if allModulesAbove80() {
-                                        ZStack {
-                                            FireworksView()
-                                                .frame(height: 220)
-                                                .cornerRadius(18)
-
-                                            Text("Your LIFESPACE is looking great!")
-                                                .font(.system(size: 32, weight: .bold))
-                                                .foregroundColor(.white)
-                                                .multilineTextAlignment(.center)
-                                                .lineLimit(3)
-                                                .minimumScaleFactor(0.7)
-                                                .frame(maxWidth: .infinity)
-                                                .shadow(radius: 10)
-                                                .scaleEffect(pulse ? 1.03 : 0.97)
-                                                .animation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true), value: pulse)
-                                        }
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical, 8)
-                                        .onAppear { pulse = true }
-
-                                        Text("Keep doing what you're doing. You're maintaining a strong mind–body–soul balance.")
-                                            .font(.custom("Avenir", size: 16))
-                                            .foregroundColor(.white)
-                                            .multilineTextAlignment(.center)
-                                            .lineLimit(nil)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                            .frame(maxWidth: .infinity)
-                                            .padding(.top, -50)
-                                    } else {
-                                        let recs = recommendedModules()
-
-                                        Text("LIFESPACE Prescription")
-                                            .font(.custom("AvenirNext-Heavy", size: min(30, screenWidth * 0.073)))
-                                            .textCase(.uppercase)
-                                            .tracking(1.1)
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.55)
-                                            .allowsTightening(true)
-                                            .foregroundColor(.clear)
-                                            .overlay(
-                                                LinearGradient(
-                                                    gradient: Gradient(colors: [
-                                                        Color.white.opacity(0.96),
-                                                        Color(red: 0.40, green: 1.00, blue: 1.00),
-                                                        Color(red: 0.92, green: 0.76, blue: 0.22)
-                                                    ]),
-                                                    startPoint: .leading,
-                                                    endPoint: .trailing
-                                                )
-                                                .mask(
-                                                    Text("LIFESPACE Prescription")
-                                                        .font(.custom("AvenirNext-Heavy", size: min(30, screenWidth * 0.073)))
-                                                        .textCase(.uppercase)
-                                                        .tracking(1.1)
-                                                        .lineLimit(1)
-                                                        .minimumScaleFactor(0.55)
-                                                        .allowsTightening(true)
-                                                )
-                                            )
-                                            .padding(.vertical, 10)
-                                            .padding(.horizontal, 16)
-                                            .frame(maxWidth: .infinity, alignment: .center)
-                                            .background(
-                                                Capsule()
-                                                    .fill(Color.white.opacity(0.12))
-                                                    .overlay(Capsule().stroke(Color.white.opacity(0.35), lineWidth: 1))
-                                            )
-                                            .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 6)
-                                            .padding(.horizontal, 8)
-
-                                        if recs.isEmpty {
-                                            Text("Everything looks good today! Keep reinforcing the habits that are working.")
-                                                .font(.custom("Avenir", size: 16))
-                                                .foregroundColor(.white)
-                                                .multilineTextAlignment(.center)
-                                                .lineLimit(nil)
-                                                .fixedSize(horizontal: false, vertical: true)
-                                                .frame(maxWidth: .infinity, alignment: .center)
-                                                .padding(.top, 12)
-                                        } else {
-                                            Text("Focus on these top priorities in the following week.")
-                                                .font(.custom("Avenir", size: min(17, screenWidth * 0.043)))
-                                                .foregroundColor(.white)
-                                                .multilineTextAlignment(.center)
-                                                .lineLimit(nil)
-                                                .fixedSize(horizontal: false, vertical: true)
-                                                .frame(maxWidth: .infinity, alignment: .center)
-
-                                            ForEach(Array(recs.prefix(3).enumerated()), id: \.offset) { idx, module in
-                                                prescriptionBubble(index: idx + 1, module: module, screenWidth: screenWidth)
-                                            }
-                                        }
-                                    }
-                                }
-                                .padding()
-                                .padding(.bottom, 96)
-                                .frame(maxWidth: .infinity, alignment: .topLeading)
-                            }
-                        } else {
-                            VStack {
-                                Spacer()
-                                HStack {
-                                    Spacer()
-                                    TypingDotsView()
-                                    Spacer()
-                                }
-                                .padding(.bottom, 100)
-                                Spacer()
-                            }
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
+                        VStack {
+                            Spacer()
+                            TypingDotsView()
+                            Spacer()
                         }
+                        .frame(maxWidth: .infinity, minHeight: lowerMinHeight)
+                        .padding(.bottom, 110)
                     }
-                    .frame(maxHeight: .infinity)
-                    .background(Color.white.opacity(0.10))
-                    .cornerRadius(14)
-                    .padding(.horizontal)
-                    .padding(.bottom, 96)
                 }
                 .padding(.top, 10)
             }
@@ -331,11 +114,235 @@ struct ResultsView: View {
                         barAnimationPhase = (barAnimationPhase + 1) % numPhases
                     }
                 }
+
                 lifespaceSyncModel.uploadSharedLifespaceData(
                     lifespaceLogModel: lifespaceLogModel,
                     userProfile: userProfile
                 )
             }
+        }
+    }
+
+    @ViewBuilder
+    private func scoreBubble(screenWidth: CGFloat) -> some View {
+        ZStack {
+            if let index = selectedBarIndex {
+                let module = modules[index]
+                let score = lifespaceLogModel.score(for: module)
+
+                VStack(spacing: 2) {
+                    Text(title(for: module))
+                        .font(.caption)
+                        .bold()
+                        .foregroundColor(darkTeal)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+
+                    Text("\(Int(score.rounded()))%")
+                        .font(.caption)
+                        .bold()
+                        .foregroundColor(darkTeal)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Color.white)
+                .clipShape(Capsule())
+                .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 2)
+                .offset(x: bubbleXOffset(for: index, totalWidth: screenWidth))
+            }
+        }
+    }
+
+    private func chartArea(screenWidth: CGFloat, maxBarHeight: CGFloat) -> some View {
+        ZStack(alignment: .bottomLeading) {
+            VStack(spacing: 0) {
+                ForEach([100, 75, 50, 25, 0], id: \.self) { tick in
+                    HStack(spacing: 4) {
+                        Text("\(tick)")
+                            .font(.caption2)
+                            .foregroundColor(.white.opacity(0.9))
+                            .frame(width: 30, alignment: .trailing)
+
+                        Rectangle()
+                            .fill(Color.white.opacity(tick == 0 ? 0.55 : 0.35))
+                            .frame(height: tick == 0 ? 2 : 1)
+                    }
+                    .frame(height: maxBarHeight / 4)
+                }
+            }
+            .padding(.top, 10)
+            .padding(.bottom, 18)
+
+            VStack(spacing: 0) {
+                let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+                let baseBarWidth = max(18, min(24, screenWidth * 0.055))
+                let barWidth = isIPad ? baseBarWidth * 3 : baseBarWidth
+                let circleSize = max(26, min(30, screenWidth * 0.068))
+
+                HStack(alignment: .bottom, spacing: 0) {
+                    ForEach(modules.indices, id: \.self) { i in
+                        let module = modules[i]
+                        let height = barHeight(for: module, maxHeight: maxBarHeight)
+                        let phase = (barAnimationPhase + i) % numPhases
+
+                        VStack(spacing: 8) {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: barGradients[phase]),
+                                        startPoint: .bottom,
+                                        endPoint: .top
+                                    )
+                                )
+                                .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 4)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(.white.opacity(0.25), lineWidth: 1)
+                                )
+                                .frame(width: barWidth, height: showBars ? height : 0)
+                                .background(
+                                    GeometryReader { geo in
+                                        Color.clear.onAppear {
+                                            barCenters[i] = geo.frame(in: .named("chartSpace")).midX
+                                        }
+                                    }
+                                )
+                                .onTapGesture {
+                                    withAnimation(.easeInOut(duration: 0.25)) {
+                                        selectedBarIndex = selectedBarIndex == i ? nil : i
+                                    }
+                                }
+
+                            Circle()
+                                .fill(Color.white.opacity(0.95))
+                                .frame(width: circleSize, height: circleSize)
+                                .overlay(
+                                    Text(String(moduleLabels[i]))
+                                        .font(.caption2)
+                                        .bold()
+                                        .foregroundColor(darkTeal)
+                                )
+                                .onTapGesture {
+                                    withAnimation(.easeInOut(duration: 0.25)) {
+                                        selectedBarIndex = selectedBarIndex == i ? nil : i
+                                    }
+                                }
+                        }
+
+                        if i != modules.indices.last {
+                            Spacer(minLength: 0)
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.leading, 50)
+                .padding(.trailing, 22)
+                .padding(.bottom, 18)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func prescriptionContent(screenWidth: CGFloat) -> some View {
+        if allModulesAbove80() {
+            VStack(spacing: 18) {
+                ZStack {
+                    FireworksView()
+                        .frame(height: 220)
+                        .cornerRadius(18)
+
+                    Text("Your LIFESPACE is looking great!")
+                        .font(.system(size: 32, weight: .bold))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.7)
+                        .frame(maxWidth: .infinity)
+                        .shadow(radius: 10)
+                        .scaleEffect(pulse ? 1.03 : 0.97)
+                        .animation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true), value: pulse)
+                }
+                .frame(maxWidth: .infinity)
+                .onAppear { pulse = true }
+
+                Text("Keep doing what you're doing. You're maintaining a strong mind–body–soul balance.")
+                    .font(.custom("Avenir", size: 16))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity)
+            }
+        } else {
+            let recs = recommendedModules()
+
+            VStack(alignment: .leading, spacing: 22) {
+                Text("LIFESPACE Prescription")
+                    .font(.custom("AvenirNext-Heavy", size: min(30, screenWidth * 0.073)))
+                    .textCase(.uppercase)
+                    .tracking(1.1)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.55)
+                    .allowsTightening(true)
+                    .foregroundColor(.clear)
+                    .overlay(
+                        LinearGradient(
+                            gradient: Gradient(colors: [
+                                Color.white.opacity(0.96),
+                                Color(red: 0.40, green: 1.00, blue: 1.00),
+                                Color(red: 0.92, green: 0.76, blue: 0.22)
+                            ]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .mask(
+                            Text("LIFESPACE Prescription")
+                                .font(.custom("AvenirNext-Heavy", size: min(30, screenWidth * 0.073)))
+                                .textCase(.uppercase)
+                                .tracking(1.1)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.55)
+                                .allowsTightening(true)
+                        )
+                    )
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 16)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .background(
+                        Capsule()
+                            .fill(Color.white.opacity(0.12))
+                            .overlay(Capsule().stroke(Color.white.opacity(0.35), lineWidth: 1))
+                    )
+                    .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 6)
+
+                if recs.isEmpty {
+                    Text("Everything looks good today! Keep reinforcing the habits that are working.")
+                        .font(.custom("Avenir", size: 16))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                } else {
+                    Text("Focus on these top priorities in the following week.")
+                        .font(.custom("Avenir", size: min(23, screenWidth * 0.055)))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 12)
+
+                    ForEach(Array(recs.prefix(3).enumerated()), id: \.offset) { idx, module in
+                        prescriptionBubble(index: idx + 1, module: module, screenWidth: screenWidth)
+                    }
+                }
+
+                Spacer(minLength: 0)
+            }
+            .frame(maxWidth: .infinity, alignment: .topLeading)
         }
     }
 
@@ -352,7 +359,7 @@ struct ResultsView: View {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity, minHeight: 52)
-                .background(Color.white.opacity(0.20))
+                .background(Color.white.opacity(0.22))
                 .cornerRadius(14)
             }
 
@@ -367,14 +374,14 @@ struct ResultsView: View {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity, minHeight: 52)
-                .background(Color.white.opacity(0.20))
+                .background(Color.white.opacity(0.22))
                 .cornerRadius(14)
             }
         }
         .padding(.horizontal, 16)
         .padding(.top, 10)
         .padding(.bottom, 8)
-        .background(.ultraThinMaterial.opacity(0.25))
+        .background(Color(red: 0.08, green: 0.42, blue: 0.42).opacity(0.72))
     }
 
     private func bubbleXOffset(for index: Int, totalWidth: CGFloat) -> CGFloat {
@@ -431,25 +438,27 @@ struct ResultsView: View {
             Text("\(index).")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.white)
-                .padding(10)
+                .frame(width: 54, height: 54)
                 .background(Color.white.opacity(0.20))
                 .clipShape(Circle())
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(title(for: module))
-                    .font(.headline)
+                    .font(.system(size: min(22, screenWidth * 0.055), weight: .bold))
                     .foregroundColor(.white)
                     .lineLimit(2)
                     .minimumScaleFactor(0.75)
 
                 Text(description(for: module))
-                    .font(.custom("Avenir", size: min(16, screenWidth * 0.04)))
+                    .font(.custom("Avenir", size: min(20, screenWidth * 0.048)))
                     .foregroundColor(.white)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.trailing, 12)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 6)
     }
 }
 
