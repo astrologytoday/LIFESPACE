@@ -1,0 +1,10 @@
+import Foundation
+
+struct JournalEntry: Identifiable, Codable, Equatable {
+    let id: UUID
+    let date: String // Format: "MM/DD"
+    var title: String
+    var content: String
+}
+
+

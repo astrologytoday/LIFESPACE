@@ -1,0 +1,711 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9C26F3332EE36D29008F84E5 /* CalmWaves.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9C26F3302EE36D29008F84E5 /* CalmWaves.mp3 */; };
+		9C26F3342EE36D29008F84E5 /* DeepFocus.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9C26F3312EE36D29008F84E5 /* DeepFocus.mp3 */; };
+		9C26F3352EE36D29008F84E5 /* ForestChimes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9C26F3322EE36D29008F84E5 /* ForestChimes.mp3 */; };
+		9C5677F42EFB530D00417DF6 /* LIFESPACEGrand.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 9C5677F32EFB530D00417DF6 /* LIFESPACEGrand.sf2 */; };
+		9C56824F2F057D8A00417DF6 /* 432Hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9C56824C2F057D8A00417DF6 /* 432Hz.mp3 */; };
+		9C5682502F057D8A00417DF6 /* 963Hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9C56824E2F057D8A00417DF6 /* 963Hz.mp3 */; };
+		9C5682512F057D8A00417DF6 /* 528Hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9C56824D2F057D8A00417DF6 /* 528Hz.mp3 */; };
+		9C62793B2ECD488F007A40B2 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9C62793A2ECD488F007A40B2 /* FirebaseAnalytics */; };
+		9C62793D2ECD488F007A40B2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9C62793C2ECD488F007A40B2 /* FirebaseAuth */; };
+		9C62793F2ECD488F007A40B2 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9C62793E2ECD488F007A40B2 /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9CACCB402E1FD9D800948C26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CACCB262E1FD9D700948C26 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9CACCB2D2E1FD9D700948C26;
+			remoteInfo = LIFESPACE;
+		};
+		9CACCB4A2E1FD9D800948C26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9CACCB262E1FD9D700948C26 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9CACCB2D2E1FD9D700948C26;
+			remoteInfo = LIFESPACE;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9C26F3302EE36D29008F84E5 /* CalmWaves.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CalmWaves.mp3; sourceTree = "<group>"; };
+		9C26F3312EE36D29008F84E5 /* DeepFocus.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DeepFocus.mp3; sourceTree = "<group>"; };
+		9C26F3322EE36D29008F84E5 /* ForestChimes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ForestChimes.mp3; sourceTree = "<group>"; };
+		9C5677F32EFB530D00417DF6 /* LIFESPACEGrand.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LIFESPACEGrand.sf2; sourceTree = "<group>"; };
+		9C56824C2F057D8A00417DF6 /* 432Hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 432Hz.mp3; sourceTree = "<group>"; };
+		9C56824D2F057D8A00417DF6 /* 528Hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 528Hz.mp3; sourceTree = "<group>"; };
+		9C56824E2F057D8A00417DF6 /* 963Hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 963Hz.mp3; sourceTree = "<group>"; };
+		9CACCB2E2E1FD9D700948C26 /* LIFESPACE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LIFESPACE.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CACCB3F2E1FD9D800948C26 /* LIFESPACETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LIFESPACETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CACCB492E1FD9D800948C26 /* LIFESPACEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LIFESPACEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9CBD1A262F52645900B92FF3 /* Exceptions for "LIFESPACE" folder in "LIFESPACE" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 9CACCB2D2E1FD9D700948C26 /* LIFESPACE */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		9CACCB302E1FD9D700948C26 /* LIFESPACE */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9CBD1A262F52645900B92FF3 /* Exceptions for "LIFESPACE" folder in "LIFESPACE" target */,
+			);
+			path = LIFESPACE;
+			sourceTree = "<group>";
+		};
+		9CACCB422E1FD9D800948C26 /* LIFESPACETests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LIFESPACETests;
+			sourceTree = "<group>";
+		};
+		9CACCB4C2E1FD9D800948C26 /* LIFESPACEUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LIFESPACEUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9CACCB2B2E1FD9D700948C26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C62793B2ECD488F007A40B2 /* FirebaseAnalytics in Frameworks */,
+				9C62793D2ECD488F007A40B2 /* FirebaseAuth in Frameworks */,
+				9C62793F2ECD488F007A40B2 /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CACCB3C2E1FD9D800948C26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CACCB462E1FD9D800948C26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9C26F32F2EE36CCA008F84E5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9C26F3302EE36D29008F84E5 /* CalmWaves.mp3 */,
+				9C26F3312EE36D29008F84E5 /* DeepFocus.mp3 */,
+				9C26F3322EE36D29008F84E5 /* ForestChimes.mp3 */,
+				9C56824C2F057D8A00417DF6 /* 432Hz.mp3 */,
+				9C56824D2F057D8A00417DF6 /* 528Hz.mp3 */,
+				9C56824E2F057D8A00417DF6 /* 963Hz.mp3 */,
+				9C5677F32EFB530D00417DF6 /* LIFESPACEGrand.sf2 */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9CACCB252E1FD9D700948C26 = {
+			isa = PBXGroup;
+			children = (
+				9C26F32F2EE36CCA008F84E5 /* Resources */,
+				9CACCB302E1FD9D700948C26 /* LIFESPACE */,
+				9CACCB422E1FD9D800948C26 /* LIFESPACETests */,
+				9CACCB4C2E1FD9D800948C26 /* LIFESPACEUITests */,
+				9CACCB2F2E1FD9D700948C26 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9CACCB2F2E1FD9D700948C26 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9CACCB2E2E1FD9D700948C26 /* LIFESPACE.app */,
+				9CACCB3F2E1FD9D800948C26 /* LIFESPACETests.xctest */,
+				9CACCB492E1FD9D800948C26 /* LIFESPACEUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9CACCB2D2E1FD9D700948C26 /* LIFESPACE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CACCB522E1FD9D800948C26 /* Build configuration list for PBXNativeTarget "LIFESPACE" */;
+			buildPhases = (
+				9CACCB2A2E1FD9D700948C26 /* Sources */,
+				9CACCB2B2E1FD9D700948C26 /* Frameworks */,
+				9CACCB2C2E1FD9D700948C26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				9CACCB302E1FD9D700948C26 /* LIFESPACE */,
+			);
+			name = LIFESPACE;
+			packageProductDependencies = (
+				9C62793A2ECD488F007A40B2 /* FirebaseAnalytics */,
+				9C62793C2ECD488F007A40B2 /* FirebaseAuth */,
+				9C62793E2ECD488F007A40B2 /* FirebaseFirestore */,
+			);
+			productName = LIFESPACE;
+			productReference = 9CACCB2E2E1FD9D700948C26 /* LIFESPACE.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9CACCB3E2E1FD9D800948C26 /* LIFESPACETests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CACCB572E1FD9D800948C26 /* Build configuration list for PBXNativeTarget "LIFESPACETests" */;
+			buildPhases = (
+				9CACCB3B2E1FD9D800948C26 /* Sources */,
+				9CACCB3C2E1FD9D800948C26 /* Frameworks */,
+				9CACCB3D2E1FD9D800948C26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9CACCB412E1FD9D800948C26 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9CACCB422E1FD9D800948C26 /* LIFESPACETests */,
+			);
+			name = LIFESPACETests;
+			packageProductDependencies = (
+			);
+			productName = LIFESPACETests;
+			productReference = 9CACCB3F2E1FD9D800948C26 /* LIFESPACETests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9CACCB482E1FD9D800948C26 /* LIFESPACEUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9CACCB5A2E1FD9D800948C26 /* Build configuration list for PBXNativeTarget "LIFESPACEUITests" */;
+			buildPhases = (
+				9CACCB452E1FD9D800948C26 /* Sources */,
+				9CACCB462E1FD9D800948C26 /* Frameworks */,
+				9CACCB472E1FD9D800948C26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9CACCB4B2E1FD9D800948C26 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9CACCB4C2E1FD9D800948C26 /* LIFESPACEUITests */,
+			);
+			name = LIFESPACEUITests;
+			packageProductDependencies = (
+			);
+			productName = LIFESPACEUITests;
+			productReference = 9CACCB492E1FD9D800948C26 /* LIFESPACEUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9CACCB262E1FD9D700948C26 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					9CACCB2D2E1FD9D700948C26 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					9CACCB3E2E1FD9D800948C26 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 9CACCB2D2E1FD9D700948C26;
+					};
+					9CACCB482E1FD9D800948C26 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 9CACCB2D2E1FD9D700948C26;
+					};
+				};
+			};
+			buildConfigurationList = 9CACCB292E1FD9D700948C26 /* Build configuration list for PBXProject "LIFESPACE" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9CACCB252E1FD9D700948C26;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9C6279392ECD488F007A40B2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9CACCB2F2E1FD9D700948C26 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9CACCB2D2E1FD9D700948C26 /* LIFESPACE */,
+				9CACCB3E2E1FD9D800948C26 /* LIFESPACETests */,
+				9CACCB482E1FD9D800948C26 /* LIFESPACEUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9CACCB2C2E1FD9D700948C26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C56824F2F057D8A00417DF6 /* 432Hz.mp3 in Resources */,
+				9C5682502F057D8A00417DF6 /* 963Hz.mp3 in Resources */,
+				9C5682512F057D8A00417DF6 /* 528Hz.mp3 in Resources */,
+				9C26F3332EE36D29008F84E5 /* CalmWaves.mp3 in Resources */,
+				9C5677F42EFB530D00417DF6 /* LIFESPACEGrand.sf2 in Resources */,
+				9C26F3342EE36D29008F84E5 /* DeepFocus.mp3 in Resources */,
+				9C26F3352EE36D29008F84E5 /* ForestChimes.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CACCB3D2E1FD9D800948C26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CACCB472E1FD9D800948C26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9CACCB2A2E1FD9D700948C26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CACCB3B2E1FD9D800948C26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CACCB452E1FD9D800948C26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9CACCB412E1FD9D800948C26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9CACCB2D2E1FD9D700948C26 /* LIFESPACE */;
+			targetProxy = 9CACCB402E1FD9D800948C26 /* PBXContainerItemProxy */;
+		};
+		9CACCB4B2E1FD9D800948C26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9CACCB2D2E1FD9D700948C26 /* LIFESPACE */;
+			targetProxy = 9CACCB4A2E1FD9D800948C26 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		9CACCB532E1FD9D800948C26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LIFESPACE/LIFESPACE.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 13;
+				DEVELOPMENT_TEAM = JMU2TN42B8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LIFESPACE/Info.plist;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "LIFESPACE needs access to your Reminders to import tasks into your To-Do List.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We use the camera so you can take nature photos for your personal LIFESPACE journal.\n";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to personalize wellness feedback based on your environment.\n";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "LIFESPACE saves mood board images to your Photos.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "LIFESPACE needs access to your Reminders to import tasks into your To-Do List.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = creationhealth.LIFESPACE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Debug;
+		};
+		9CACCB542E1FD9D800948C26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LIFESPACE/LIFESPACE.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 13;
+				DEVELOPMENT_TEAM = JMU2TN42B8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LIFESPACE/Info.plist;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "LIFESPACE needs access to your Reminders to import tasks into your To-Do List.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We use the camera so you can take nature photos for your personal LIFESPACE journal.\n";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to personalize wellness feedback based on your environment.\n";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "LIFESPACE saves mood board images to your Photos.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "LIFESPACE needs access to your Reminders to import tasks into your To-Do List.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = creationhealth.LIFESPACE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Release;
+		};
+		9CACCB552E1FD9D800948C26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = JMU2TN42B8;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9CACCB562E1FD9D800948C26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = JMU2TN42B8;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		9CACCB582E1FD9D800948C26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMU2TN42B8;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = creationhealth.LIFESPACETests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LIFESPACE.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LIFESPACE";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Debug;
+		};
+		9CACCB592E1FD9D800948C26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMU2TN42B8;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = creationhealth.LIFESPACETests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LIFESPACE.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LIFESPACE";
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Release;
+		};
+		9CACCB5B2E1FD9D800948C26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMU2TN42B8;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = creationhealth.LIFESPACEUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = LIFESPACE;
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Debug;
+		};
+		9CACCB5C2E1FD9D800948C26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMU2TN42B8;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = creationhealth.LIFESPACEUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = LIFESPACE;
+				XROS_DEPLOYMENT_TARGET = 2.4;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9CACCB292E1FD9D700948C26 /* Build configuration list for PBXProject "LIFESPACE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CACCB552E1FD9D800948C26 /* Debug */,
+				9CACCB562E1FD9D800948C26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CACCB522E1FD9D800948C26 /* Build configuration list for PBXNativeTarget "LIFESPACE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CACCB532E1FD9D800948C26 /* Debug */,
+				9CACCB542E1FD9D800948C26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CACCB572E1FD9D800948C26 /* Build configuration list for PBXNativeTarget "LIFESPACETests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CACCB582E1FD9D800948C26 /* Debug */,
+				9CACCB592E1FD9D800948C26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9CACCB5A2E1FD9D800948C26 /* Build configuration list for PBXNativeTarget "LIFESPACEUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9CACCB5B2E1FD9D800948C26 /* Debug */,
+				9CACCB5C2E1FD9D800948C26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9C6279392ECD488F007A40B2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9C62793A2ECD488F007A40B2 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C6279392ECD488F007A40B2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		9C62793C2ECD488F007A40B2 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C6279392ECD488F007A40B2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		9C62793E2ECD488F007A40B2 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C6279392ECD488F007A40B2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 9CACCB262E1FD9D700948C26 /* Project object */;
+}
