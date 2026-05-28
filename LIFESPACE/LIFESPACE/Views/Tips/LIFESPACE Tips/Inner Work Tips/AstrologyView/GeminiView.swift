@@ -34,7 +34,11 @@ struct GeminiView: View {
                     Text("May 21 – June 20")
                         .font(.system(size: 20))
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.horizontal)
 
                     // Info Section + Gemini Symbol
                     HStack(alignment: .top, spacing: 16) {
@@ -47,6 +51,7 @@ struct GeminiView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 20)
+                        .layoutPriority(1)
 
                         // Gemini Symbol Image
                         Image("gemini-symbol")
@@ -54,7 +59,7 @@ struct GeminiView: View {
                             .renderingMode(.template)
                             .foregroundColor(.white)
                             .scaledToFit()
-                            .frame(width: 150, height: 150)
+                            .frame(maxWidth: 150, maxHeight: 150)
                             .padding(.trailing, 20)
                             .shadow(radius: 10)
                     }
@@ -70,6 +75,8 @@ struct GeminiView: View {
                     Their minds move quickly, and they can shift between perspectives with ease, sometimes juggling different interests or moods at the same time. Gemini can be restless and easily distracted, but their versatility and sharp intellect make them engaging, witty, and endlessly fascinated by life.
                     """)
                     .foregroundColor(.white)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal)
 
                     // Back Button
@@ -89,7 +96,7 @@ struct GeminiView: View {
                         Spacer()
                     }
                     .padding(.top, 10)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 44)
                 }
                 .opacity(contentOpacity)
                 .onAppear {
@@ -103,19 +110,20 @@ struct GeminiView: View {
 
     // MARK: - Info Row Builder
     func infoRow(label: String, value: String) -> some View {
-        HStack(spacing: 6) {
+        HStack(alignment: .top, spacing: 6) {
             Text("• \(label)")
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(value)
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
-                .fixedSize()
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
-            Spacer()
+            Spacer(minLength: 0)
         }
-        .fixedSize(horizontal: true, vertical: false)
     }
 }
-
