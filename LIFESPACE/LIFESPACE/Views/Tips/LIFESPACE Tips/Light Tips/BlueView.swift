@@ -30,10 +30,14 @@ struct BlueView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                         
                         Text("BLUE")
                             .font(.system(size: 40, weight: .heavy))
                             .foregroundColor(darkBlue)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                             .scaleEffect(isPulsing ? 1.08 : 1.0)
                             .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: isPulsing)
                             .onAppear {
@@ -88,6 +92,7 @@ struct BlueView: View {
                     }
                     .foregroundColor(.white)
                     .font(.body)
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                     
                     // MARK: - Where to Use Blue
@@ -101,6 +106,8 @@ struct BlueView: View {
                     Text("Because of its ability to calm the nervous system and lower blood pressure, this can be a good color used in the bedroom. On the contrary, because it lowers blood pressure, this is not a good color to be used in rooms associated with sexual activity. Blue is perfect anywhere you need clarity, tranquility, or emotional grounding.")
                         .foregroundColor(.white)
                         .font(.body)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                     
                     VStack(alignment: .leading, spacing: 10) {
                         bulletView(Text("Bedrooms"))
@@ -122,6 +129,8 @@ struct BlueView: View {
                         Text("← Back to Light Tips")
                             .foregroundColor(.white)
                             .font(.body)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.white.opacity(0.15))
@@ -130,6 +139,7 @@ struct BlueView: View {
                     .padding(.bottom, 60)
                 }
                 .padding(.horizontal, 24)
+                .padding(.bottom, 24)
             }
         }
     }
@@ -143,6 +153,8 @@ struct BlueView: View {
         )
         .font(.title3)
         .fontWeight(.semibold)
+        .lineLimit(nil)
+        .fixedSize(horizontal: false, vertical: true)
     }
     
     // MARK: - Bullet View
@@ -153,6 +165,7 @@ struct BlueView: View {
                 .padding(.top, 2)
             text
                 .foregroundColor(.white)
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -168,6 +181,8 @@ struct BlueView: View {
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity)
             
             // Underline
@@ -187,6 +202,8 @@ struct BlueView: View {
             .font(.system(size: 17, weight: .regular)) // NOT bold
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity)
             .padding(.top, 2) // subtle lift upward
         }
