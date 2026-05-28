@@ -31,27 +31,32 @@ struct InnerWorkTipsView: View {
     ]
 
     var body: some View {
-        ZStack {
-            // Background
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.35, green: 0.80, blue: 0.75),
-                    Color(red: 0.20, green: 0.65, blue: 0.60),
-                    Color(red: 0.10, green: 0.45, blue: 0.45)
-                ]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+        GeometryReader { geometry in
+            let safeBottom = geometry.safeAreaInsets.bottom
+            let bottomPadding = max(24, safeBottom + 12)
 
-            VStack(spacing: 20) {
-                header
-                scrollContainer
-                bottomButtons
+            ZStack {
+                // Background
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color(red: 0.35, green: 0.80, blue: 0.75),
+                        Color(red: 0.20, green: 0.65, blue: 0.60),
+                        Color(red: 0.10, green: 0.45, blue: 0.45)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
+
+                VStack(spacing: 20) {
+                    header
+                    scrollContainer
+                    bottomButtons(bottomPadding: bottomPadding)
+                }
             }
+            .onAppear { appeared = true }
+            .transition(.opacity)
         }
-        .onAppear { appeared = true }
-        .transition(.opacity)
     }
 
     // MARK: - Header
@@ -62,12 +67,15 @@ struct InnerWorkTipsView: View {
                 .font(.system(size: 34, weight: .bold))
                 .foregroundColor(.white)
                 .shadow(radius: 4)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text("To raise your vibrational energy\nand enrich your soul")
                 .font(.title2)
                 .italic()
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color.white.opacity(0.95))
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.horizontal, 14)
@@ -100,7 +108,7 @@ struct InnerWorkTipsView: View {
 
     // MARK: - Bottom Buttons
 
-    private var bottomButtons: some View {
+    private func bottomButtons(bottomPadding: CGFloat) -> some View {
         HStack(spacing: 40) {
             Button {
                 withAnimation(.easeInOut(duration: 0.4)) {
@@ -130,7 +138,7 @@ struct InnerWorkTipsView: View {
                     .shadow(radius: 4)
             }
         }
-        .padding(.bottom, 24)
+        .padding(.bottom, bottomPadding)
     }
 
     // MARK: - Navigation
@@ -155,7 +163,9 @@ struct InnerWorkTipsView: View {
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.6)
-                    .lineLimit(1)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 8)
                     .frame(width: circleSize(for: title), height: circleSize(for: title))
                     .background(Color.white.opacity(0.15))
                     .clipShape(Circle())
