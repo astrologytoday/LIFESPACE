@@ -28,147 +28,164 @@ struct BudgetPlannerView: View {
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 20) {
-
-                HStack {
-                    Text("Income:")
-                        .font(.headline)
-                        .foregroundColor(.white)
-
-                    TextField("0", value: $model.income, formatter: NumberFormatter())
-                        .keyboardType(.decimalPad)
-                        .padding()
-                        .background(Color.white.opacity(0.2))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .frame(width: 120)
-                        .onChange(of: model.income) { _ in
-                            model.updateIncome(model.income)
-                        }
-                }
-
-                ForEach(model.categories.filter { $0.name.uppercased() != "OTHER" }) { category in
+            ScrollView(showsIndicators: true) {
+                VStack(spacing: 20) {
                     HStack {
-                        Text(category.name)
+                        Text("Income:")
+                            .font(.headline)
                             .foregroundColor(.white)
+                            .lineLimit(1)
+                            .layoutPriority(1)
 
-                        Spacer()
-
-                        TextField("0", value: Binding(
-                            get: { category.originalAmount },
-                            set: { newValue in
-                                model.updateCategoryAmount(id: category.id, amount: newValue)
+                        TextField("0", value: $model.income, formatter: NumberFormatter())
+                            .keyboardType(.decimalPad)
+                            .padding()
+                            .background(Color.white.opacity(0.2))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .frame(width: 120)
+                            .onChange(of: model.income) { _ in
+                                model.updateIncome(model.income)
                             }
-                        ), formatter: NumberFormatter())
-                        .keyboardType(.decimalPad)
-                        .padding(6)
-                        .background(Color.white.opacity(0.2))
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .frame(width: 80)
+                    }
+
+                    ForEach(model.categories.filter { $0.name.uppercased() != "OTHER" }) { category in
+                        HStack(alignment: .center, spacing: 10) {
+                            Text(category.name)
+                                .foregroundColor(.white)
+                                .lineLimit(2)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .layoutPriority(1)
+
+                            Spacer(minLength: 8)
+
+                            TextField("0", value: Binding(
+                                get: { category.originalAmount },
+                                set: { newValue in
+                                    model.updateCategoryAmount(id: category.id, amount: newValue)
+                                }
+                            ), formatter: NumberFormatter())
+                            .keyboardType(.decimalPad)
+                            .padding(6)
+                            .background(Color.white.opacity(0.2))
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                            .frame(width: 80)
+
+                            Button {
+                                model.removeCategory(id: category.id)
+                            } label: {
+                                Image(systemName: "minus.circle")
+                                    .foregroundColor(.red)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+
+                    HStack(alignment: .center, spacing: 10) {
+                        TextField("Spending Category", text: $newCategoryName)
+                            .padding(8)
+                            .background(Color.white.opacity(0.2))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .focused($focusedField, equals: .name)
+                            .layoutPriority(1)
+
+                        TextField("Amount", text: $newCategoryAmount)
+                            .keyboardType(.decimalPad)
+                            .padding(8)
+                            .background(Color.white.opacity(0.2))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .frame(width: 100)
+                            .focused($focusedField, equals: .amount)
 
                         Button {
-                            model.removeCategory(id: category.id)
+                            if let amount = Double(newCategoryAmount) {
+                                model.addCategory(name: newCategoryName, amount: amount)
+                                newCategoryName = ""
+                                newCategoryAmount = ""
+                                focusedField = .name
+                            }
                         } label: {
-                            Image(systemName: "minus.circle")
-                                .foregroundColor(.red)
+                            Image(systemName: "plus.circle")
+                                .foregroundColor(.white)
+                                .font(.title2)
                         }
                     }
                     .padding(.horizontal)
-                }
 
-                HStack {
-                    TextField("Spending Category", text: $newCategoryName)
-                        .padding(8)
-                        .background(Color.white.opacity(0.2))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .focused($focusedField, equals: .name)
-
-                    TextField("Amount", text: $newCategoryAmount)
-                        .keyboardType(.decimalPad)
-                        .padding(8)
-                        .background(Color.white.opacity(0.2))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .frame(width: 100)
-                        .focused($focusedField, equals: .amount)
-
-                    Button {
-                        if let amount = Double(newCategoryAmount) {
-                            model.addCategory(name: newCategoryName, amount: amount)
-                            newCategoryName = ""
-                            newCategoryAmount = ""
-                            focusedField = .name
-                        }
-                    } label: {
-                        Image(systemName: "plus.circle")
+                    HStack {
+                        Text("Savings:")
+                            .font(.headline)
                             .foregroundColor(.white)
-                            .font(.title2)
+                            .lineLimit(1)
+
+                        Spacer()
+
+                        Text("$\(Int(model.savings))")
+                            .font(.headline)
+                            .foregroundColor(.green)
+                            .lineLimit(1)
                     }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
-
-                HStack {
-                    Text("Savings:")
-                        .font(.headline)
-                        .foregroundColor(.white)
-
-                    Spacer()
-
-                    Text("$\(Int(model.savings))")
-                        .font(.headline)
-                        .foregroundColor(.green)
-                }
-                .padding(.horizontal)
-
-                Spacer()
-
-                HStack {
-                    Button("Weekly Tracker") {
-                        presentWeeklyTrackerView(
-                            navModel: navModel,
-                            userProfile: userProfile,
-                            lifespaceLogModel: lifespaceLogModel,
-                            budgetModel: model
-                        )
-                    }
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
-                    .background(Color.white)
-                    .foregroundColor(.black)
-                    .cornerRadius(12)
-
-                    Spacer()
-
-                    HStack(spacing: 14) {
-                        Button {
-                            navModel.pop()
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .font(.title2.bold())
-                                .foregroundColor(.white)
-                                .padding()
-                        }
-
-                        Button {
-                            navModel.push("HomeView")
-                        } label: {
-                            Image(systemName: "house.fill")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .padding()
-                        }
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.bottom, 20)
+                .padding(.top)
+                .padding(.bottom, 120)
             }
-            .padding(.top)
+        }
+        .safeAreaInset(edge: .bottom) {
+            bottomBar
         }
         .onAppear {
             AppDelegate.orientationLock = .portrait
             UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         }
+    }
+
+    private var bottomBar: some View {
+        HStack {
+            Button("Weekly Tracker") {
+                presentWeeklyTrackerView(
+                    navModel: navModel,
+                    userProfile: userProfile,
+                    lifespaceLogModel: lifespaceLogModel,
+                    budgetModel: model
+                )
+            }
+            .padding(.vertical, 10)
+            .padding(.horizontal, 20)
+            .background(Color.white)
+            .foregroundColor(.black)
+            .cornerRadius(12)
+            .lineLimit(1)
+            .layoutPriority(1)
+
+            Spacer(minLength: 12)
+
+            HStack(spacing: 14) {
+                Button {
+                    navModel.pop()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.title2.bold())
+                        .foregroundColor(.white)
+                        .padding()
+                }
+
+                Button {
+                    navModel.push("HomeView")
+                } label: {
+                    Image(systemName: "house.fill")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding()
+                }
+            }
+        }
+        .padding(.horizontal)
+        .padding(.top, 10)
+        .padding(.bottom, 8)
+        .background(Color(red: 0.10, green: 0.45, blue: 0.45))
     }
 }
