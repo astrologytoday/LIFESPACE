@@ -102,6 +102,9 @@ struct GoalPlannerView: View {
                     Text(goal.title)
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color.white.opacity(0.09))
@@ -137,14 +140,19 @@ struct GoalPlannerView: View {
                         Text("What are the steps you need to take to achieve this goal?")
                             .font(.headline)
                             .foregroundColor(.white)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
 
                         ForEach(Array(goal.steps.enumerated()), id: \.offset) { idx, step in
                             HStack {
                                 Text(step)
                                     .foregroundColor(.white)
+                                    .lineLimit(nil)
                                     .fixedSize(horizontal: false, vertical: true)
+                                    .layoutPriority(1)
 
-                                Spacer()
+                                Spacer(minLength: 8)
 
                                 Button {
                                     goal.steps.remove(at: idx)
@@ -207,6 +215,9 @@ struct GoalPlannerView: View {
                         Text("How long will it take to complete this goal?")
                             .font(.headline)
                             .foregroundColor(.white)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
 
                         HStack {
                             Text("A")
@@ -245,7 +256,7 @@ struct GoalPlannerView: View {
                             .cornerRadius(18)
                     }
                     .disabled(!isReady)
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 50)
                 }
                 .padding(.horizontal, 14)
             }
@@ -300,6 +311,8 @@ private struct RelevancePopup: View {
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundColor(.white.opacity(0.92))
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, 10)
 
             HStack(spacing: 12) {
@@ -326,7 +339,6 @@ private struct RelevancePopup: View {
         }
         .padding(18)
         .frame(maxWidth: 360)
-        .frame(height: 190)
         .background(
             BlurView(style: .systemUltraThinMaterial)
         )
@@ -354,7 +366,9 @@ private struct SectionHeaderBubble: View {
                 Text(text)
                     .font(.headline)
                     .foregroundColor(.white)
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
+                    .layoutPriority(1)
 
                 Button {
                     withAnimation(.easeInOut(duration: 0.22)) {
