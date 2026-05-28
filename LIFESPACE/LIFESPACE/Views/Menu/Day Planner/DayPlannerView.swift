@@ -48,6 +48,8 @@ struct DayPlannerView: View {
             GeometryReader { geo in
                 let totalW = geo.size.width
                 let totalH = geo.size.height
+                let safeBottom = geo.safeAreaInsets.bottom
+                let usableH = max(320, totalH - safeBottom)
                 let pinch: CGFloat = 6
                 let spacing: CGFloat = 12 + pinch
                 let cardPad: CGFloat = 14
@@ -162,7 +164,7 @@ struct DayPlannerView: View {
                                 }
                             }
                         }
-                        .frame(width: plannerW, height: totalH - 30)
+                        .frame(width: plannerW, height: usableH - 30)
                         .offset(x: scheduleNudgeRight, y: 0)
 
                         if isToDoCollapsed {
@@ -205,7 +207,7 @@ struct DayPlannerView: View {
                         } else {
                             VStack(spacing: 12) {
                                 let bottomButtonsH: CGFloat = 54
-                                let todoCardH = (totalH - 30) - bottomButtonsH - 12 - (pinch * 3)
+                                let todoCardH = (usableH - 30) - bottomButtonsH - 12 - (pinch * 3)
                                 let todoTextW = max(80, todoOpenW - 94)
 
                                 glassCard {
