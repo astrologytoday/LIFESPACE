@@ -17,11 +17,11 @@ struct PSSDBuildingBlocksMatrixView: View {
     private let corner: CGFloat  = 18
 
     var body: some View {
-        let containerW   = min(UIScreen.main.bounds.width, 900) - 24
-        let totalHSpace  = hSpacing * 3
-        let cellW        = max(88, (containerW - totalHSpace) / 4.0)
-        let cellH        = max(52, cellW * 0.52)
-        let gridHeight   = cellH * 3 + vSpacing * 2
+        let containerW = max(0, min(UIScreen.main.bounds.width, 900) - 24)
+        let totalHSpace = hSpacing * 3
+        let cellW = max(64, (containerW - totalHSpace) / 4.0)
+        let cellH = max(52, cellW * 0.52)
+        let gridHeight = cellH * 3 + vSpacing * 2
 
         return ZStack {
             // STATIC GRID
@@ -85,6 +85,7 @@ struct PSSDBuildingBlocksMatrixView: View {
                 .transition(.opacity.combined(with: .scale))
             }
         }
+        .frame(maxWidth: .infinity)
         .frame(height: gridHeight)
         .padding(.vertical, 2)
     }
