@@ -156,7 +156,6 @@ struct WeeklyTrackerView: View {
         .padding(.horizontal)
         .padding(.top, 10)
         .padding(.bottom, 8)
-        .background(Color(red: 0.10, green: 0.45, blue: 0.45))
     }
 
     private func headerCell(_ text: String, width: CGFloat) -> some View {
