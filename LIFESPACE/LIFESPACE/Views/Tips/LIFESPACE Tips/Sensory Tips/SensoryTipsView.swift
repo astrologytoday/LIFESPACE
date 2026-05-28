@@ -49,164 +49,176 @@ struct SensoryTipsView: View {
     ]
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
+        GeometryReader { geometry in
+            let safeBottom = geometry.safeAreaInsets.bottom
+            let homeBottomPadding = max(22, safeBottom + 12)
 
-            // 🌊 LIFESPACE gradient background
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.35, green: 0.80, blue: 0.75),
-                    Color(red: 0.20, green: 0.65, blue: 0.60),
-                    Color(red: 0.10, green: 0.45, blue: 0.45)
-                ]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            ZStack(alignment: .topLeading) {
 
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 20) {
+                // 🌊 LIFESPACE gradient background
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color(red: 0.35, green: 0.80, blue: 0.75),
+                        Color(red: 0.20, green: 0.65, blue: 0.60),
+                        Color(red: 0.10, green: 0.45, blue: 0.45)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
 
-                    // 🧠 Header
-                    Text("Sensory Tips")
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundColor(.white)
-                        .shadow(radius: 4)
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 20) {
 
-                    Text("To improve the efficiency of your environment")
-                        .font(.title3)
-                        .italic()
-                        .foregroundColor(Color.white.opacity(0.95))
-                        .fixedSize(horizontal: false, vertical: true)
+                        // 🧠 Header
+                        Text("Sensory Tips")
+                            .font(.system(size: 40, weight: .bold))
+                            .foregroundColor(.white)
+                            .shadow(radius: 4)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
 
-                    // 📘 Dictionary
-                    DictionaryCard(
-                        headword: "Sensory Health",
-                        partOfSpeech: "noun",
-                        definition: "1: the quality of your direct sensory experience: what you see, hear, feel, and smell throughout the day."
-                    )
+                        Text("To improve the efficiency of your environment")
+                            .font(.title3)
+                            .italic()
+                            .foregroundColor(Color.white.opacity(0.95))
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
 
-                    // ✅ Assessment Title
-                    assessmentHeader()
-
-                    // 👁️ SIGHT
-                    assessmentSection(title: "SIGHT") {
-                        numberQuestion(key: "sight_decor", text: "Is your home decor to your liking?")
-                        numberQuestion(key: "sight_appearance", text: "Do you like how you look?")
-                        fengShuiLinkedNumberQuestion(
-                            key: "sight_fengshui",
-                            prefix: "Does your home follow the laws of ",
-                            linkText: "Feng Shui",
-                            suffix: "?"
+                        // 📘 Dictionary
+                        DictionaryCard(
+                            headword: "Sensory Health",
+                            partOfSpeech: "noun",
+                            definition: "1: the quality of your direct sensory experience: what you see, hear, feel, and smell throughout the day."
                         )
-                        numberQuestion(key: "sight_messy", text: "Is your home clean? Are your dishes washed?")
-                        numberQuestion(key: "sight_lighting", text: "Is your lighting warm or does it feel sterile?")
-                    }
 
-                    // 👂 SOUND
-                    assessmentSection(title: "SOUND") {
-                        numberQuestion(key: "sound_pollution", text: "Is your space free from noise pollution?")
-                        numberQuestion(key: "sound_music", text: "Do you listen to music?")
-                        numberQuestion(key: "sound_silence", text: "Do you have access to silence if you need it?")
-                    }
+                        // ✅ Assessment Title
+                        assessmentHeader()
 
-                    // ✋ TOUCH
-                    assessmentSection(title: "TOUCH") {
-                        numberQuestion(key: "touch_furniture", text: "Is your furniture comfortable and ergonomic?")
-                        numberQuestion(key: "touch_clothes", text: "Are your clothes comfortable?")
-                        numberQuestion(key: "touch_clean", text: "Are you clean and showered?")
-                        numberQuestion(key: "touch_temp", text: "Is your temperature regulated?")
-                    }
-
-                    // 👃 SMELL
-                    assessmentSection(title: "SMELL") {
-                        numberQuestion(key: "smell_freshair", text: "Does your space get fresh air?")
-                        numberQuestion(key: "smell_scent", text: "Does your space have a good scent?")
-                        numberQuestion(key: "smell_teeth", text: "How does your breath smell?")
-                    }
-
-                    // ✅ Submit Button
-                    Button(action: submitAssessment) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                .fill(Color.white.opacity(0.18))
-                                .shadow(color: .black.opacity(0.18), radius: 10, x: 0, y: 8)
-
-                            Text("SUBMIT ASSESSMENT")
-                                .font(.system(size: 18, weight: .heavy))
-                                .foregroundColor(.white)
-                                .padding(.vertical, 16)
+                        // 👁️ SIGHT
+                        assessmentSection(title: "SIGHT") {
+                            numberQuestion(key: "sight_decor", text: "Is your home decor to your liking?")
+                            numberQuestion(key: "sight_appearance", text: "Do you like how you look?")
+                            fengShuiLinkedNumberQuestion(
+                                key: "sight_fengshui",
+                                prefix: "Does your home follow the laws of ",
+                                linkText: "Feng Shui",
+                                suffix: "?"
+                            )
+                            numberQuestion(key: "sight_messy", text: "Is your home clean? Are your dishes washed?")
+                            numberQuestion(key: "sight_lighting", text: "Is your lighting warm or does it feel sterile?")
                         }
-                        .frame(maxWidth: .infinity)
-                    }
-                    .padding(.top, 8)
 
-                    // ✅ Result Card
-                    if showResultCard {
-                        resultCard()
-                            .transition(.opacity)
-                            .padding(.top, 10)
-                    }
-
-                    Spacer(minLength: 40)
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, 40)
-                .padding(.bottom, 160)
-                .opacity(appeared ? 1 : 0)
-                .animation(.easeInOut(duration: 0.6), value: appeared)
-            }
-
-            VStack {
-                HStack {
-                    Spacer()
-                    BackButtonView(customTarget: "TipsView")
-                }
-                Spacer()
-            }
-            .padding(.top, 12)
-            .padding(.trailing, 22)
-
-            // 🏠 Home Button
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        navModel.push("HomeView")
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        Color.white.opacity(0.9),
-                                        Color.white.opacity(0.6)
-                                    ]),
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ))
-                                .frame(width: 60, height: 60)
-                                .shadow(color: .black.opacity(0.25), radius: 8, x: 0, y: 6)
-
-                            Image(systemName: "house.fill")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(Color(red: 0.10, green: 0.45, blue: 0.45))
+                        // 👂 SOUND
+                        assessmentSection(title: "SOUND") {
+                            numberQuestion(key: "sound_pollution", text: "Is your space free from noise pollution?")
+                            numberQuestion(key: "sound_music", text: "Do you listen to music?")
+                            numberQuestion(key: "sound_silence", text: "Do you have access to silence if you need it?")
                         }
+
+                        // ✋ TOUCH
+                        assessmentSection(title: "TOUCH") {
+                            numberQuestion(key: "touch_furniture", text: "Is your furniture comfortable and ergonomic?")
+                            numberQuestion(key: "touch_clothes", text: "Are your clothes comfortable?")
+                            numberQuestion(key: "touch_clean", text: "Are you clean and showered?")
+                            numberQuestion(key: "touch_temp", text: "Is your temperature regulated?")
+                        }
+
+                        // 👃 SMELL
+                        assessmentSection(title: "SMELL") {
+                            numberQuestion(key: "smell_freshair", text: "Does your space get fresh air?")
+                            numberQuestion(key: "smell_scent", text: "Does your space have a good scent?")
+                            numberQuestion(key: "smell_teeth", text: "How does your breath smell?")
+                        }
+
+                        // ✅ Submit Button
+                        Button(action: submitAssessment) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                    .fill(Color.white.opacity(0.18))
+                                    .shadow(color: .black.opacity(0.18), radius: 10, x: 0, y: 8)
+
+                                Text("SUBMIT ASSESSMENT")
+                                    .font(.system(size: 18, weight: .heavy))
+                                    .foregroundColor(.white)
+                                    .lineLimit(2)
+                                    .minimumScaleFactor(0.75)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.vertical, 16)
+                                    .padding(.horizontal, 12)
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                        .padding(.top, 8)
+
+                        // ✅ Result Card
+                        if showResultCard {
+                            resultCard()
+                                .transition(.opacity)
+                                .padding(.top, 10)
+                        }
+
+                        Spacer(minLength: 40)
                     }
-                    .padding(.trailing, 22)
-                    .padding(.bottom, 22)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 40)
+                    .padding(.bottom, 160 + homeBottomPadding)
+                    .opacity(appeared ? 1 : 0)
+                    .animation(.easeInOut(duration: 0.6), value: appeared)
+                }
+
+                VStack {
+                    HStack {
+                        Spacer()
+                        BackButtonView(customTarget: "TipsView")
+                    }
+                    Spacer()
+                }
+                .padding(.top, 12)
+                .padding(.trailing, 22)
+
+                // 🏠 Home Button
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            navModel.push("HomeView")
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(LinearGradient(
+                                        gradient: Gradient(colors: [
+                                            Color.white.opacity(0.9),
+                                            Color.white.opacity(0.6)
+                                        ]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ))
+                                    .frame(width: 60, height: 60)
+                                    .shadow(color: .black.opacity(0.25), radius: 8, x: 0, y: 6)
+
+                                Image(systemName: "house.fill")
+                                    .font(.system(size: 24, weight: .bold))
+                                    .foregroundColor(Color(red: 0.10, green: 0.45, blue: 0.45))
+                            }
+                        }
+                        .padding(.trailing, 22)
+                        .padding(.bottom, homeBottomPadding)
+                    }
                 }
             }
-        }
-        .onAppear {
-            appeared = true
-            loadValues()
+            .onAppear {
+                appeared = true
+                loadValues()
 
-            lastLoggedQuestions = lastLoggedQuestionsStored
-            lastYes = lastYesStored
+                lastLoggedQuestions = lastLoggedQuestionsStored
+                lastYes = lastYesStored
 
-            showResultCard = (!sensoryAssessmentLogEntryID.isEmpty) || (lastLoggedQuestionsStored > 0)
+                showResultCard = (!sensoryAssessmentLogEntryID.isEmpty) || (lastLoggedQuestionsStored > 0)
+            }
+            .transition(.opacity)
         }
-        .transition(.opacity)
     }
 
     // MARK: - Header
@@ -219,25 +231,33 @@ struct SensoryTipsView: View {
                     .shadow(color: .black.opacity(0.18), radius: 10, x: 0, y: 8)
 
                 VStack(spacing: 8) {
-                    HStack(spacing: 10) {
+                    HStack(alignment: .top, spacing: 10) {
                         Image(systemName: "sparkles")
                             .font(.system(size: 18, weight: .bold))
                             .foregroundColor(.white.opacity(0.95))
+                            .padding(.top, 5)
 
                         Text("Sensory Assessment")
                             .font(.system(size: 28, weight: .heavy))
                             .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.75)
+                            .fixedSize(horizontal: false, vertical: true)
                             .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 4)
 
                         Image(systemName: "sparkles")
                             .font(.system(size: 18, weight: .bold))
                             .foregroundColor(.white.opacity(0.95))
+                            .padding(.top, 5)
                     }
 
                     Text("Tap a number from 1–10 for each area.")
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundColor(.white.opacity(0.9))
                         .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(.vertical, 14)
                 .padding(.horizontal, 18)
@@ -265,10 +285,13 @@ struct SensoryTipsView: View {
                 .shadow(color: .black.opacity(0.18), radius: 12, x: 0, y: 10)
 
             VStack(alignment: .leading, spacing: 10) {
-                HStack {
+                HStack(alignment: .top) {
                     Text("Assessment Result")
                         .font(.system(size: 28, weight: .heavy))
                         .foregroundColor(.white)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.75)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     Spacer()
 
@@ -276,6 +299,8 @@ struct SensoryTipsView: View {
                         Text("\(percent)%")
                             .font(.system(size: 28, weight: .heavy, design: .rounded))
                             .foregroundColor(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                             .shadow(color: Color.white.opacity(0.95), radius: 10, x: 0, y: 0)
                             .shadow(color: Color.white.opacity(0.55), radius: 22, x: 0, y: 0)
                     }
@@ -285,11 +310,13 @@ struct SensoryTipsView: View {
                     Text(lastNeutralMessage.isEmpty ? "Nothing was logged yet." : lastNeutralMessage)
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.white.opacity(0.9))
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                 } else {
                     Text("\(lastYes) out of \(lastLoggedQuestions) logged sensory areas scored 7 or higher.")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.white.opacity(0.9))
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -387,6 +414,7 @@ struct SensoryTipsView: View {
             Text(text)
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(.white)
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
 
             numberDotGrid(for: key)
@@ -401,6 +429,7 @@ struct SensoryTipsView: View {
             Text(fengShuiAttributed(prefix: prefix, linkText: linkText, suffix: suffix))
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(.white)
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
                 .environment(\.openURL, OpenURLAction { url in
                     if url.scheme == "lifespace", url.host == "fengshui" {
@@ -535,6 +564,9 @@ private struct DictionaryCard: View {
                 Text(headword)
                     .font(.system(size: 28, weight: .semibold, design: .serif))
                     .foregroundColor(.white)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(partOfSpeech)
                     .font(.system(size: 16, weight: .semibold, design: .serif))
@@ -545,6 +577,7 @@ private struct DictionaryCard: View {
                 Text(definition)
                     .font(.system(size: 18, weight: .regular, design: .serif))
                     .foregroundColor(Color.white.opacity(0.95))
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.vertical, 20)
