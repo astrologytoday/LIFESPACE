@@ -327,7 +327,7 @@ struct ResultsView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                 } else {
                     Text("Focus on these top priorities in the following week.")
-                        .font(.custom("Avenir", size: min(23, screenWidth * 0.055)))
+                        .font(.custom("Avenir", size: min(17, screenWidth * 0.043)))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
@@ -444,13 +444,13 @@ struct ResultsView: View {
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(title(for: module))
-                    .font(.system(size: min(22, screenWidth * 0.055), weight: .bold))
+                    .font(.headline)
                     .foregroundColor(.white)
                     .lineLimit(2)
                     .minimumScaleFactor(0.75)
 
                 Text(description(for: module))
-                    .font(.custom("Avenir", size: min(20, screenWidth * 0.048)))
+                    .font(.custom("Avenir", size: min(16, screenWidth * 0.04)))
                     .foregroundColor(.white)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
