@@ -68,6 +68,9 @@ struct AnalyticsView: View {
             backgroundView
             content
         }
+        .safeAreaInset(edge: .bottom) {
+            chartPicker
+        }
         .onAppear {
             applyStartTabIfNeeded()
         }
@@ -102,51 +105,60 @@ struct AnalyticsView: View {
     }
 
     private var content: some View {
-        VStack(spacing: 18) {
+        ScrollView(showsIndicators: true) {
+            VStack(spacing: 14) {
+                BackButtonView()
+                    .padding(.leading)
+                    .padding(.top, 10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-            BackButtonView()
-                .padding(.leading)
-                .padding(.top, 10)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                if selectedChart == .lifespace {
+                    Text("Today's Brain Optimization Score")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.75)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 18)
+                        .padding(.top, 4)
 
-            if selectedChart == .lifespace {
-                Text("Today's Brain Optimization Score")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(.top, 8)
-
-                Text("\(todaysScore)%")
-                    .font(.system(size: 54, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
-                    .scaleEffect(animatePulse ? 1.09 : 1.0)
-                    .shadow(color: .white.opacity(0.2), radius: 12, x: 0, y: 2)
-                    .padding(.bottom, 8)
-                    .onAppear {
-                        withAnimation(.easeInOut(duration: 0.95).repeatForever(autoreverses: true)) {
-                            animatePulse = true
+                    Text("\(todaysScore)%")
+                        .font(.system(size: 54, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .scaleEffect(animatePulse ? 1.09 : 1.0)
+                        .shadow(color: .white.opacity(0.2), radius: 12, x: 0, y: 2)
+                        .padding(.bottom, 2)
+                        .onAppear {
+                            withAnimation(.easeInOut(duration: 0.95).repeatForever(autoreverses: true)) {
+                                animatePulse = true
+                            }
                         }
-                    }
+                }
+
+                Text(averagesTitle)
+                    .font(.title2)
+                    .bold()
+                    .foregroundColor(.white)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.68)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 18)
+                    .padding(.top, 2)
+                    .padding(.bottom, 2)
+
+                chartIntervalPicker
+                chartSection
+
+                if selectedChart == .lifespace {
+                    moduleButtons
+                }
             }
-
-            Text(averagesTitle)
-                .font(.title2)
-                .bold()
-                .foregroundColor(.white)
-                .padding(.top, 2)
-                .padding(.bottom, 2)
-
-            chartIntervalPicker
-            chartSection
-
-            if selectedChart == .lifespace {
-                moduleButtons
-            }
-
-            chartPicker
-
-            Spacer(minLength: 10)
+            .padding(.top, 8)
+            .padding(.bottom, 110)
         }
-        .padding(.top, 10)
     }
 
     private var chartIntervalPicker: some View {
@@ -156,7 +168,7 @@ struct AnalyticsView: View {
             }
         }
         .pickerStyle(.segmented)
-        .padding(.horizontal)
+        .padding(.horizontal, 18)
         .padding(.bottom, 2)
     }
 
@@ -234,8 +246,8 @@ struct AnalyticsView: View {
         .transaction { transaction in
             transaction.animation = nil
         }
-        .frame(height: 260)
-        .padding(.horizontal)
+        .frame(height: 230)
+        .padding(.horizontal, 18)
     }
 
     private var weightChart: some View {
@@ -254,8 +266,8 @@ struct AnalyticsView: View {
         }
         .chartScrollableAxes(.horizontal)
         .chartXVisibleDomain(length: chartInterval == .week ? 6 : 12)
-        .frame(height: 260)
-        .padding(.horizontal)
+        .frame(height: 230)
+        .padding(.horizontal, 18)
     }
 
     private func toggleModule(_ module: LifespaceModule) {
@@ -269,16 +281,21 @@ struct AnalyticsView: View {
     }
 
     private var moduleButtons: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 14) {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), spacing: 10) {
             ForEach(LifespaceModule.allCases, id: \.self) { module in
                 Button {
                     toggleModule(module)
                 } label: {
                     Text(displayName(for: module))
-                        .font(.headline)
+                        .font(.system(size: 17, weight: .bold))
                         .foregroundColor(.white)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 16)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.65)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, minHeight: 48)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 8)
                         .background(
                             toggledModules.contains(module)
                                 ? (moduleColors[module] ?? Color.white.opacity(0.25))
@@ -288,8 +305,8 @@ struct AnalyticsView: View {
                 }
             }
         }
-        .padding(.horizontal)
-        .padding(.top, -8)
+        .padding(.horizontal, 18)
+        .padding(.top, -4)
     }
 
     private var chartPicker: some View {
@@ -299,8 +316,10 @@ struct AnalyticsView: View {
             }
         }
         .pickerStyle(.segmented)
-        .padding(.horizontal)
-        .padding(.bottom, 20)
+        .padding(.horizontal, 18)
+        .padding(.top, 10)
+        .padding(.bottom, 10)
+        .background(.ultraThinMaterial.opacity(0.35))
     }
 
     func displayName(for module: LifespaceModule) -> String {
