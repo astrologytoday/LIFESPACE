@@ -441,21 +441,27 @@ struct ResultsView: View {
                 .frame(width: 54, height: 54)
                 .background(Color.white.opacity(0.20))
                 .clipShape(Circle())
+                .layoutPriority(0)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(title(for: module))
                     .font(.custom("Avenir-Heavy", size: 17))
                     .foregroundColor(.white)
                     .lineLimit(2)
-                    .minimumScaleFactor(0.75)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .layoutPriority(2)
 
                 Text(description(for: module))
                     .font(.custom("Avenir", size: 16))
                     .foregroundColor(.white)
                     .lineLimit(nil)
+                    .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.trailing, 12)
+                    .layoutPriority(1)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .layoutPriority(2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 6)
