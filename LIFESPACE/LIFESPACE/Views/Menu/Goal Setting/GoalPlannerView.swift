@@ -143,6 +143,9 @@ struct GoalPlannerView: View {
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
                             .layoutPriority(1)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
 
                         ForEach(Array(goal.steps.enumerated()), id: \.offset) { idx, step in
                             HStack {
@@ -215,6 +218,9 @@ struct GoalPlannerView: View {
                         Text("How long will it take to complete this goal?")
                             .font(.headline)
                             .foregroundColor(.white)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
                             .layoutPriority(1)
