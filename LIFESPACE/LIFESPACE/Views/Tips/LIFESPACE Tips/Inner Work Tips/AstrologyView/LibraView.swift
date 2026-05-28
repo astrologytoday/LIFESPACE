@@ -33,7 +33,11 @@ struct LibraView: View {
                     Text("September 23 – October 22")
                         .font(.system(size: 20))
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.horizontal)
 
                     HStack(alignment: .top, spacing: 16) {
                         VStack(alignment: .leading, spacing: 14) {
@@ -45,13 +49,14 @@ struct LibraView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 20)
+                        .layoutPriority(1)
 
                         Image("libra-symbol")
                             .resizable()
                             .renderingMode(.template)
                             .foregroundColor(.white)
                             .scaledToFit()
-                            .frame(width: 150, height: 150)
+                            .frame(maxWidth: 150, maxHeight: 150)
                             .padding(.trailing, 20)
                             .shadow(radius: 10)
                     }
@@ -66,6 +71,8 @@ struct LibraView: View {
                     Partnership comes naturally to Libra, and they often feel most at ease when collaborating or sharing life with others. With a strong sense of justice, they care deeply about fairness. Still, they can sometimes hesitate when faced with tough decisions, weighing every side before choosing a path.
                     """)
                     .foregroundColor(.white)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal)
 
                     HStack {
@@ -84,7 +91,7 @@ struct LibraView: View {
                         Spacer()
                     }
                     .padding(.top, 10)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 44)
                 }
                 .opacity(contentOpacity)
                 .onAppear {
@@ -98,19 +105,20 @@ struct LibraView: View {
 
     // MARK: - Info Row Builder
     func infoRow(label: String, value: String) -> some View {
-        HStack(spacing: 6) {
+        HStack(alignment: .top, spacing: 6) {
             Text("• \(label)")
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(value)
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
-                .fixedSize()
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
-            Spacer()
+            Spacer(minLength: 0)
         }
-        .fixedSize(horizontal: true, vertical: false)
     }
 }
-
