@@ -8,6 +8,8 @@ struct TypingDotsView: View {
         Text("Thinking" + String(repeating: ".", count: dotCount))
             .foregroundColor(.white)
             .font(.custom("Avenir", size: 16))
+            .lineLimit(1)
+            .minimumScaleFactor(0.75)
             .onReceive(timer) { _ in
                 dotCount = (dotCount + 1) % 4
             }
@@ -28,36 +30,12 @@ struct ResultsView: View {
     @State private var pulse = false
 
     let barGradients: [[Color]] = [
-        [
-            Color(red: 0.02, green: 0.38, blue: 0.42),
-            Color(red: 0.20, green: 0.82, blue: 0.50),
-            Color(red: 0.34, green: 1.00, blue: 1.00)
-        ],
-        [
-            Color(red: 0.08, green: 0.56, blue: 0.60),
-            Color(red: 0.94, green: 0.40, blue: 0.45),
-            Color(red: 0.40, green: 1.00, blue: 1.00)
-        ],
-        [
-            Color(red: 0.10, green: 0.62, blue: 0.66),
-            Color(red: 0.46, green: 0.48, blue: 0.82),
-            Color(red: 0.42, green: 1.00, blue: 1.00)
-        ],
-        [
-            Color(red: 0.00, green: 0.34, blue: 0.38),
-            Color(red: 0.92, green: 0.76, blue: 0.22),
-            Color(red: 0.40, green: 1.00, blue: 1.00)
-        ],
-        [
-            Color(red: 0.00, green: 0.32, blue: 0.36),
-            Color(red: 0.14, green: 0.80, blue: 0.50),
-            Color(red: 0.36, green: 1.00, blue: 1.00)
-        ],
-        [
-            Color(red: 0.00, green: 0.28, blue: 0.32),
-            Color(red: 0.78, green: 0.30, blue: 0.78),
-            Color(red: 0.32, green: 0.94, blue: 1.00)
-        ]
+        [Color(red: 0.02, green: 0.38, blue: 0.42), Color(red: 0.20, green: 0.82, blue: 0.50), Color(red: 0.34, green: 1.00, blue: 1.00)],
+        [Color(red: 0.08, green: 0.56, blue: 0.60), Color(red: 0.94, green: 0.40, blue: 0.45), Color(red: 0.40, green: 1.00, blue: 1.00)],
+        [Color(red: 0.10, green: 0.62, blue: 0.66), Color(red: 0.46, green: 0.48, blue: 0.82), Color(red: 0.42, green: 1.00, blue: 1.00)],
+        [Color(red: 0.00, green: 0.34, blue: 0.38), Color(red: 0.92, green: 0.76, blue: 0.22), Color(red: 0.40, green: 1.00, blue: 1.00)],
+        [Color(red: 0.00, green: 0.32, blue: 0.36), Color(red: 0.14, green: 0.80, blue: 0.50), Color(red: 0.36, green: 1.00, blue: 1.00)],
+        [Color(red: 0.00, green: 0.28, blue: 0.32), Color(red: 0.78, green: 0.30, blue: 0.78), Color(red: 0.32, green: 0.94, blue: 1.00)]
     ]
 
     let numPhases = 6
@@ -101,11 +79,15 @@ struct ResultsView: View {
                                     .font(.caption)
                                     .bold()
                                     .foregroundColor(darkTeal)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.7)
 
                                 Text("\(Int(score.rounded()))%")
                                     .font(.caption)
                                     .bold()
                                     .foregroundColor(darkTeal)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.7)
                             }
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
@@ -206,7 +188,7 @@ struct ResultsView: View {
                     }
                     .frame(height: screenHeight * 0.34)
 
-                    Spacer(minLength: 14)
+                    Spacer(minLength: 10)
 
                     ZStack(alignment: .bottomTrailing) {
                         if showText {
@@ -222,24 +204,23 @@ struct ResultsView: View {
                                                 .font(.system(size: 32, weight: .bold))
                                                 .foregroundColor(.white)
                                                 .multilineTextAlignment(.center)
+                                                .lineLimit(3)
+                                                .minimumScaleFactor(0.7)
                                                 .frame(maxWidth: .infinity)
                                                 .shadow(radius: 10)
                                                 .scaleEffect(pulse ? 1.03 : 0.97)
-                                                .animation(
-                                                    .easeInOut(duration: 1.1).repeatForever(autoreverses: true),
-                                                    value: pulse
-                                                )
+                                                .animation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true), value: pulse)
                                         }
                                         .frame(maxWidth: .infinity)
                                         .padding(.vertical, 8)
-                                        .onAppear {
-                                            pulse = true
-                                        }
+                                        .onAppear { pulse = true }
 
                                         Text("Keep doing what you're doing. You're maintaining a strong mind–body–soul balance.")
                                             .font(.custom("Avenir", size: 16))
                                             .foregroundColor(.white)
                                             .multilineTextAlignment(.center)
+                                            .lineLimit(nil)
+                                            .fixedSize(horizontal: false, vertical: true)
                                             .frame(maxWidth: .infinity)
                                             .padding(.top, -50)
                                     } else {
@@ -279,9 +260,7 @@ struct ResultsView: View {
                                             .background(
                                                 Capsule()
                                                     .fill(Color.white.opacity(0.12))
-                                                    .overlay(
-                                                        Capsule().stroke(Color.white.opacity(0.35), lineWidth: 1)
-                                                    )
+                                                    .overlay(Capsule().stroke(Color.white.opacity(0.35), lineWidth: 1))
                                             )
                                             .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 6)
                                             .padding(.horizontal, 8)
@@ -311,75 +290,40 @@ struct ResultsView: View {
                                     }
                                 }
                                 .padding()
+                                .padding(.bottom, 96)
                                 .frame(maxWidth: .infinity, alignment: .topLeading)
                             }
                         } else {
                             VStack {
                                 Spacer()
-
                                 HStack {
                                     Spacer()
                                     TypingDotsView()
                                     Spacer()
                                 }
                                 .padding(.bottom, 100)
-
                                 Spacer()
                             }
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
                     }
-                    .frame(height: screenHeight * 0.50)
+                    .frame(maxHeight: .infinity)
                     .background(Color.white.opacity(0.10))
                     .cornerRadius(14)
                     .padding(.horizontal)
-
-                    Spacer()
-
-                    HStack(spacing: 16) {
-                        Button {
-                            navModel.push("TipsView")
-                        } label: {
-                            HStack {
-                                Image(systemName: "star.fill")
-                                Text("TIPS").bold()
-                            }
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.white.opacity(0.20))
-                            .cornerRadius(14)
-                        }
-
-                        Button {
-                            navModel.push("AnalyticsView")
-                        } label: {
-                            HStack {
-                                Image(systemName: "chart.bar.xaxis")
-                                Text("ANALYTICS").bold()
-                            }
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.white.opacity(0.20))
-                            .cornerRadius(14)
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 96)
                 }
                 .padding(.top, 10)
             }
             .coordinateSpace(name: "chartSpace")
+            .safeAreaInset(edge: .bottom) {
+                bottomButtonBar
+            }
             .onAppear {
-                withAnimation(.easeInOut(duration: 0.4)) {
-                    showBars = true
-                }
+                withAnimation(.easeInOut(duration: 0.4)) { showBars = true }
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    withAnimation(.easeIn(duration: 0.8)) {
-                        showText = true
-                    }
+                    withAnimation(.easeIn(duration: 0.8)) { showText = true }
                 }
 
                 Timer.scheduledTimer(withTimeInterval: 3.50, repeats: true) { _ in
@@ -395,6 +339,44 @@ struct ResultsView: View {
         }
     }
 
+    private var bottomButtonBar: some View {
+        HStack(spacing: 16) {
+            Button { navModel.push("TipsView") } label: {
+                HStack {
+                    Image(systemName: "star.fill")
+                    Text("TIPS").bold()
+                }
+                .font(.headline)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                .foregroundColor(.white)
+                .padding()
+                .frame(maxWidth: .infinity, minHeight: 52)
+                .background(Color.white.opacity(0.20))
+                .cornerRadius(14)
+            }
+
+            Button { navModel.push("AnalyticsView") } label: {
+                HStack {
+                    Image(systemName: "chart.bar.xaxis")
+                    Text("ANALYTICS").bold()
+                }
+                .font(.headline)
+                .lineLimit(1)
+                .minimumScaleFactor(0.65)
+                .foregroundColor(.white)
+                .padding()
+                .frame(maxWidth: .infinity, minHeight: 52)
+                .background(Color.white.opacity(0.20))
+                .cornerRadius(14)
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 10)
+        .padding(.bottom, 8)
+        .background(.ultraThinMaterial.opacity(0.25))
+    }
+
     private func bubbleXOffset(for index: Int, totalWidth: CGFloat) -> CGFloat {
         guard barCenters[index] != 0 else { return 0 }
         return barCenters[index] - (totalWidth / 2) - 4
@@ -405,70 +387,42 @@ struct ResultsView: View {
     }
 
     private func recommendedModules() -> [LifespaceModule] {
-        let sorted = modules.sorted {
-            lifespaceLogModel.score(for: $0) < lifespaceLogModel.score(for: $1)
-        }
-
-        let filtered = sorted.filter {
-            lifespaceLogModel.score(for: $0) < 80
-        }
-
-        return filtered
+        let sorted = modules.sorted { lifespaceLogModel.score(for: $0) < lifespaceLogModel.score(for: $1) }
+        return sorted.filter { lifespaceLogModel.score(for: $0) < 80 }
     }
 
     private func allModulesAbove80() -> Bool {
         for module in modules {
-            if lifespaceLogModel.score(for: module) < 80 {
-                return false
-            }
+            if lifespaceLogModel.score(for: module) < 80 { return false }
         }
-
         return true
     }
 
     private func title(for module: LifespaceModule) -> String {
         switch module {
-        case .light:
-            return "Sunlight"
-        case .innerWork:
-            return "Inner Work"
-        case .fitness:
-            return "Fitness"
-        case .eating:
-            return "Healthy Eating"
-        case .sensory:
-            return "Sensory Health"
-        case .purpose:
-            return "Purpose"
-        case .activity:
-            return "Activity"
-        case .community:
-            return "Community"
-        case .expression:
-            return "Expression"
+        case .light: return "Sunlight"
+        case .innerWork: return "Inner Work"
+        case .fitness: return "Fitness"
+        case .eating: return "Healthy Eating"
+        case .sensory: return "Sensory Health"
+        case .purpose: return "Purpose"
+        case .activity: return "Activity"
+        case .community: return "Community"
+        case .expression: return "Expression"
         }
     }
 
     private func description(for module: LifespaceModule) -> String {
         switch module {
-        case .light:
-            return "Get at least 15 minutes of sunlight per day."
-        case .innerWork:
-            return "Aim for at least 15 minutes of meditation per day to regulate the limbic system."
-        case .fitness:
-            return "Try and work in at least 5 minutes of daily vigorous exercise."
-        case .eating:
-            return "Cook healthy meals and minimize junk food consumption."
-        case .sensory:
-            return "Keep your living space clean."
-        case .purpose:
-            return "Work toward meaningful goals that support your life's purpose."
-        case .activity:
-            return "Make sure you're getting at least 7 hours of sleep. Find time to do something fun."
-        case .community:
-            return "Meet someone new in your community or spend time with friends and family."
-        case .expression:
-            return "Take time to do something creative."
+        case .light: return "Get at least 15 minutes of sunlight per day."
+        case .innerWork: return "Aim for at least 15 minutes of meditation per day to regulate the limbic system."
+        case .fitness: return "Try and work in at least 5 minutes of daily vigorous exercise."
+        case .eating: return "Cook healthy meals and minimize junk food consumption."
+        case .sensory: return "Keep your living space clean."
+        case .purpose: return "Work toward meaningful goals that support your life's purpose."
+        case .activity: return "Make sure you're getting at least 7 hours of sleep. Find time to do something fun."
+        case .community: return "Meet someone new in your community or spend time with friends and family."
+        case .expression: return "Take time to do something creative."
         }
     }
 
@@ -485,13 +439,15 @@ struct ResultsView: View {
                 Text(title(for: module))
                     .font(.headline)
                     .foregroundColor(.white)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.75)
 
                 Text(description(for: module))
                     .font(.custom("Avenir", size: min(16, screenWidth * 0.04)))
                     .foregroundColor(.white)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.trailing, 54)
+                    .padding(.trailing, 12)
             }
         }
     }
@@ -539,31 +495,21 @@ struct FireworksView: View {
                         height: particle.size
                     )
 
-                    context.fill(
-                        Path(ellipseIn: rect),
-                        with: .color(particle.color.opacity(opacity))
-                    )
+                    context.fill(Path(ellipseIn: rect), with: .color(particle.color.opacity(opacity)))
 
                     let glowRect = rect.insetBy(dx: -particle.size * 0.6, dy: -particle.size * 0.6)
-
-                    context.fill(
-                        Path(ellipseIn: glowRect),
-                        with: .color(particle.color.opacity(opacity * 0.25))
-                    )
+                    context.fill(Path(ellipseIn: glowRect), with: .color(particle.color.opacity(opacity * 0.25)))
                 }
             }
             .blendMode(.screen)
             .clipped()
         }
         .allowsHitTesting(false)
-        .onAppear {
-            lastUpdate = Date()
-        }
+        .onAppear { lastUpdate = Date() }
     }
 
     private func updateParticles(dt: TimeInterval, size: CGSize) {
         guard dt > 0 else { return }
-
         let dtf = CGFloat(dt)
         timeSinceLastBurst += dt
 
@@ -577,18 +523,13 @@ struct FireworksView: View {
 
         for var particle in particles {
             particle.velocity.dy += gravity * dtf
-
             particle.velocity.dx *= (1 - drag * dtf)
             particle.velocity.dy *= (1 - drag * dtf)
-
             particle.position.x += particle.velocity.dx * dtf
             particle.position.y += particle.velocity.dy * dtf
-
             particle.life -= dt
 
-            if particle.life > 0 {
-                updated.append(particle)
-            }
+            if particle.life > 0 { updated.append(particle) }
         }
 
         particles = updated
@@ -600,35 +541,18 @@ struct FireworksView: View {
             y: CGFloat.random(in: size.height * 0.15 ... size.height * 0.55)
         )
 
-        let colors: [Color] = [
-            .red, .orange, .yellow, .green, .blue, .purple, .pink, .white
-        ]
-
+        let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple, .pink, .white]
         var newParticles: [FireworkParticle] = []
         let count = Int.random(in: 40...80)
 
         for _ in 0..<count {
             let angle = CGFloat.random(in: 0...(2 * .pi))
             let speed = CGFloat.random(in: 100...260)
-
-            let velocity = CGVector(
-                dx: cos(angle) * speed,
-                dy: sin(angle) * speed
-            )
-
+            let velocity = CGVector(dx: cos(angle) * speed, dy: sin(angle) * speed)
             let life = Double.random(in: 1.0...1.8)
             let sizeVal = CGFloat.random(in: 4...10)
             let color = colors.randomElement() ?? .white
-
-            let particle = FireworkParticle(
-                position: origin,
-                velocity: velocity,
-                color: color,
-                size: sizeVal,
-                life: life,
-                maxLife: life
-            )
-
+            let particle = FireworkParticle(position: origin, velocity: velocity, color: color, size: sizeVal, life: life, maxLife: life)
             newParticles.append(particle)
         }
 
