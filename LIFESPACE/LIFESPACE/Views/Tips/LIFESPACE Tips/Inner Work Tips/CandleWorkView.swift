@@ -57,6 +57,8 @@ struct CandleWorkView: View {
                     Text("CANDLE WORK")
                         .font(.system(size: 36, weight: .bold))
                         .foregroundColor(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
                         .shadow(color: .white.opacity(0.28), radius: 10, x: 0, y: 0)
                         .shadow(color: .black.opacity(0.30), radius: 3, x: 0, y: 2)
                         .shadow(color: .white.opacity(0.7), radius: 10)
@@ -72,7 +74,9 @@ struct CandleWorkView: View {
                         Text("Candle gazing is a sacred practice found in yoga, mysticism, and ancient spiritual traditions. It calms the mind, activates inner light, and deepens intuitive awareness.")
                             .font(.system(size: 17))
                             .foregroundColor(.white.opacity(0.95))
+                            .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
 
                         Spacer(minLength: 0)
                     }
@@ -85,6 +89,7 @@ struct CandleWorkView: View {
                         }
                         .font(.system(size: 17))
                         .foregroundColor(.white.opacity(0.93))
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 6)
                     }
@@ -97,6 +102,7 @@ struct CandleWorkView: View {
                         }
                         .font(.system(size: 17))
                         .foregroundColor(.white.opacity(0.93))
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 6)
                     }
@@ -109,6 +115,7 @@ struct CandleWorkView: View {
                         }
                         .font(.system(size: 17))
                         .foregroundColor(.white.opacity(0.93))
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 6)
                     }
@@ -121,6 +128,7 @@ struct CandleWorkView: View {
                         }
                         .font(.system(size: 17))
                         .foregroundColor(.white.opacity(0.93))
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 6)
                     }
@@ -145,6 +153,7 @@ struct CandleWorkView: View {
                         Text("Light a single candle in a quiet room. Allow your gaze to soften. Let the flame still your thoughts and awaken what is already inside you.")
                             .font(.system(size: 17))
                             .foregroundColor(.white.opacity(0.93))
+                            .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.top, 6)
                     }
@@ -182,7 +191,7 @@ struct CandleWorkView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.top, 10)
-                    .padding(.bottom, 38)
+                    .padding(.bottom, 44)
                 }
                 .padding(.horizontal, 20)
                 .opacity(contentOpacity)
@@ -246,7 +255,7 @@ private struct CandleHeader: View {
     let symbol: String
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(alignment: .top, spacing: 10) {
             ZStack {
                 Circle()
                     .fill(Color.white.opacity(0.14))
@@ -261,6 +270,9 @@ private struct CandleHeader: View {
             Text(title)
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.white)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
 
             Spacer(minLength: 0)
         }
@@ -282,7 +294,9 @@ private struct CandleSingleBullet: View {
                 .multilineTextAlignment(.leading)
                 .shadow(color: .white.opacity(0.12), radius: 10, x: 0, y: 0)
                 .shadow(color: .black.opacity(0.22), radius: 3, x: 0, y: 2)
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
 
             Spacer(minLength: 0)
         }
