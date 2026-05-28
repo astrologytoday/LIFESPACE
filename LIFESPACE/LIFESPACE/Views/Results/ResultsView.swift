@@ -69,8 +69,8 @@ struct ResultsView: View {
 
                 VStack(spacing: 0) {
                     scoreBubble(screenWidth: screenWidth)
-                        .frame(height: 40)
-                        .padding(.top, 10)
+                        .frame(height: selectedBarIndex == nil ? 0 : 40)
+                        .padding(.top, selectedBarIndex == nil ? 0 : 6)
 
                     chartArea(screenWidth: screenWidth, maxBarHeight: maxBarHeight)
                         .frame(height: screenHeight * 0.34)
@@ -359,7 +359,7 @@ struct ResultsView: View {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity, minHeight: 52)
-                .background(Color(red: 0.40, green: 0.68, blue: 0.66))
+                .background(Color(red: 0.35, green: 0.70, blue: 0.67))
                 .cornerRadius(14)
             }
 
@@ -374,14 +374,14 @@ struct ResultsView: View {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity, minHeight: 52)
-                .background(Color(red: 0.40, green: 0.68, blue: 0.66))
+                .background(Color(red: 0.35, green: 0.70, blue: 0.67))
                 .cornerRadius(14)
             }
         }
         .padding(.horizontal, 16)
         .padding(.top, 10)
         .padding(.bottom, 8)
-        .background(Color(red: 0.08, green: 0.42, blue: 0.42))
+        .background(Color(red: 0.10, green: 0.45, blue: 0.45))
     }
 
     private func bubbleXOffset(for index: Int, totalWidth: CGFloat) -> CGFloat {
