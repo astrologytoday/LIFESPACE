@@ -1,0 +1,34 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+Packages/
+
+# CocoaPods
+Pods/
+
+# App archives / exports
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# Signing / certificates
+*.mobileprovision
+*.p12
+*.cer
+
+# Secrets / environment files
+.env
+.env.local
+Secrets.plist
+APIKeys.plist
+
+# macOS
+.DS_Store
