@@ -8,8 +8,10 @@ struct EatingTipsView: View {
         GeometryReader { geometry in
             let screenWidth = geometry.size.width
             let screenHeight = geometry.size.height
+            let safeBottom = geometry.safeAreaInsets.bottom
             let horizontalPadding = max(20, screenWidth * 0.06)
             let footerHeight: CGFloat = max(80, screenHeight * 0.11)
+            let footerBottomPadding: CGFloat = max(20, safeBottom + 10)
 
             ZStack(alignment: .topLeading) {
                 LinearGradient(
@@ -35,6 +37,7 @@ struct EatingTipsView: View {
                             .font(.system(size: min(20, screenWidth * 0.052)))
                             .italic()
                             .foregroundColor(Color.white.opacity(0.95))
+                            .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
 
                         DictionaryCard(
@@ -54,7 +57,7 @@ struct EatingTipsView: View {
                     }
                     .padding(.horizontal, horizontalPadding)
                     .padding(.top, 68)
-                    .padding(.bottom, footerHeight + 60)
+                    .padding(.bottom, footerHeight + footerBottomPadding + 70)
                     .opacity(appeared ? 1 : 0)
                     .animation(.easeInOut(duration: 0.6), value: appeared)
                 }
@@ -65,8 +68,8 @@ struct EatingTipsView: View {
 
                 VStack {
                     Spacer()
-                    footerButtons(screenWidth: screenWidth)
-                        .frame(height: footerHeight)
+                    footerButtons(screenWidth: screenWidth, bottomPadding: footerBottomPadding)
+                        .frame(height: footerHeight + footerBottomPadding)
                         .background(
                             LinearGradient(
                                 gradient: Gradient(colors: [
@@ -76,17 +79,15 @@ struct EatingTipsView: View {
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
-                            .ignoresSafeArea(edges: .bottom)
                         )
                 }
-                .ignoresSafeArea(edges: .bottom)
             }
             .onAppear { appeared = true }
             .transition(.opacity)
         }
     }
 
-    private func footerButtons(screenWidth: CGFloat) -> some View {
+    private func footerButtons(screenWidth: CGFloat, bottomPadding: CGFloat) -> some View {
         let buttonSize = max(52, min(68, screenWidth * 0.155))
         let spacing = max(12, screenWidth * 0.04)
 
@@ -106,7 +107,7 @@ struct EatingTipsView: View {
         }
         .padding(.horizontal, 8)
         .padding(.top, 8)
-        .padding(.bottom, 20)
+        .padding(.bottom, bottomPadding)
         .frame(maxWidth: .infinity)
     }
 }
@@ -212,8 +213,9 @@ private struct DictionaryCard: View {
                 Text(headword)
                     .font(.system(size: min(27, screenWidth * 0.068), weight: .semibold, design: .serif))
                     .foregroundColor(.white)
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .minimumScaleFactor(0.8)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(partOfSpeech)
                     .font(.system(size: min(15.5, screenWidth * 0.04), weight: .semibold, design: .serif))
@@ -222,6 +224,7 @@ private struct DictionaryCard: View {
                 Text(definition)
                     .font(.system(size: min(17, screenWidth * 0.044), design: .serif))
                     .foregroundColor(Color.white.opacity(0.95))
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(22)
