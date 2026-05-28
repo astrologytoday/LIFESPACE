@@ -17,12 +17,12 @@ struct DepressionBuildingBlocksMatrixView: View {
     private let corner: CGFloat  = 18
 
     var body: some View {
-        // Compute sizes WITHOUT GeometryReader so the view keeps a tight intrinsic height
-        let containerW   = min(UIScreen.main.bounds.width, 900) - 24   // roughly accounts for outer padding
-        let totalHSpace  = hSpacing * 3                                // 4 cols → 3 gaps
-        let cellW        = max(88, (containerW - totalHSpace) / 4.0)
-        let cellH        = max(52, cellW * 0.52)
-        let gridHeight   = cellH * 3 + vSpacing * 2                    // 3 rows → 2 gaps
+        // Compute sizes without forcing the grid wider than smaller iPhones
+        let containerW = max(0, min(UIScreen.main.bounds.width, 900) - 24)
+        let totalHSpace = hSpacing * 3
+        let cellW = max(64, (containerW - totalHSpace) / 4.0)
+        let cellH = max(52, cellW * 0.52)
+        let gridHeight = cellH * 3 + vSpacing * 2
 
         return ZStack {
             // STATIC GRID (doesn't move)
@@ -92,6 +92,7 @@ struct DepressionBuildingBlocksMatrixView: View {
             }
         }
         // clamp the height so ScrollView doesn't reserve extra whitespace
+        .frame(maxWidth: .infinity)
         .frame(height: gridHeight)
         .padding(.vertical, 2)
     }
