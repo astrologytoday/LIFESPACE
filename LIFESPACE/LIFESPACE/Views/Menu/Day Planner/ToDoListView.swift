@@ -57,40 +57,7 @@ struct ToDoListView: View {
                     }
                 }
 
-                Spacer()
-
-                HStack(spacing: 16) {
-                    Button(action: {
-                        navModel.push("ReminderImportListView")
-                    }) {
-                        HStack(spacing: 8) {
-                            Image(systemName: "arrow.down.doc")
-                                .font(.title3)
-
-                            Text("Import Reminders")
-                                .fontWeight(.semibold)
-                        }
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 18)
-                        .background(tealGradient)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 4, y: 2)
-                    }
-
-                    Button(action: {
-                        navModel.push("HomeView")
-                    }) {
-                        Image(systemName: "house.fill")
-                            .font(.title2)
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(tealGradient)
-                            .cornerRadius(12)
-                    }
-                }
-                .padding(.bottom, 20)
-                .frame(maxWidth: .infinity, alignment: .trailing)
+                Spacer(minLength: 0)
             }
             .padding()
 
@@ -147,6 +114,41 @@ struct ToDoListView: View {
                 .zIndex(999)
                 .transition(.opacity)
             }
+        }
+        .safeAreaInset(edge: .bottom) {
+            HStack(spacing: 16) {
+                Button(action: {
+                    navModel.push("ReminderImportListView")
+                }) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "arrow.down.doc")
+                            .font(.title3)
+
+                        Text("Import Reminders")
+                            .fontWeight(.semibold)
+                    }
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 18)
+                    .background(tealGradient)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 4, y: 2)
+                }
+
+                Button(action: {
+                    navModel.push("HomeView")
+                }) {
+                    Image(systemName: "house.fill")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .background(tealGradient)
+                        .cornerRadius(12)
+                }
+            }
+            .padding(.bottom, 20)
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .onAppear {
             autoGenerateLifespaceTasks()
