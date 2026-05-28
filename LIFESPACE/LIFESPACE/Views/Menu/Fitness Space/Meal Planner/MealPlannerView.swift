@@ -367,7 +367,7 @@ struct MealPlannerView: View {
         .padding(.top, 10)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
-        .background(.ultraThinMaterial.opacity(0.16))
+        .background(Color(red: 0.08, green: 0.42, blue: 0.42).opacity(0.88))
     }
 
     private func floatingButton(systemName: String, action: @escaping () -> Void) -> some View {
