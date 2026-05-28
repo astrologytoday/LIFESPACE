@@ -444,13 +444,13 @@ struct ResultsView: View {
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(title(for: module))
-                    .font(.headline)
+                    .font(.custom("Avenir-Heavy", size: 17))
                     .foregroundColor(.white)
                     .lineLimit(2)
                     .minimumScaleFactor(0.75)
 
                 Text(description(for: module))
-                    .font(.custom("Avenir", size: min(16, screenWidth * 0.04)))
+                    .font(.custom("Avenir", size: 16))
                     .foregroundColor(.white)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
