@@ -35,6 +35,8 @@ struct ExpressionTipsView: View {
                             .font(.system(size: 40, weight: .heavy))
                             .foregroundColor(.white)
                             .shadow(radius: 4)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .opacity(appeared ? 1 : 0)
                             .offset(y: appeared ? 0 : -10)
                             .animation(.easeInOut(duration: 0.4), value: appeared)
@@ -44,6 +46,7 @@ struct ExpressionTipsView: View {
                             .font(.title3)
                             .italic()
                             .foregroundColor(Color.white.opacity(0.95))
+                            .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
                             .opacity(appeared ? 1 : 0)
                             .animation(.easeInOut(duration: 0.6).delay(0.05), value: appeared)
@@ -55,6 +58,8 @@ Creative expression is one of the most effective ways to support mental health. 
 """)
                         .font(.custom("Avenir", size: 17))
                         .foregroundColor(.white.opacity(0.95))
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .opacity(appeared ? 1 : 0)
                         .animation(.easeInOut(duration: 0.6).delay(0.1), value: appeared)
 
@@ -66,12 +71,16 @@ Creative expression is one of the most effective ways to support mental health. 
                                 Text("Creative Paths")
                                     .font(.system(size: 22, weight: .heavy))
                                     .foregroundColor(.white)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .shadow(color: .white.opacity(0.4), radius: 3)
                             }
 
                             Text("Sublimate your feelings.")
                                 .font(.custom("Avenir", size: 16))
                                 .foregroundColor(.white.opacity(0.9))
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
 
                             ExpressionGrid { route in
                                 // ✅ Special-case Music so it opens in your landscape window
@@ -113,6 +122,7 @@ Creative expression is one of the most effective ways to support mental health. 
                     }
                     .padding(.horizontal, 18)
                     .padding(.top, 70) // ✅ leaves room for the fixed top-right buttons
+                    .padding(.bottom, 80)
                 }
             }
 
@@ -196,7 +206,7 @@ Creative expression is one of the most effective ways to support mental health. 
             Button(action: action) {
                 VStack(alignment: .leading, spacing: 8) {
 
-                    HStack(spacing: 10) {
+                    HStack(alignment: .top, spacing: 10) {
                         ZStack {
                             Circle()
                                 .fill(
@@ -222,13 +232,14 @@ Creative expression is one of the most effective ways to support mental health. 
                             .foregroundColor(.white)
                             .lineLimit(2)
                             .multilineTextAlignment(.leading)
-                            .fixedSize(horizontal: true, vertical: false) // 👈 prevents word breaking
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         Image(systemName: "chevron.right")
                             .font(.system(size: 14, weight: .bold))
                             .foregroundColor(.white.opacity(0.9))
+                            .padding(.top, 8)
                     }
 
                     Text(subtitle)
