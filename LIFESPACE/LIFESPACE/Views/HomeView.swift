@@ -15,13 +15,9 @@ struct HomeView: View {
     @AppStorage("hasSeenOptimizationInfo") private var hasSeenOptimizationInfo: Bool = false
     @AppStorage("hasSeenStartView") private var hasSeenStartView: Bool = false
 
-    // ✅ This key is written by LifespaceLogModel.addEntry using "yyyy-MM-dd"
     @AppStorage("lastCheckCompletedDate") private var lastCheckCompletedDate: String = ""
-
-    // ✅ NEW: gates the NewYear flow to happen once per year
     @AppStorage("newYearFlow_lastShownYear") private var newYearFlowLastShownYear: Int = 0
 
-    // Diagnostic states for all disorders
     @AppStorage("AnxietyDiagnostic_lastResultTimestamp") var anxietyLastResultTimestamp: Double = 0
     @AppStorage("AnxietyDiagnostic_lastResultRisk") var anxietyLastResultRisk: String = ""
     @AppStorage("DepressionDiagnostic_lastResultTimestamp") var depressionLastResultTimestamp: Double = 0
@@ -40,65 +36,79 @@ struct HomeView: View {
     @AppStorage("CPTSDDiagnostic_lastResultRisk") var cptsdLastResultRisk: String = ""
 
     var body: some View {
-        ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.35, green: 0.80, blue: 0.75),
-                    Color(red: 0.20, green: 0.65, blue: 0.60),
-                    Color(red: 0.10, green: 0.45, blue: 0.45)
-                ]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+        GeometryReader { geometry in
+            let screenWidth = geometry.size.width
+            let logoSize = min(200, screenWidth * 0.48)
+            let buttonWidth = min(300, screenWidth * 0.78)
 
-            VStack(spacing: 40) {
-                Spacer()
-
-                Image("lifespace_logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 200)
-                    .opacity(showContent ? 1 : 0)
-                    .animation(.easeInOut(duration: 1), value: showContent)
-
-                Text("LIFESPACE")
-                    .font(.system(size: 48, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
-                    .opacity(showContent ? 1 : 0)
-                    .animation(.easeInOut(duration: 1.2).delay(0.2), value: showContent)
-
-                Spacer()
-
-                Button(action: handleStartTapped) {
-                    Text("START")
-                        .font(.headline)
-                        .foregroundColor(Color(red: 0.12, green: 0.49, blue: 0.45))
-                        .frame(width: 300, height: 75)
-                        .background(Color.white)
-                        .cornerRadius(25)
-                        .shadow(color: .black.opacity(0.3), radius: isPressed ? 1 : 5, x: 0, y: isPressed ? 1 : 4)
-                        .scaleEffect(isPressed ? 0.96 : 1.0)
-                        .animation(.easeInOut(duration: 0.15), value: isPressed)
-                }
-                .simultaneousGesture(
-                    DragGesture(minimumDistance: 0)
-                        .updating($isPressed) { _, state, _ in state = true }
+            ZStack {
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color(red: 0.35, green: 0.80, blue: 0.75),
+                        Color(red: 0.20, green: 0.65, blue: 0.60),
+                        Color(red: 0.10, green: 0.45, blue: 0.45)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
                 )
+                .ignoresSafeArea()
 
-                Text("Version 1.0")
-                    .font(.footnote)
-                    .foregroundColor(.white.opacity(0.8))
-                    .opacity(showContent ? 1 : 0)
-                    .animation(.easeInOut(duration: 1).delay(0.4), value: showContent)
+                VStack(spacing: 32) {
+                    Spacer(minLength: 24)
 
-                Spacer()
+                    Image("lifespace_logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: logoSize, height: logoSize)
+                        .opacity(showContent ? 1 : 0)
+                        .animation(.easeInOut(duration: 1), value: showContent)
+
+                    Text("LIFESPACE")
+                        .font(.system(size: min(48, screenWidth * 0.12), weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.65)
+                        .allowsTightening(true)
+                        .padding(.horizontal, 24)
+                        .opacity(showContent ? 1 : 0)
+                        .animation(.easeInOut(duration: 1.2).delay(0.2), value: showContent)
+
+                    Spacer(minLength: 24)
+
+                    Button(action: handleStartTapped) {
+                        Text("START")
+                            .font(.headline)
+                            .foregroundColor(Color(red: 0.12, green: 0.49, blue: 0.45))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                            .frame(width: buttonWidth, height: 75)
+                            .background(Color.white)
+                            .cornerRadius(25)
+                            .shadow(color: .black.opacity(0.3), radius: isPressed ? 1 : 5, x: 0, y: isPressed ? 1 : 4)
+                            .scaleEffect(isPressed ? 0.96 : 1.0)
+                            .animation(.easeInOut(duration: 0.15), value: isPressed)
+                    }
+                    .simultaneousGesture(
+                        DragGesture(minimumDistance: 0)
+                            .updating($isPressed) { _, state, _ in state = true }
+                    )
+
+                    Text("Version 1.0")
+                        .font(.footnote)
+                        .foregroundColor(.white.opacity(0.8))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                        .opacity(showContent ? 1 : 0)
+                        .animation(.easeInOut(duration: 1).delay(0.4), value: showContent)
+
+                    Spacer(minLength: 24)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
             }
             .onAppear {
                 if isSetupComplete {
-                    // ✅ Ensure New Year reset + year-summary save happens as soon as app opens
                     lifespaceLogModel.resetIfNewYear()
-
                     NotificationManager.shared.resetSuppressionIfNeeded()
                     initializeNotifications(lifespaceLogModel: lifespaceLogModel)
                     NotificationManager.shared.scheduleDailyCheckNotification(
@@ -114,61 +124,19 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - All Diagnostic Retests
     private var allDiagnostics: [DiagnosticRetestInfo] {
         [
-            DiagnosticRetestInfo(
-                disorder: "Anxiety",
-                lastResultTimestamp: anxietyLastResultTimestamp,
-                lastResultRisk: anxietyLastResultRisk,
-                diagnosticViewName: "AnxietyDiagnosticView"
-            ),
-            DiagnosticRetestInfo(
-                disorder: "Depression",
-                lastResultTimestamp: depressionLastResultTimestamp,
-                lastResultRisk: depressionLastResultRisk,
-                diagnosticViewName: "DepressionDiagnosticView"
-            ),
-            DiagnosticRetestInfo(
-                disorder: "PSSD",
-                lastResultTimestamp: pssdLastResultTimestamp,
-                lastResultRisk: pssdLastResultRisk,
-                diagnosticViewName: "PSSDDiagnosticView"
-            ),
-            DiagnosticRetestInfo(
-                disorder: "ADHD",
-                lastResultTimestamp: adhdLastResultTimestamp,
-                lastResultRisk: adhdLastResultRisk,
-                diagnosticViewName: "ADHDDiagnosticView"
-            ),
-            DiagnosticRetestInfo(
-                disorder: "Autism",
-                lastResultTimestamp: autismLastResultTimestamp,
-                lastResultRisk: autismLastResultRisk,
-                diagnosticViewName: "AutismDiagnosticView"
-            ),
-            DiagnosticRetestInfo(
-                disorder: "BPD",
-                lastResultTimestamp: bpdLastResultTimestamp,
-                lastResultRisk: bpdLastResultRisk,
-                diagnosticViewName: "BPDDiagnosticView"
-            ),
-            DiagnosticRetestInfo(
-                disorder: "Psychosis",
-                lastResultTimestamp: psychosisLastResultTimestamp,
-                lastResultRisk: psychosisLastResultRisk,
-                diagnosticViewName: "PsychosisDiagnosticView"
-            ),
-            DiagnosticRetestInfo(
-                disorder: "C-PTSD",
-                lastResultTimestamp: cptsdLastResultTimestamp,
-                lastResultRisk: cptsdLastResultRisk,
-                diagnosticViewName: "CPTSDDiagnosticView"
-            )
+            DiagnosticRetestInfo(disorder: "Anxiety", lastResultTimestamp: anxietyLastResultTimestamp, lastResultRisk: anxietyLastResultRisk, diagnosticViewName: "AnxietyDiagnosticView"),
+            DiagnosticRetestInfo(disorder: "Depression", lastResultTimestamp: depressionLastResultTimestamp, lastResultRisk: depressionLastResultRisk, diagnosticViewName: "DepressionDiagnosticView"),
+            DiagnosticRetestInfo(disorder: "PSSD", lastResultTimestamp: pssdLastResultTimestamp, lastResultRisk: pssdLastResultRisk, diagnosticViewName: "PSSDDiagnosticView"),
+            DiagnosticRetestInfo(disorder: "ADHD", lastResultTimestamp: adhdLastResultTimestamp, lastResultRisk: adhdLastResultRisk, diagnosticViewName: "ADHDDiagnosticView"),
+            DiagnosticRetestInfo(disorder: "Autism", lastResultTimestamp: autismLastResultTimestamp, lastResultRisk: autismLastResultRisk, diagnosticViewName: "AutismDiagnosticView"),
+            DiagnosticRetestInfo(disorder: "BPD", lastResultTimestamp: bpdLastResultTimestamp, lastResultRisk: bpdLastResultRisk, diagnosticViewName: "BPDDiagnosticView"),
+            DiagnosticRetestInfo(disorder: "Psychosis", lastResultTimestamp: psychosisLastResultTimestamp, lastResultRisk: psychosisLastResultRisk, diagnosticViewName: "PsychosisDiagnosticView"),
+            DiagnosticRetestInfo(disorder: "C-PTSD", lastResultTimestamp: cptsdLastResultTimestamp, lastResultRisk: cptsdLastResultRisk, diagnosticViewName: "CPTSDDiagnosticView")
         ]
     }
 
-    // MARK: - Find Due Retest (first due in order)
     private func dueRetest() -> DiagnosticRetestInfo? {
         let now = Date()
 
@@ -189,25 +157,21 @@ struct HomeView: View {
         return nil
     }
 
-    // MARK: - ✅ New Year gating helpers
     private func hasPreviousYearSummary() -> Bool {
         let currentYear = Calendar.current.component(.year, from: Date())
         return lifespaceLogModel.loadYearSummary(forYear: currentYear - 1) != nil
     }
 
-
     private func parseLastCheckDate(_ raw: String) -> Date? {
         let rawTrimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !rawTrimmed.isEmpty else { return nil }
 
-        // Primary: "yyyy-MM-dd"
         let iso = DateFormatter()
         iso.locale = Locale(identifier: "en_US_POSIX")
         iso.timeZone = TimeZone.current
         iso.dateFormat = "yyyy-MM-dd"
         if let d = iso.date(from: rawTrimmed) { return d }
 
-        // Fallback: locale short date (in case older builds stored it)
         let short = DateFormatter()
         short.locale = Locale.current
         short.timeZone = TimeZone.current
@@ -235,42 +199,32 @@ struct HomeView: View {
     private func shouldShowNewYearFlow() -> Bool {
         let currentYear = Calendar.current.component(.year, from: Date())
 
-        // ✅ Brand-new installs: no previous-year summary => never show NewYearView
         guard hasPreviousYearSummary() else { return false }
-
-        // Only once per year, and only if they haven't completed a check since Jan 1.
         if newYearFlowLastShownYear == currentYear { return false }
         if hasCompletedLifespaceCheckSinceJan1() { return false }
         return true
     }
 
-    // MARK: - START Button Logic
     private func handleStartTapped() {
         withAnimation(.easeInOut(duration: 0.6)) {
             if isSetupComplete {
-
-                // ✅ Ensure reset occurs once per year (even if user missed Jan 1)
                 lifespaceLogModel.resetIfNewYear()
 
-                // ✅ NEW YEAR ROUTE (only if they haven’t completed a check since reset)
                 if shouldShowNewYearFlow() {
                     navModel.push("NewYearView")
                     return
                 }
 
-                // --- Diagnostic Retest Reminder Check ---
                 if let due = dueRetest() {
                     navModel.reminderDisorder = due.disorder
                     navModel.reminderDateTaken = Date(timeIntervalSince1970: due.lastResultTimestamp)
                     navModel.reminderRiskLevel = due.lastResultRisk
                     navModel.reminderDiagnosticViewName = due.diagnosticViewName
                     navModel.reminderDailyCheckViewName = "LightCheckView"
-
                     navModel.selectedScreen = "DiagnosticReminderView"
                     return
                 }
 
-                // ✅ Use the same format LifespaceLogModel writes: "yyyy-MM-dd"
                 let formatter = DateFormatter()
                 formatter.locale = Locale(identifier: "en_US_POSIX")
                 formatter.timeZone = TimeZone.current
