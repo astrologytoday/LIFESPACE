@@ -33,7 +33,11 @@ struct CapricornView: View {
                     Text("December 22 – January 19")
                         .font(.system(size: 20))
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.horizontal)
 
                     HStack(alignment: .top, spacing: 16) {
                         VStack(alignment: .leading, spacing: 14) {
@@ -45,13 +49,14 @@ struct CapricornView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 20)
+                        .layoutPriority(1)
 
                         Image("capricorn-symbol")
                             .resizable()
                             .renderingMode(.template)
                             .foregroundColor(.white)
                             .scaledToFit()
-                            .frame(width: 150, height: 150)
+                            .frame(maxWidth: 150, maxHeight: 150)
                             .padding(.trailing, 20)
                             .shadow(radius: 10)
                     }
@@ -66,6 +71,8 @@ struct CapricornView: View {
                     While they can be cautious or self-critical, their ability to endure setbacks makes them incredibly resilient. They value social order, tradition, and stability, and may feel uneasy when things feel uncertain. At their best, Capricorns lead with integrity and achieve through dedication, not shortcuts.
                     """)
                     .foregroundColor(.white)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal)
 
                     HStack {
@@ -84,7 +91,7 @@ struct CapricornView: View {
                         Spacer()
                     }
                     .padding(.top, 10)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 44)
                 }
                 .opacity(contentOpacity)
                 .onAppear {
@@ -98,19 +105,20 @@ struct CapricornView: View {
 
     // MARK: - Info Row Builder
     func infoRow(label: String, value: String) -> some View {
-        HStack(spacing: 6) {
+        HStack(alignment: .top, spacing: 6) {
             Text("• \(label)")
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(value)
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .medium))
-                .fixedSize()
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
-            Spacer()
+            Spacer(minLength: 0)
         }
-        .fixedSize(horizontal: true, vertical: false)
     }
 }
-
