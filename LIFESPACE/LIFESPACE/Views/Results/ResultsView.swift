@@ -83,7 +83,7 @@ struct ResultsView: View {
                                 .background(Color.white.opacity(0.13))
                                 .cornerRadius(28)
                                 .padding(.horizontal, 16)
-                                .padding(.top, 12)
+                                .padding(.top, 28)
                                 .padding(.bottom, 110)
                         }
                     } else {
@@ -96,7 +96,7 @@ struct ResultsView: View {
                         .padding(.bottom, 110)
                     }
                 }
-                .padding(.top, 26)
+                .padding(.top, 8)
 
                 VStack(spacing: 0) {
                     Spacer()
