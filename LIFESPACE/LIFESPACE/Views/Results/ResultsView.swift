@@ -96,11 +96,14 @@ struct ResultsView: View {
                         .padding(.bottom, 110)
                     }
                 }
-                .padding(.top, 18)
+                .padding(.top, 26)
             }
             .coordinateSpace(name: "chartSpace")
-            .safeAreaInset(edge: .bottom) {
+            .safeAreaInset(edge: .bottom, spacing: 0) {
                 bottomButtonBar
+                    .transaction { transaction in
+                        transaction.animation = nil
+                    }
             }
             .onAppear {
                 withAnimation(.easeInOut(duration: 0.4)) { showBars = true }
