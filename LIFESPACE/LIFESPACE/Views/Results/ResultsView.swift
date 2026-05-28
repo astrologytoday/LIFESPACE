@@ -69,8 +69,8 @@ struct ResultsView: View {
 
                 VStack(spacing: 0) {
                     scoreBubble(screenWidth: screenWidth)
-                        .frame(height: selectedBarIndex == nil ? 0 : 40)
-                        .padding(.top, selectedBarIndex == nil ? 0 : 6)
+                        .frame(height: 40)
+                        .padding(.top, 6)
 
                     chartArea(screenWidth: screenWidth, maxBarHeight: maxBarHeight)
                         .frame(height: screenHeight * 0.34)
@@ -97,11 +97,14 @@ struct ResultsView: View {
                     }
                 }
                 .padding(.top, 26)
+
+                VStack(spacing: 0) {
+                    Spacer()
+                    bottomButtonBar(safeBottom: geometry.safeAreaInsets.bottom)
+                }
+                .ignoresSafeArea(edges: .bottom)
             }
             .coordinateSpace(name: "chartSpace")
-            .safeAreaInset(edge: .bottom) {
-                bottomButtonBar
-            }
             .onAppear {
                 withAnimation(.easeInOut(duration: 0.4)) { showBars = true }
 
@@ -346,7 +349,7 @@ struct ResultsView: View {
         }
     }
 
-    private var bottomButtonBar: some View {
+    private func bottomButtonBar(safeBottom: CGFloat) -> some View {
         HStack(spacing: 16) {
             Button { navModel.push("TipsView") } label: {
                 HStack {
@@ -380,7 +383,7 @@ struct ResultsView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 10)
-        .padding(.bottom, 8)
+        .padding(.bottom, max(8, safeBottom + 8))
         .background(Color(red: 0.10, green: 0.45, blue: 0.45))
     }
 
