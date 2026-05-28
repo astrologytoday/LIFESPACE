@@ -25,6 +25,10 @@ struct MeditationView: View {
         GridItem(.flexible(), spacing: 14)
     ]
 
+    private let chipColumns: [GridItem] = [
+        GridItem(.adaptive(minimum: 104), spacing: 10)
+    ]
+
     var body: some View {
         ZStack {
             // Background
@@ -55,19 +59,18 @@ struct MeditationView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 18) {
-
                     Spacer(minLength: 20)
 
-                    // Title (kept consistent with your style)
                     Text("MEDITATION")
                         .font(.system(size: 36, weight: .bold))
                         .foregroundColor(.white)
-                        .shadow(color: .white.opacity(0.28), radius: 10, x: 0, y: 0) // mystical glow
-                        .shadow(color: .black.opacity(0.30), radius: 3, x: 0, y: 2)  // depth
-                        .shadow(color: .white.opacity(0.7), radius: 10)              // your original title glow (optional)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                        .shadow(color: .white.opacity(0.28), radius: 10, x: 0, y: 0)
+                        .shadow(color: .black.opacity(0.30), radius: 3, x: 0, y: 2)
+                        .shadow(color: .white.opacity(0.7), radius: 10)
                         .frame(maxWidth: .infinity, alignment: .center)
 
-                    // Intro (clean, but with a small accent row)
                     GlassCard {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack(spacing: 10) {
@@ -85,10 +88,14 @@ struct MeditationView: View {
                                     Text("Tune Inward")
                                         .font(.system(size: 18, weight: .bold))
                                         .foregroundColor(.white)
+                                        .lineLimit(nil)
+                                        .fixedSize(horizontal: false, vertical: true)
 
                                     Text("Still the mind. Align the self.")
                                         .font(.system(size: 13, weight: .semibold))
                                         .foregroundColor(.white.opacity(0.78))
+                                        .lineLimit(nil)
+                                        .fixedSize(horizontal: false, vertical: true)
                                 }
 
                                 Spacer()
@@ -97,9 +104,10 @@ struct MeditationView: View {
                             Text("Meditation is the art of tuning inward, calming the mind, stilling the breath, and aligning with your higher self. The Law of Assumption teaches that what you assume to be true begins to manifest in your life.")
                                 .font(.system(size: 16))
                                 .foregroundColor(.white.opacity(0.95))
+                                .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
 
-                            HStack(spacing: 10) {
+                            LazyVGrid(columns: chipColumns, alignment: .leading, spacing: 10) {
                                 Chip(text: "Breath", icon: "lungs.fill")
                                 Chip(text: "Imagination", icon: "wand.and.stars")
                                 Chip(text: "Assumption", icon: "checkmark.circle.fill")
@@ -109,7 +117,6 @@ struct MeditationView: View {
                     }
                     .padding(.horizontal)
 
-                    // Law of Assumption
                     GlassCard {
                         VStack(alignment: .leading, spacing: 12) {
                             SectionHeader(title: "The Law of Assumption", icon: "eye.fill")
@@ -117,6 +124,7 @@ struct MeditationView: View {
                             Text("The Law of Assumption states that what you believe to be true becomes your reality. When your emotions, imagination, and assumptions align, your subconscious begins to reshape the world around you.")
                                 .font(.system(size: 16))
                                 .foregroundColor(.white.opacity(0.95))
+                                .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
 
                             QuoteCard(text: "Assume the feeling of the wish fulfilled, and the world will begin to mirror it back.")
@@ -124,7 +132,6 @@ struct MeditationView: View {
                     }
                     .padding(.horizontal)
 
-                    // How to Practice (spiced-up steps)
                     GlassCard {
                         VStack(alignment: .leading, spacing: 12) {
                             SectionHeader(title: "How to Practice the Law of Assumption", icon: "list.bullet.rectangle.portrait.fill")
@@ -143,12 +150,11 @@ struct MeditationView: View {
                     }
                     .padding(.horizontal)
 
-                    // Ideal Times (more visual)
                     GlassCard {
                         VStack(alignment: .leading, spacing: 12) {
                             SectionHeader(title: "Ideal Times for Manifestation Practice", icon: "clock.fill")
 
-                            HStack(spacing: 12) {
+                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 130), spacing: 12)], spacing: 12) {
                                 TimePill(title: "After Waking", subtitle: "First 10 minutes", icon: "sun.max.fill")
                                 TimePill(title: "Before Sleep", subtitle: "Last 10 minutes", icon: "moon.stars.fill")
                             }
@@ -156,12 +162,12 @@ struct MeditationView: View {
                             Text("These are moments when your subconscious mind is most open to suggestion. Use them to visualize the life you want to create.")
                                 .font(.system(size: 16))
                                 .foregroundColor(.white.opacity(0.95))
+                                .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                     .padding(.horizontal)
 
-                    // Affirmations Grid
                     GlassCard {
                         VStack(alignment: .leading, spacing: 12) {
                             SectionHeader(title: "Affirmations by Focus Area", icon: "square.grid.2x2.fill")
@@ -175,7 +181,6 @@ struct MeditationView: View {
                     }
                     .padding(.horizontal)
 
-                    // Timer Button (more “primary”)
                     Button(action: {
                         navModel.push("TimerView")
                     }) {
@@ -194,11 +199,16 @@ struct MeditationView: View {
                                 Text("Start Meditation Timer")
                                     .font(.system(size: 18, weight: .bold))
                                     .foregroundColor(.white)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
 
                                 Text("Choose a duration and begin")
                                     .font(.system(size: 13, weight: .semibold))
                                     .foregroundColor(.white.opacity(0.75))
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
+                            .layoutPriority(1)
 
                             Spacer()
 
@@ -219,7 +229,6 @@ struct MeditationView: View {
                     }
                     .padding(.top, 2)
 
-                    // Back Button (kept as-is behavior)
                     HStack {
                         Spacer()
                         Button(action: {
@@ -236,7 +245,7 @@ struct MeditationView: View {
                         Spacer()
                     }
                     .padding(.top, 10)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 44)
                 }
                 .opacity(contentOpacity)
                 .onAppear {
@@ -275,14 +284,20 @@ private struct SectionHeader: View {
     let icon: String
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(alignment: .top, spacing: 10) {
             Image(systemName: icon)
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(.white.opacity(0.95))
+                .padding(.top, 2)
+
             Text(title)
                 .font(.system(size: 18, weight: .bold))
                 .foregroundColor(.white)
-            Spacer()
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
+
+            Spacer(minLength: 0)
         }
     }
 }
@@ -299,7 +314,9 @@ private struct QuoteCard: View {
             Text(text)
                 .font(.system(size: 15, weight: .medium))
                 .foregroundColor(.white.opacity(0.92))
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -332,7 +349,9 @@ private struct StepRow: View {
             Text(text)
                 .font(.system(size: 16))
                 .foregroundColor(.white.opacity(0.95))
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
 
             Spacer(minLength: 0)
         }
@@ -352,9 +371,12 @@ private struct Chip: View {
             Text(text)
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundColor(.white.opacity(0.95))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
+        .frame(maxWidth: .infinity, alignment: .center)
         .background(Color.white.opacity(0.12))
         .overlay(Capsule().stroke(Color.white.opacity(0.16), lineWidth: 1))
         .cornerRadius(999)
@@ -368,18 +390,24 @@ private struct TimePill: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 8) {
+            HStack(alignment: .top, spacing: 8) {
                 Image(systemName: icon)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white.opacity(0.95))
+                    .padding(.top, 2)
                 Text(title)
                     .font(.system(size: 15, weight: .bold))
                     .foregroundColor(.white)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .layoutPriority(1)
             }
 
             Text(subtitle)
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundColor(.white.opacity(0.78))
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -410,21 +438,26 @@ private struct AffirmationCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 8) {
+            HStack(alignment: .top, spacing: 8) {
                 Image(systemName: iconName)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white.opacity(0.95))
+                    .padding(.top, 2)
 
                 Text(category)
                     .font(.system(size: 14, weight: .bold))
                     .foregroundColor(.white)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .layoutPriority(1)
 
-                Spacer()
+                Spacer(minLength: 0)
             }
 
             Text(affirmation)
                 .font(.system(size: 15, weight: .medium))
                 .foregroundColor(.white.opacity(0.95))
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(12)
