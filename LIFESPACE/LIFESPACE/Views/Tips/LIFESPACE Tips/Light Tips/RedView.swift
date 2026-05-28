@@ -27,10 +27,14 @@ struct RedView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
 
                         Text("RED")
                             .font(.system(size: 40, weight: .heavy))
                             .foregroundColor(.red)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                             .scaleEffect(isPulsing ? 1.08 : 1.0)
                             .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: isPulsing)
                             .onAppear {
@@ -99,6 +103,7 @@ struct RedView: View {
                     }
                     .foregroundColor(.white)
                     .font(.body)
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
 
 
@@ -113,6 +118,8 @@ struct RedView: View {
                     Text("Where you use the color Red will depend on the shade. Bright red tones should not be used in places where you need rest and relaxation.")
                         .foregroundColor(.white)
                         .font(.body)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     VStack(alignment: .leading, spacing: 10) {
                         bulletView(Text("Dining areas"))
@@ -135,6 +142,8 @@ struct RedView: View {
                         Text("← Back to Light Tips")
                             .foregroundColor(.white)
                             .font(.body)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.white.opacity(0.15))
@@ -144,6 +153,7 @@ struct RedView: View {
 
                 }
                 .padding(.horizontal, 24)
+                .padding(.bottom, 24)
             }
         }
     }
@@ -158,6 +168,8 @@ struct RedView: View {
         )
         .font(.title3)
         .fontWeight(.semibold)
+        .lineLimit(nil)
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     // MARK: - Bullet Helper
@@ -169,6 +181,7 @@ struct RedView: View {
 
             text
                 .foregroundColor(.white)
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -182,6 +195,8 @@ struct RedView: View {
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity)
 
             // Underline
@@ -201,6 +216,8 @@ struct RedView: View {
             .font(.system(size: 17, weight: .regular))
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity)
             .padding(.top, 2)
         }
@@ -210,4 +227,3 @@ struct RedView: View {
         .cornerRadius(18)
     }
 }
-
