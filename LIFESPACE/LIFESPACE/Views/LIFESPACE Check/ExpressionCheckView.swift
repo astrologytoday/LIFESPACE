@@ -14,7 +14,6 @@ struct ExpressionCheckView: View {
 
     var body: some View {
         ZStack {
-            // Teal background
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 0.35, green: 0.80, blue: 0.75),
@@ -27,78 +26,77 @@ struct ExpressionCheckView: View {
             .ignoresSafeArea()
 
             GeometryReader { geo in
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 40) {
-                        Spacer(minLength: 0)
-
+                ScrollView(showsIndicators: true) {
+                    VStack(spacing: 34) {
                         Text(expressionTitle.uppercased())
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
+                            .font(.system(size: 34, weight: .bold))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.75)
+                            .padding(.horizontal, 22)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.65)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 54)
 
                         Text("Have you expressed yourself creatively in the last 7 days?")
-                            .font(.title2)
-                            .fontWeight(.semibold)
+                            .font(.system(size: 22, weight: .semibold))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 24)
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
 
-                        HStack(spacing: 30) {
-                            Button(action: {
+                        HStack(spacing: 22) {
+                            selectionButton(title: "Yes", selected: expressionSelected == true) {
                                 expressionSelected = true
-                            }) {
-                                Text("Yes")
-                                    .padding(.horizontal, 30)
-                                    .padding(.vertical, 12)
-                                    .background(expressionSelected == true ? Color.white : Color.white.opacity(0.3))
-                                    .foregroundColor(.black)
-                                    .cornerRadius(12)
                             }
-                            .buttonStyle(.plain)
 
-                            Button(action: {
+                            selectionButton(title: "No", selected: expressionSelected == false) {
                                 expressionSelected = false
-                            }) {
-                                Text("No")
-                                    .padding(.horizontal, 30)
-                                    .padding(.vertical, 12)
-                                    .background(expressionSelected == false ? Color.white : Color.white.opacity(0.3))
-                                    .foregroundColor(.black)
-                                    .cornerRadius(12)
                             }
-                            .buttonStyle(.plain)
                         }
-
-                        Button(action: finishTapped) {
-                            Text(didFinish ? "Finishing..." : "Finish")
-                                .fontWeight(.bold)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.white)
-                                .foregroundColor(.black)
-                                .cornerRadius(12)
-                                .padding(.horizontal)
-                                .padding(.bottom, 30)
-                        }
-                        .buttonStyle(.plain)
-                        .disabled(expressionSelected == nil || didFinish)
-                        .opacity((expressionSelected != nil && !didFinish) ? 1 : 0.5)
-
-                        Spacer(minLength: 0)
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 110)
                     }
-                    .padding()
                     .frame(maxWidth: .infinity)
-                    // ✅ Keeps your layout centered on normal phones, but scrolls on smaller ones
                     .frame(minHeight: geo.size.height)
                 }
             }
         }
+        .safeAreaInset(edge: .bottom) {
+            Button(action: finishTapped) {
+                Text(didFinish ? "Finishing..." : "Finish")
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .padding()
+                    .frame(maxWidth: .infinity, minHeight: 52)
+                    .background(Color.white)
+                    .foregroundColor(.black)
+                    .cornerRadius(12)
+            }
+            .buttonStyle(.plain)
+            .disabled(expressionSelected == nil || didFinish)
+            .opacity((expressionSelected != nil && !didFinish) ? 1 : 0.5)
+            .padding(.horizontal, 18)
+            .padding(.top, 10)
+            .padding(.bottom, 8)
+            .background(.ultraThinMaterial.opacity(0.20))
+        }
+    }
+
+    private func selectionButton(title: String, selected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.headline)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .frame(maxWidth: .infinity, minHeight: 48)
+                .background(selected ? Color.white : Color.white.opacity(0.3))
+                .foregroundColor(.black)
+                .cornerRadius(12)
+        }
+        .buttonStyle(.plain)
     }
 
     private func finishTapped() {
@@ -106,7 +104,6 @@ struct ExpressionCheckView: View {
         guard let result = expressionSelected else { return }
         didFinish = true
 
-        // ✅ Log expression check (once)
         lifespaceLog.addEntry(
             LifespaceLogEntry(
                 type: .lifespace,
@@ -116,10 +113,8 @@ struct ExpressionCheckView: View {
             )
         )
 
-        // ✅ STOP NOTIFICATION FOR TODAY
         NotificationManager.shared.suppressDailyCheckForToday()
 
-        // ✅ Navigate to loading
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
             withAnimation(.easeInOut(duration: 0.4)) {
                 navModel.push("LoadingView")
