@@ -7,68 +7,77 @@ struct AbsView: View {
     @State private var isExiting = false
 
     var body: some View {
-        ZStack {
-            // LIFESPACE Teal Gradient Background
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.35, green: 0.80, blue: 0.75),
-                    Color(red: 0.20, green: 0.65, blue: 0.60),
-                    Color(red: 0.10, green: 0.45, blue: 0.45)
-                ]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+        GeometryReader { geometry in
+            let safeBottom = geometry.safeAreaInsets.bottom
+            let bottomPadding = max(40, safeBottom + 18)
 
-            VStack(spacing: 30) {
-                Text("Choose a Workout")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.top, 60)
+            ZStack {
+                // LIFESPACE Teal Gradient Background
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color(red: 0.35, green: 0.80, blue: 0.75),
+                        Color(red: 0.20, green: 0.65, blue: 0.60),
+                        Color(red: 0.10, green: 0.45, blue: 0.45)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
 
-                VStack(spacing: 20) {
-                    workoutButton("Sit-Ups") {
-                        fadeAndNavigate(to: "SitUpsView")
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 30) {
+                        Text("Choose a Workout")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 60)
+
+                        VStack(spacing: 20) {
+                            workoutButton("Sit-Ups") {
+                                fadeAndNavigate(to: "SitUpsView")
+                            }
+                            workoutButton("Elbow Plank") {
+                                fadeAndNavigate(to: "ElbowPlankView")
+                            }
+                            workoutButton("Lying Tuck Crunches") {
+                                fadeAndNavigate(to: "LyingTuckCrunchView")
+                            }
+                            workoutButton("Fish Pose Matsyasana") {
+                                fadeAndNavigate(to: "FishPoseMatsyasanaView")
+                            }
+                            workoutButton("Criss Cross Leg Raise") {
+                                fadeAndNavigate(to: "CrissCrossLegRaiseView")
+                            }
+                            workoutButton("Burpee + Jump + Push-Up") {
+                                fadeAndNavigate(to: "BurpeeJumpPushUpView")
+                            }
+                            workoutButton("Negative Push-Ups") {
+                                fadeAndNavigate(to: "NegativePushUpsView")
+                            }
+                        }
+
+                        Button(action: {
+                            fadeAndNavigate(to: "FitnessSpaceView")
+                        }) {
+                            Image(systemName: "arrow.left")
+                                .resizable()
+                                .frame(width: 30, height: 20)
+                                .foregroundColor(.white)
+                                .padding()
+                        }
+                        .padding(.bottom, bottomPadding)
                     }
-                    workoutButton("Elbow Plank") {
-                        fadeAndNavigate(to: "ElbowPlankView")
-                    }
-                    workoutButton("Lying Tuck Crunches") {
-                        fadeAndNavigate(to: "LyingTuckCrunchView")
-                    }
-                    workoutButton("Fish Pose Matsyasana") {
-                        fadeAndNavigate(to: "FishPoseMatsyasanaView")
-                    }
-                    workoutButton("Criss Cross Leg Raise") {
-                        fadeAndNavigate(to: "CrissCrossLegRaiseView")
-                    }
-                    workoutButton("Burpee + Jump + Push-Up") {
-                        fadeAndNavigate(to: "BurpeeJumpPushUpView")
-                    }
-                    workoutButton("Negative Push-Ups") {
-                        fadeAndNavigate(to: "NegativePushUpsView")
-                    }
+                    .padding(.horizontal, 30)
+                    .frame(maxWidth: .infinity)
                 }
-
-                Spacer()
-
-                Button(action: {
-                    fadeAndNavigate(to: "FitnessSpaceView")
-                }) {
-                    Image(systemName: "arrow.left")
-                        .resizable()
-                        .frame(width: 30, height: 20)
-                        .foregroundColor(.white)
-                        .padding()
-                }
-                .padding(.bottom, 40)
-            }
-            .padding(.horizontal, 30)
-            .opacity(isVisible ? 1 : 0)
-            .onAppear {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    isVisible = true
+                .opacity(isVisible ? 1 : 0)
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isVisible = true
+                    }
                 }
             }
         }
@@ -80,6 +89,9 @@ struct AbsView: View {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(
@@ -104,4 +116,3 @@ struct AbsView: View {
         }
     }
 }
-
