@@ -30,10 +30,14 @@ struct IndigoView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                         
                         Text("PURPLE")
                             .font(.system(size: 40, weight: .heavy))
                             .foregroundColor(darkIndigo)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                             .scaleEffect(isPulsing ? 1.08 : 1.0)
                             .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: isPulsing)
                             .onAppear {
@@ -91,6 +95,7 @@ struct IndigoView: View {
                     }
                     .foregroundColor(.white)
                     .font(.body)
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                     
                     // MARK: - Where to Use Indigo
@@ -104,6 +109,8 @@ struct IndigoView: View {
                     Text("Purple is best suited for spaces of reflection, prayer, and dreams.")
                         .foregroundColor(.white)
                         .font(.body)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                     
                     VStack(alignment: .leading, spacing: 10) {
                         bulletView(Text("Bedrooms"))
@@ -123,6 +130,8 @@ struct IndigoView: View {
                         Text("← Back to Light Tips")
                             .foregroundColor(.white)
                             .font(.body)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.white.opacity(0.15))
@@ -131,6 +140,7 @@ struct IndigoView: View {
                     .padding(.bottom, 60)
                 }
                 .padding(.horizontal, 24)
+                .padding(.bottom, 24)
             }
         }
     }
@@ -144,6 +154,8 @@ struct IndigoView: View {
         )
         .font(.title3)
         .fontWeight(.semibold)
+        .lineLimit(nil)
+        .fixedSize(horizontal: false, vertical: true)
     }
     
     // MARK: - Bullet View
@@ -154,6 +166,7 @@ struct IndigoView: View {
                 .padding(.top, 2)
             text
                 .foregroundColor(.white)
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -167,6 +180,8 @@ struct IndigoView: View {
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity)
             
             // Underline
@@ -186,6 +201,8 @@ struct IndigoView: View {
             .font(.system(size: 17, weight: .regular))
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity)
             .padding(.top, 2)
         }
