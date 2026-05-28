@@ -359,7 +359,7 @@ struct ResultsView: View {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity, minHeight: 52)
-                .background(Color.white.opacity(0.22))
+                .background(Color(red: 0.40, green: 0.68, blue: 0.66))
                 .cornerRadius(14)
             }
 
@@ -374,14 +374,14 @@ struct ResultsView: View {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity, minHeight: 52)
-                .background(Color.white.opacity(0.22))
+                .background(Color(red: 0.40, green: 0.68, blue: 0.66))
                 .cornerRadius(14)
             }
         }
         .padding(.horizontal, 16)
         .padding(.top, 10)
         .padding(.bottom, 8)
-        .background(Color(red: 0.08, green: 0.42, blue: 0.42).opacity(0.72))
+        .background(Color(red: 0.08, green: 0.42, blue: 0.42))
     }
 
     private func bubbleXOffset(for index: Int, totalWidth: CGFloat) -> CGFloat {
