@@ -30,10 +30,14 @@ struct YellowView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.black)
                             .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
 
                         Text("YELLOW")
                             .font(.system(size: 40, weight: .heavy))
                             .foregroundColor(darkYellow)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                             .scaleEffect(isPulsing ? 1.08 : 1.0)
                             .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: isPulsing)
                             .onAppear {
@@ -90,6 +94,7 @@ struct YellowView: View {
                     }
                     .foregroundColor(.black)
                     .font(.body)
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
 
                     // MARK: - Where to Use Yellow
@@ -103,6 +108,8 @@ struct YellowView: View {
                     Text("Yellow is the color that reflects the most light and is also the most visible color. It can be fatiguing to the eye due to the high amount of light that it reflects. With that said, yellow stimulates appetite and is also effective for spaces associated with learning.")
                         .foregroundColor(.black)
                         .font(.body)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     VStack(alignment: .leading, spacing: 10) {
                         bulletView(Text("Kitchens or Dining Areas"))
@@ -122,6 +129,8 @@ struct YellowView: View {
                         Text("← Back to Light Tips")
                             .foregroundColor(.black)
                             .font(.body)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.white.opacity(0.15))
@@ -130,6 +139,7 @@ struct YellowView: View {
                     .padding(.bottom, 60)
                 }
                 .padding(.horizontal, 24)
+                .padding(.bottom, 24)
             }
         }
     }
@@ -143,6 +153,8 @@ struct YellowView: View {
         )
         .font(.title3)
         .fontWeight(.semibold)
+        .lineLimit(nil)
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     // MARK: - Bullet View
@@ -153,6 +165,7 @@ struct YellowView: View {
                 .padding(.top, 2)
             text
                 .foregroundColor(.black)
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -166,6 +179,8 @@ struct YellowView: View {
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity)
 
             // Underline
@@ -185,6 +200,8 @@ struct YellowView: View {
             .font(.system(size: 17, weight: .regular))
             .foregroundColor(.black)
             .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity)
             .padding(.top, 2)
         }
@@ -194,4 +211,3 @@ struct YellowView: View {
         .cornerRadius(18)
     }
 }
-
