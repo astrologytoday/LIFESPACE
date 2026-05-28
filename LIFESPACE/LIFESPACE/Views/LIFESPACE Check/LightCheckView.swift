@@ -11,7 +11,6 @@ struct LightCheckView: View {
 
     var body: some View {
         ZStack {
-            // Teal background
             LinearGradient(
                 gradient: Gradient(colors: [
                     Color(red: 0.35, green: 0.80, blue: 0.75),
@@ -24,17 +23,18 @@ struct LightCheckView: View {
             .ignoresSafeArea()
 
             GeometryReader { geo in
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 40) {
-                        Spacer(minLength: 0)
-
+                ScrollView(showsIndicators: true) {
+                    VStack(spacing: 30) {
                         Text("LIGHT")
-                            .font(.system(size: 32, weight: .bold))
+                            .font(.system(size: 36, weight: .bold))
                             .foregroundColor(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
                             .opacity(showTitle ? 1 : 0)
                             .animation(.easeIn(duration: 1), value: showTitle)
+                            .padding(.top, 48)
 
-                        VStack(spacing: 30) {
+                        VStack(spacing: 28) {
                             QuestionToggle(
                                 question: "Have you opened your blinds?",
                                 selection: $blindsOpened
@@ -45,11 +45,10 @@ struct LightCheckView: View {
                                 selection: $wentOutside
                             )
                         }
-
-                        Spacer(minLength: 0)
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 44)
                     }
-                    .padding()
-                    // ✅ This is what restores centering while still allowing scroll on small phones
+                    .padding(.vertical, 18)
                     .frame(maxWidth: .infinity)
                     .frame(minHeight: geo.size.height)
                 }
