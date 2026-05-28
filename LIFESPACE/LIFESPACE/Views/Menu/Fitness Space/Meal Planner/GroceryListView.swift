@@ -86,30 +86,37 @@ struct GroceryListView: View {
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 18) {
+            VStack(spacing: 14) {
                 Text("GROCERY LIST")
                     .font(.custom("Avenir-Heavy", size: 28))
                     .foregroundColor(.white)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
                     .padding(.top, 16)
+                    .padding(.horizontal, 20)
 
-                HStack {
+                HStack(spacing: 10) {
                     TextField("Add item…", text: $newItemText)
                         .font(.custom("Avenir", size: 16))
                         .foregroundColor(.white)
                         .padding(12)
                         .background(Color.white.opacity(0.18))
                         .cornerRadius(12)
+                        .submitLabel(.done)
+                        .onSubmit { addManualItem() }
 
                     Button {
                         addManualItem()
                     } label: {
                         Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 28))
+                            .font(.system(size: 30))
                             .foregroundColor(.white)
+                            .frame(width: 44, height: 44)
                     }
                     .disabled(newItemText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .opacity(newItemText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0.45 : 1)
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 16)
 
                 List {
                     ForEach(rows) { row in
@@ -118,6 +125,8 @@ struct GroceryListView: View {
                             Text(category.rawValue)
                                 .font(.custom("Avenir-Heavy", size: 14))
                                 .foregroundColor(.white.opacity(0.8))
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.75)
                                 .padding(.top, 8)
                                 .padding(.leading, 16)
                                 .listRowBackground(Color.clear)
@@ -137,37 +146,7 @@ struct GroceryListView: View {
                 .environment(\.editMode, .constant(.active))
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
-
-                Spacer(minLength: 8)
-
-                Button {
-                    withAnimation(.easeInOut(duration: 0.25)) {
-                        showClearListPopup = true
-                    }
-                } label: {
-                    Text("DONE SHOPPING")
-                        .font(.custom("Avenir-Heavy", size: 16))
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(Color.red.opacity(0.65))
-                        .cornerRadius(14)
-                        .padding(.horizontal, 40)
-                }
-
-                Button {
-                    navModel.pop()
-                } label: {
-                    Text("BACK")
-                        .font(.custom("Avenir-Heavy", size: 16))
-                        .foregroundColor(.black)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(Color.white.opacity(0.9))
-                        .cornerRadius(14)
-                        .padding(.horizontal, 40)
-                }
-                .padding(.bottom, 12)
+                .padding(.bottom, 8)
             }
 
             if showClearListPopup {
@@ -184,6 +163,9 @@ struct GroceryListView: View {
                     Text("Clear List?")
                         .font(.custom("Avenir-Heavy", size: 26))
                         .foregroundColor(.white)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.75)
+                        .multilineTextAlignment(.center)
 
                     HStack(spacing: 18) {
                         Button {
@@ -196,6 +178,8 @@ struct GroceryListView: View {
                             Text("YES")
                                 .font(.custom("Avenir-Heavy", size: 16))
                                 .foregroundColor(Color(red: 0.05, green: 0.35, blue: 0.38))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
                                 .frame(width: 90)
                                 .padding(.vertical, 10)
                                 .background(Color.white.opacity(0.95))
@@ -210,6 +194,8 @@ struct GroceryListView: View {
                             Text("NO")
                                 .font(.custom("Avenir-Heavy", size: 16))
                                 .foregroundColor(.white)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
                                 .frame(width: 90)
                                 .padding(.vertical, 10)
                                 .background(Color.white.opacity(0.22))
@@ -237,6 +223,9 @@ struct GroceryListView: View {
                 .zIndex(10)
             }
         }
+        .safeAreaInset(edge: .bottom) {
+            bottomActionBar
+        }
         .onAppear {
             manualItems = decodeManualItems()
             syncGroceryList()
@@ -246,8 +235,44 @@ struct GroceryListView: View {
         }
     }
 
+    private var bottomActionBar: some View {
+        VStack(spacing: 10) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    showClearListPopup = true
+                }
+            } label: {
+                Text("DONE SHOPPING")
+                    .font(.custom("Avenir-Heavy", size: 16))
+                    .foregroundColor(.white)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+                    .frame(maxWidth: .infinity, minHeight: 46)
+                    .background(Color.red.opacity(0.65))
+                    .cornerRadius(14)
+            }
+
+            Button {
+                navModel.pop()
+            } label: {
+                Text("BACK")
+                    .font(.custom("Avenir-Heavy", size: 16))
+                    .foregroundColor(.black)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+                    .frame(maxWidth: .infinity, minHeight: 46)
+                    .background(Color.white.opacity(0.9))
+                    .cornerRadius(14)
+            }
+        }
+        .padding(.horizontal, 40)
+        .padding(.top, 10)
+        .padding(.bottom, 8)
+        .background(.ultraThinMaterial.opacity(0.18))
+    }
+
     private func groceryRow(item: Binding<GroceryItem>) -> some View {
-        HStack {
+        HStack(alignment: .top, spacing: 10) {
             Image(systemName: item.wrappedValue.isChecked ? "checkmark.square.fill" : "square")
                 .font(.system(size: 22))
                 .foregroundColor(
@@ -266,8 +291,11 @@ struct GroceryListView: View {
                 .font(.custom("Avenir", size: 16))
                 .foregroundColor(.white)
                 .strikethrough(item.wrappedValue.isChecked, color: .white.opacity(0.6))
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .multilineTextAlignment(.leading)
 
-            Spacer()
+            Spacer(minLength: 0)
         }
         .padding()
         .background(
