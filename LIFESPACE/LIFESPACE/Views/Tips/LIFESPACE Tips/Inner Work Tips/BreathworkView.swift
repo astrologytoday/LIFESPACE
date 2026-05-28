@@ -5,6 +5,10 @@ struct BreathworkView: View {
     @State private var contentOpacity: Double = 0.0
     @State private var glowPhase: Bool = false
 
+    private let tagColumns: [GridItem] = [
+        GridItem(.adaptive(minimum: 86), spacing: 10)
+    ]
+
     var body: some View {
         ZStack {
             // Background Gradient
@@ -41,9 +45,11 @@ struct BreathworkView: View {
                     Text("BREATHWORK")
                         .font(.system(size: 36, weight: .bold))
                         .foregroundColor(.white)
-                        .shadow(color: .white.opacity(0.28), radius: 10, x: 0, y: 0) // mystical glow
-                        .shadow(color: .black.opacity(0.30), radius: 3, x: 0, y: 2)  // depth
-                        .shadow(color: .white.opacity(0.7), radius: 10)              // your original title glow (optional)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                        .shadow(color: .white.opacity(0.28), radius: 10, x: 0, y: 0)
+                        .shadow(color: .black.opacity(0.30), radius: 3, x: 0, y: 2)
+                        .shadow(color: .white.opacity(0.7), radius: 10)
                         .frame(maxWidth: .infinity, alignment: .center)
 
                     // Timeline flow (same style as MirrorWorkView)
@@ -51,15 +57,17 @@ struct BreathworkView: View {
                         Text("Breathwork is the practice of consciously controlling your breath to influence your physical, mental, and emotional states. It’s one of the most direct ways to access calm, focus, energy, and even spiritual insight.")
                             .font(.system(size: 16))
                             .foregroundColor(.white.opacity(0.95))
+                            .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
 
                         Text("Your breath is the bridge between your body and mind. Through slow, intentional breathing, you can reduce stress, balance your nervous system, and shift your emotional state in just minutes.")
                             .font(.system(size: 16))
                             .foregroundColor(.white.opacity(0.95))
+                            .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.top, 6)
 
-                        HStack(spacing: 10) {
+                        LazyVGrid(columns: tagColumns, alignment: .leading, spacing: 10) {
                             TagPill(text: "Calm", icon: "moon.stars.fill")
                             TagPill(text: "Focus", icon: "scope")
                             TagPill(text: "Energy", icon: "bolt.fill")
@@ -78,6 +86,7 @@ struct BreathworkView: View {
                         Text("Breath bypasses the thinking mind. When you breathe consciously, you give the body a new rhythm, which signals safety, peace, or strength. Breath can shift brainwaves, release tension, and unlock stuck emotion.")
                             .font(.system(size: 16))
                             .foregroundColor(.white.opacity(0.95))
+                            .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
 
                         SubtleCallout(text: "When you change your breath, you change your state.")
@@ -134,11 +143,16 @@ struct BreathworkView: View {
                                 Text("Start Breathwork Timer")
                                     .font(.system(size: 18, weight: .bold))
                                     .foregroundColor(.white)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
 
                                 Text("Pick a technique and begin")
                                     .font(.system(size: 13, weight: .semibold))
                                     .foregroundColor(.white.opacity(0.75))
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
+                            .layoutPriority(1)
 
                             Spacer()
 
@@ -178,7 +192,7 @@ struct BreathworkView: View {
                         Spacer()
                     }
                     .padding(.top, 10)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 44)
                 }
                 .opacity(contentOpacity)
                 .onAppear {
@@ -244,21 +258,23 @@ private struct TimelineSection<Content: View>: View {
 
             VStack(alignment: .leading, spacing: 10) {
                 if centerTitle {
-                    HStack(spacing: 10) {
+                    HStack(alignment: .top, spacing: 10) {
                         Image(systemName: icon)
                             .font(.system(size: 18, weight: .semibold))
                             .foregroundColor(.white.opacity(0.95))
-                            .padding(.top, 1)
+                            .padding(.top, 2)
 
                         Text(title)
                             .font(.system(size: 20, weight: .bold))
                             .foregroundColor(.white)
+                            .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
 
                         Image(systemName: icon)
                             .font(.system(size: 18, weight: .semibold))
                             .foregroundColor(.white.opacity(0.95))
-                            .padding(.top, 1)
+                            .padding(.top, 2)
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 } else {
@@ -266,12 +282,14 @@ private struct TimelineSection<Content: View>: View {
                         Image(systemName: icon)
                             .font(.system(size: 18, weight: .semibold))
                             .foregroundColor(.white.opacity(0.95))
-                            .padding(.top, 1)
+                            .padding(.top, 2)
 
                         Text(title)
                             .font(.system(size: 20, weight: .bold))
                             .foregroundColor(.white)
+                            .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
 
                         Spacer(minLength: 0)
                     }
@@ -298,9 +316,12 @@ private struct TagPill: View {
             Text(text)
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundColor(.white.opacity(0.95))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
+        .frame(maxWidth: .infinity, alignment: .center)
         .background(Color.white.opacity(0.10))
         .overlay(Capsule().stroke(Color.white.opacity(0.16), lineWidth: 1))
         .cornerRadius(999)
@@ -319,7 +340,9 @@ private struct SubtleCallout: View {
             Text(text)
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(.white.opacity(0.92))
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
         }
         .padding(12)
         .background(Color.white.opacity(0.08))
@@ -344,7 +367,9 @@ private struct BulletRow: View {
             Text(text)
                 .font(.system(size: 16))
                 .foregroundColor(.white.opacity(0.95))
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
 
             Spacer(minLength: 0)
         }
@@ -358,16 +383,21 @@ private struct TechniqueRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 10) {
+            HStack(alignment: .top, spacing: 10) {
                 Text(title)
                     .font(.system(size: 17, weight: .bold))
                     .foregroundColor(.white)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .layoutPriority(1)
 
-                Spacer()
+                Spacer(minLength: 6)
 
                 Text(pattern)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundColor(.white.opacity(0.8))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
                     .padding(.vertical, 6)
                     .padding(.horizontal, 10)
                     .background(Color.white.opacity(0.10))
@@ -381,6 +411,7 @@ private struct TechniqueRow: View {
             Text(description)
                 .font(.system(size: 15))
                 .foregroundColor(.white.opacity(0.95))
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(12)
