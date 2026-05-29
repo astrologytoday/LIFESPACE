@@ -86,6 +86,18 @@ struct ResultsView: View {
                                 .padding(.top, 28)
                                 .padding(.bottom, 110)
                         }
+                        .mask(
+                            LinearGradient(
+                                gradient: Gradient(stops: [
+                                    .init(color: .clear, location: 0.00),
+                                    .init(color: .black.opacity(0.20), location: 0.035),
+                                    .init(color: .black, location: 0.12),
+                                    .init(color: .black, location: 1.00)
+                                ]),
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
                     } else {
                         VStack {
                             Spacer()
