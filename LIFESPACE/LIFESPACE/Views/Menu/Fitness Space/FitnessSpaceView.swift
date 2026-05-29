@@ -38,7 +38,8 @@ struct FitnessSpaceView: View {
             let headerBottomSpace: CGFloat = isShortPhone ? -12 : 6
             let footerTopSpace: CGFloat = isShortPhone ? -16 : 8
 
-            let footerSpacing: CGFloat = isShortPhone ? 58 : 80
+            let footerSpacing: CGFloat = isShortPhone ? max(34, min(58, w * 0.14)) : max(48, min(80, w * 0.17))
+            let plannerWidth: CGFloat = min(190, max(156, w * 0.45))
             let homeSize: CGFloat = isShortPhone ? 92 : 100
             let cameraSize: CGFloat = isShortPhone ? 43 : 46
 
@@ -64,6 +65,7 @@ struct FitnessSpaceView: View {
                     footer(homeSize: homeSize,
                            cameraSize: cameraSize,
                            footerSpacing: footerSpacing,
+                           plannerWidth: plannerWidth,
                            safeBottom: safeBottom)
                 }
                 .opacity(isVisible ? 1 : 0)
@@ -121,13 +123,17 @@ struct FitnessSpaceView: View {
                 Text("GOAL:")
                     .font(.system(size: isShortPhone ? 31 : 32))
                     .foregroundColor(.white)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
 
                 Text(userProfile.fitnessOptions.first ?? "No goal set")
                     .font(.system(size: 35, weight: .heavy))
                     .foregroundColor(.white)
                     .lineLimit(2)
-                    .minimumScaleFactor(0.75)
+                    .minimumScaleFactor(0.70)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            .layoutPriority(1)
 
             Spacer(minLength: 8)
 
@@ -212,14 +218,14 @@ struct FitnessSpaceView: View {
 
     // MARK: - FOOTER
 
-    private func footer(homeSize: CGFloat, cameraSize: CGFloat, footerSpacing: CGFloat, safeBottom: CGFloat) -> some View {
+    private func footer(homeSize: CGFloat, cameraSize: CGFloat, footerSpacing: CGFloat, plannerWidth: CGFloat, safeBottom: CGFloat) -> some View {
         HStack(alignment: .bottom, spacing: footerSpacing) {
             VStack(spacing: 12) {
-                plannerButton("Workout Planner") {
+                plannerButton("Workout Planner", width: plannerWidth) {
                     navModel.push("WorkoutPlannerView")
                 }
 
-                plannerButton("Meal Planner") {
+                plannerButton("Meal Planner", width: plannerWidth) {
                     navModel.push("MealPlannerView")
                 }
             }
@@ -253,18 +259,21 @@ struct FitnessSpaceView: View {
                 .offset(x: 26, y: -34)
             }
         }
+        .padding(.horizontal, 12)
         .padding(.bottom, safeBottom + 6)
     }
 
     // MARK: - REUSABLES
 
-    private func plannerButton(_ title: String, action: @escaping () -> Void) -> some View {
+    private func plannerButton(_ title: String, width: CGFloat, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
                 .font(Font.custom("Avenir-Heavy", size: 16))
                 .foregroundColor(.black)
+                .lineLimit(1)
+                .minimumScaleFactor(0.72)
                 .padding(.vertical, 12)
-                .frame(width: 190)
+                .frame(width: width)
                 .background(lifescapeButtonGradient)
                 .cornerRadius(22)
         }
@@ -355,6 +364,8 @@ struct FitnessSpaceView: View {
             Text(title)
                 .font(Font.custom("Avenir-Heavy", size: 15))
                 .foregroundColor(.black)
+                .lineLimit(1)
+                .minimumScaleFactor(0.72)
                 .padding(.vertical, 12)
                 .frame(maxWidth: .infinity)
                 .background(lifescapeButtonGradient)
@@ -375,6 +386,8 @@ struct PulsatingBubble: View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 13, weight: .bold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.72)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(Color(red: 0.10, green: 0.45, blue: 0.45))
